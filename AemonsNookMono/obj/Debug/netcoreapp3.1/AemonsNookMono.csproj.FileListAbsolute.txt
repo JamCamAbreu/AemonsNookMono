@@ -21,3 +21,4 @@ C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\obj\Debug\netcoreapp3.
 C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\obj\Debug\netcoreapp3.1\AemonsNookMono.dll
 C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\obj\Debug\netcoreapp3.1\AemonsNookMono.pdb
 C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\obj\Debug\netcoreapp3.1\AemonsNookMono.genruntimeconfig.cache
+C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\World\Terrain\Grass-a.xnb

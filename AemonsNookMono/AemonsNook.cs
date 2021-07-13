@@ -1,20 +1,26 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 namespace AemonsNookMono
 {
-    public class Game1 : Game
+    public class AemonsNook : Game
     {
-        private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
+        private GraphicsDeviceManager GM;
+        private SpriteBatch SB;
 
-        public Game1()
+        public Dictionary<string, Texture2D> Sprites;
+
+        public AemonsNook()
         {
-            _graphics = new GraphicsDeviceManager(this);
+            GM = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            Sprites = new Dictionary<string, Texture2D>();
         }
+
+
 
         protected override void Initialize()
         {
@@ -25,9 +31,8 @@ namespace AemonsNookMono
 
         protected override void LoadContent()
         {
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
+            SB = new SpriteBatch(GraphicsDevice);
+            Sprites.Add("grass-a", Content.Load<Texture2D>("World/Terrain/Grass-a"));
         }
 
         protected override void Update(GameTime gameTime)
@@ -44,7 +49,9 @@ namespace AemonsNookMono
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            SB.Begin();
+            SB.Draw(Sprites["grass-a"], new Vector2(50, 50), Color.White);
+            SB.End();
 
             base.Draw(gameTime);
         }

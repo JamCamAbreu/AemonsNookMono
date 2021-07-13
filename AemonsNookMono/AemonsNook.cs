@@ -11,6 +11,9 @@ namespace AemonsNookMono
         private SpriteBatch SB;
 
         public Dictionary<string, Texture2D> Sprites;
+        public Cursor mouse;
+        int test;
+
 
         public AemonsNook()
         {
@@ -18,15 +21,17 @@ namespace AemonsNookMono
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             Sprites = new Dictionary<string, Texture2D>();
+
+            test = 0;
         }
 
 
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            this.mouse = new Cursor();
 
-            base.Initialize();
+            base.Initialize(); // do this last
         }
 
         protected override void LoadContent()
@@ -40,17 +45,18 @@ namespace AemonsNookMono
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            this.test = this.mouse.Update(gameTime);
 
-            base.Update(gameTime);
+            base.Update(gameTime); // Do last
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             SB.Begin();
             SB.Draw(Sprites["grass-a"], new Vector2(50, 50), Color.White);
+
             SB.End();
 
             base.Draw(gameTime);

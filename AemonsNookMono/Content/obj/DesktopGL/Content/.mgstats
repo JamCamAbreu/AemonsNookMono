@@ -1,2 +1,5 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/Fonts/Arial.spritefont","C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/bin/DesktopGL/Content/Fonts/Arial.xnb","FontDescriptionProcessor","SpriteFontContent",2063,21538,0.2434244
+"C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/Fonts/Consolas.spritefont","C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/bin/DesktopGL/Content/Fonts/Consolas.xnb","FontDescriptionProcessor","SpriteFontContent",2066,13346,0.2297044
+"C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/Fonts/CourierNew.spritefont","C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/bin/DesktopGL/Content/Fonts/CourierNew.xnb","FontDescriptionProcessor","SpriteFontContent",2069,21538,0.019409
 "C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Grass-one.png","C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/bin/DesktopGL/Content/World/Terrain/Grass-a.xnb","TextureProcessor","Texture2DContent",2356,4181,0.1461441

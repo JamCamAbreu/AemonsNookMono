@@ -29,7 +29,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Help\" />
-    <Folder Include="World\" />
     <Folder Include="Peeps\" />
   </ItemGroup>
 </Project>

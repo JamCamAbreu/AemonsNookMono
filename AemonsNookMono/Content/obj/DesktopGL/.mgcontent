@@ -4,9 +4,15 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/Fonts/Arial.spritefont</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/Fonts/Consolas.spritefont</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/Fonts/CourierNew.spritefont</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Grass-one.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File>World/Terrain/Grass-a.png</File>
   </DestFiles>
 </SourceFileCollection>

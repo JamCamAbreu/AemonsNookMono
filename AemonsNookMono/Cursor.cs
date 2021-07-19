@@ -7,19 +7,37 @@ using System.Text;
 
 namespace AemonsNookMono
 {
-    public class Cursor
+    public sealed class Cursor
     {
-        private int timer;
+        #region Singleton Implementation
+        private static Cursor instance;
+        private static object _lock = new object();
+        private Cursor() { }
+        public static Cursor Current()
+        {
+            lock (_lock)
+            {
+                if (instance == null)
+                {
+                    instance = new Cursor();
+                }
+            }
+            return instance;
+        }
+        #endregion
 
+        #region HoverBox Trigger
+        public int Timer;
         public int LastX;
         public int LastY;
-        public int HoverTriggerFrames = 250;
-
+        public int HoverTriggerFrames = 27;
         public bool Triggered;
+        public Help.HoverBox CurrentHoverBox { get; set; }
+        #endregion
 
-        public Cursor()
+        public void Init()
         {
-            this.timer = 0;
+            this.Timer = 0;
             this.Triggered = false;
 
             MouseState state = Mouse.GetState();
@@ -29,29 +47,43 @@ namespace AemonsNookMono
 
         public int Update(GameTime gameTime)
         {
-            timer++;
+            Timer++;
             MouseState state = Mouse.GetState();
 
             if (state.X != LastX || state.Y != LastY)
             {
-                this.timer = 0;
-                this.Triggered = false;
+                this.MouseMove();
             }
 
-            if (!Triggered && timer >= this.HoverTriggerFrames)
+            if (!Triggered && Timer >= this.HoverTriggerFrames)
             {
-                this.Triggered = true;
-                this.Trigger();
+                this.AlarmTrigger();
             }
 
             LastX = state.X;
             LastY = state.Y;
-            return timer;
+            return Timer;
         }
 
-        public void Trigger()
+        public void AlarmTrigger()
         {
-            Debug.WriteLine($"Triggered mouse event");
+            this.Triggered = true;
+            this.CurrentHoverBox = new Help.HoverBox("Here's a hoverbox.");
+        }
+
+        public void MouseMove()
+        {
+            this.Timer = 0;
+            this.Triggered = false;
+            this.CurrentHoverBox = null;
+        }
+
+        public void Draw()
+        {
+            if (this.CurrentHoverBox != null)
+            {
+                this.CurrentHoverBox.Draw();
+            }
         }
     }
 }

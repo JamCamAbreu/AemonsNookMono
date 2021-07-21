@@ -15,14 +15,11 @@ namespace AemonsNookMono
         private Cursor() { }
         public static Cursor Current()
         {
-            if (instance == null)
+            lock (_lock)
             {
-                lock (_lock)
+                if (instance == null)
                 {
-                    if (instance == null)
-                    {
-                        instance = new Cursor();
-                    }
+                    instance = new Cursor();
                 }
             }
             return instance;
@@ -38,7 +35,6 @@ namespace AemonsNookMono
         public Help.HoverBox CurrentHoverBox { get; set; }
         #endregion
 
-        #region Interface
         public void Init()
         {
             this.Timer = 0;
@@ -48,6 +44,7 @@ namespace AemonsNookMono
             this.LastX = state.X;
             this.LastY = state.Y;
         }
+
         public int Update(GameTime gameTime)
         {
             Timer++;
@@ -67,6 +64,20 @@ namespace AemonsNookMono
             LastY = state.Y;
             return Timer;
         }
+
+        public void AlarmTrigger()
+        {
+            this.Triggered = true;
+            this.CurrentHoverBox = new Help.HoverBox("Here's a hoverbox.");
+        }
+
+        public void MouseMove()
+        {
+            this.Timer = 0;
+            this.Triggered = false;
+            this.CurrentHoverBox = null;
+        }
+
         public void Draw()
         {
             if (this.CurrentHoverBox != null)
@@ -74,20 +85,5 @@ namespace AemonsNookMono
                 this.CurrentHoverBox.Draw();
             }
         }
-        #endregion
-
-        #region Helper Methods
-        private void MouseMove()
-        {
-            this.Timer = 0;
-            this.Triggered = false;
-            this.CurrentHoverBox = null;
-        }
-        private void AlarmTrigger()
-        {
-            this.Triggered = true;
-            this.CurrentHoverBox = new Help.HoverBox("Here's a hoverbox.");
-        }
-        #endregion
     }
 }

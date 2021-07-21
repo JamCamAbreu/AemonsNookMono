@@ -14,50 +14,40 @@ namespace AemonsNookMono
         private Graphics() { }
         public static Graphics Current()
         {
-            if (instance == null)
+            lock (_lock)
             {
-                lock (_lock)
+                if (instance == null)
                 {
-                    if (instance == null)
-                    {
-                        instance = new Graphics();
-                    }
+                    instance = new Graphics();
                 }
             }
             return instance;
         }
         #endregion
 
-        #region Public Properties
-        public Dictionary<string, Texture2D> SpritesByName { get; set; }
+        public void Init(GraphicsDevice gd)
+        {
+            this.Sprites = new Dictionary<string, Texture2D>();
+            this.Fonts = new Dictionary<string, SpriteFont>();
+            this.Device = gd;
+
+            // WINDOWED:
+            this.GraphicsDM.PreferredBackBufferWidth = 1400;
+            this.GraphicsDM.PreferredBackBufferHeight = 900;
+            this.GraphicsDM.ApplyChanges();
+
+            // FULL SCREEN:
+            //Graphics.Current().GraphicsDM.PreferredBackBufferWidth = this.Device.DisplayMode.Width;
+            //Graphics.Current().GraphicsDM.PreferredBackBufferHeight = this.Device.DisplayMode.Height;
+            //Graphics.Current().GraphicsDM.IsFullScreen = true;
+            //Graphics.Current().GraphicsDM.ApplyChanges();
+        }
+
+        public Dictionary<string, Texture2D> Sprites { get; set; }
         public Dictionary<string, SpriteFont> Fonts { get; set; }
         public GraphicsDeviceManager GraphicsDM { get; set; }
         public SpriteBatch SpriteB { get; set; }
         public GraphicsDevice Device { get; set; }
-        #endregion
 
-        #region Interface
-        public void Init(GraphicsDevice gd, bool fullscreen = false)
-        {
-            this.SpritesByName = new Dictionary<string, Texture2D>();
-            this.Fonts = new Dictionary<string, SpriteFont>();
-            this.Device = gd;
-
-            if (fullscreen)
-            {
-                this.GraphicsDM.PreferredBackBufferWidth = this.Device.DisplayMode.Width;
-                this.GraphicsDM.PreferredBackBufferHeight = this.Device.DisplayMode.Height;
-                this.GraphicsDM.IsFullScreen = true;
-                this.GraphicsDM.ApplyChanges();
-            }
-            else
-            {
-                this.GraphicsDM.PreferredBackBufferWidth = 1400;
-                this.GraphicsDM.PreferredBackBufferHeight = 900;
-                this.GraphicsDM.ApplyChanges();
-            }
-
-        }
-        #endregion
     }
 }

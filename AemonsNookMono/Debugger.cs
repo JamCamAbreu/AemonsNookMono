@@ -15,36 +15,37 @@ namespace AemonsNookMono
         private Debugger() { }
         public static Debugger Current()
         {
-            lock (_lock)
+            if (instance == null)
             {
-                if (instance == null)
+                lock (_lock)
                 {
-                    instance = new Debugger();
+                    if (instance == null)
+                    {
+                        instance = new Debugger();
+                    }
                 }
             }
             return instance;
         }
         #endregion
 
-        #region Interal
-        private FrameCounter fps { get; set; }
-        private int screenWidthPixels { get; set; }
-        private const int ROW_HEIGHT = 16;
-        private const int PAD = 4;
+        #region Public Properties
+        public bool DrawTileShapes { get; set; }
+        public GameWorld.World CurrentWorld { get; set; }
         #endregion
 
+        #region Interface
         public void Init()
         {
             fps = new FrameCounter();
             screenWidthPixels = Graphics.Current().Device.Viewport.Width;
+            this.DrawTileShapes = false;
         }
-
         public void Update(GameTime gameTime)
         {
             var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             this.fps.Update(deltaTime);
         }
-
         public void Draw(GameTime gameTime)
         {
             Graphics.Current().SpriteB.Begin();
@@ -58,6 +59,16 @@ namespace AemonsNookMono
             debugMessages.Add($"Mouse: {Cursor.Current().LastX}, {Cursor.Current().LastY}");
             debugMessages.Add($"MouseTm: {Cursor.Current().Timer}");
             debugMessages.Add($"MouseTrig: " + (Cursor.Current().Triggered ? "True" : "False"));
+            #endregion
+
+            #region World
+            if (CurrentWorld != null)
+            {
+                if (CurrentWorld.Resources != null)
+                {
+                    debugMessages.Add($"Resource Count: {CurrentWorld.Resources.Sorted.Count}");
+                }
+            }
             #endregion
 
             int maxLength = 0;
@@ -76,8 +87,15 @@ namespace AemonsNookMono
 
             Graphics.Current().SpriteB.End();
         }
-    }
+        #endregion
 
+        #region Private Properties
+        private FrameCounter fps { get; set; }
+        private int screenWidthPixels { get; set; }
+        private const int ROW_HEIGHT = 16;
+        private const int PAD = 4;
+        #endregion
+    }
     public class FrameCounter
     {
         public FrameCounter()

@@ -7,12 +7,130 @@
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/Fonts/Arial.spritefont</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/Fonts/Consolas.spritefont</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/Fonts/CourierNew.spritefont</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Effects/Sparkle/sparkle1.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Effects/Sparkle/sparkle2.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Effects/Sparkle/sparkle3.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Effects/Sparkle/sparkle4.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Effects/Sparkle/sparkle5.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Objects/Cauldron.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Objects/Fire.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Objects/Signs/SignDown.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Objects/Signs/SignLeft.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Objects/Signs/signpost.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Objects/Signs/SignRight.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Objects/Signs/SignUp.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Peeps/Peep-aqua.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Peeps/Peep-armor.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Peeps/Peep-blue.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Peeps/Peep-brown.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Peeps/Peep-green.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Peeps/Peep-grey.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Peeps/Peep-purple.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Peeps/Peep-red.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Peeps/Peep-royal.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Peeps/Peep-white.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Peeps/SpeachBubble.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Dirt/Dirt-Corner-BottomLeft.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Dirt/Dirt-Corner-BottomRight.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Dirt/Dirt-CornerTopLeft.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Dirt/Dirt-CornerTopRight.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Dirt/Dirt-Horizontal.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Dirt/Dirt-Intersection.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Dirt/Dirt-IntersectionRecolor.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Dirt/Dirt-TS-Bottom.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Dirt/Dirt-TS-Left.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Dirt/Dirt-TS-Right.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Dirt/Dirt-TS-Top.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Dirt/Dirt-Vertical.png</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Grass-one.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Stone/Quarts1.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Stone/Stone1.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Stone/Stone2.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Stone/Stone3.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Stone/Stone4.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Stone/Stone5.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Stone/Stone6.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Trees/Tree1.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Trees/Tree2.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Trees/Tree3.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Trees/Tree4.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Trees/Tree5.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Trees/Tree6.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Water/Water-Corner-BottomLeft.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Water/Water-Corner-BottomRight.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Water/Water-Corner-TopLeft.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Water/Water-Corner-TopRight.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Water/Water-Horizontal.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Water/Water-Intersection.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Water/Water-TS-Bottom.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Water/Water-TS-Left.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Water/Water-TS-Right.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Water/Water-TS-Top.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Water/Water-Vertical.png</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File>World/Terrain/Grass-a.png</File>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
   </DestFiles>
 </SourceFileCollection>

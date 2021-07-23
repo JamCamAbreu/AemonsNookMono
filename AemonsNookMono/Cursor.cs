@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using AemonsNookMono.GameWorld;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
@@ -13,19 +14,22 @@ namespace AemonsNookMono
         private static Cursor instance;
         private static object _lock = new object();
         private Cursor() { }
-        public static Cursor Current()
+        public static Cursor Current
         {
-            if (instance == null)
+            get
             {
-                lock (_lock)
+                if (instance == null)
                 {
-                    if (instance == null)
+                    lock (_lock)
                     {
-                        instance = new Cursor();
+                        if (instance == null)
+                        {
+                            instance = new Cursor();
+                        }
                     }
                 }
+                return instance;
             }
-            return instance;
         }
         #endregion
 
@@ -86,7 +90,16 @@ namespace AemonsNookMono
         private void AlarmTrigger()
         {
             this.Triggered = true;
-            this.CurrentHoverBox = new Help.HoverBox("Here's a hoverbox.");
+
+            Tile t = World.Current.TileAtPixel(this.LastX, this.LastY);
+            if (t != null)
+            {
+                this.CurrentHoverBox = new Help.HoverBox($"Tile ({t.Column}, {t.Row})\nType: {t.Type}");
+            }
+            else
+            {
+                this.CurrentHoverBox = new Help.HoverBox("Nothing here.");
+            }
         }
         #endregion
     }

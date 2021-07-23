@@ -16,7 +16,7 @@ namespace AemonsNookMono.Resources
         public override void Draw(int startDrawX, int startDrawY)
         {
             string spritestring = $"tree-{this.Version}";
-            Graphics.Current().SpriteB.Draw(Graphics.Current().SpritesByName[spritestring], new Vector2(startDrawX + PosX, startDrawY + PosY), Color.White);
+            Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName[spritestring], new Vector2(startDrawX + PosX, startDrawY + PosY), Color.White);
         }
     }
 }

@@ -13,19 +13,22 @@ namespace AemonsNookMono
         private static Debugger instance;
         private static object _lock = new object();
         private Debugger() { }
-        public static Debugger Current()
+        public static Debugger Current
         {
-            if (instance == null)
+            get
             {
-                lock (_lock)
+                if (instance == null)
                 {
-                    if (instance == null)
+                    lock (_lock)
                     {
-                        instance = new Debugger();
+                        if (instance == null)
+                        {
+                            instance = new Debugger();
+                        }
                     }
                 }
+                return instance;
             }
-            return instance;
         }
         #endregion
 
@@ -38,7 +41,7 @@ namespace AemonsNookMono
         public void Init()
         {
             fps = new FrameCounter();
-            screenWidthPixels = Graphics.Current().Device.Viewport.Width;
+            screenWidthPixels = Graphics.Current.Device.Viewport.Width;
             this.DrawTileShapes = false;
         }
         public void Update(GameTime gameTime)
@@ -48,7 +51,7 @@ namespace AemonsNookMono
         }
         public void Draw(GameTime gameTime)
         {
-            Graphics.Current().SpriteB.Begin();
+            Graphics.Current.SpriteB.Begin();
             List<string> debugMessages = new List<string>();
 
             #region FPS
@@ -56,9 +59,9 @@ namespace AemonsNookMono
             #endregion
 
             #region Mouse Hover
-            debugMessages.Add($"Mouse: {Cursor.Current().LastX}, {Cursor.Current().LastY}");
-            debugMessages.Add($"MouseTm: {Cursor.Current().Timer}");
-            debugMessages.Add($"MouseTrig: " + (Cursor.Current().Triggered ? "True" : "False"));
+            debugMessages.Add($"Mouse: {Cursor.Current.LastX}, {Cursor.Current.LastY}");
+            debugMessages.Add($"MouseTm: {Cursor.Current.Timer}");
+            debugMessages.Add($"MouseTrig: " + (Cursor.Current.Triggered ? "True" : "False"));
             #endregion
 
             #region World
@@ -81,11 +84,11 @@ namespace AemonsNookMono
             int row = 0;
             foreach (string message in debugMessages)
             {
-                Graphics.Current().SpriteB.DrawString(Graphics.Current().Fonts["debug"], message, new Vector2(screenWidthPixels - requiredWidth, PAD + (ROW_HEIGHT * row)), Color.White);
+                Graphics.Current.SpriteB.DrawString(Graphics.Current.Fonts["debug"], message, new Vector2(screenWidthPixels - requiredWidth, PAD + (ROW_HEIGHT * row)), Color.White);
                 row++;
             }
 
-            Graphics.Current().SpriteB.End();
+            Graphics.Current.SpriteB.End();
         }
         #endregion
 

@@ -10,6 +10,29 @@ namespace AemonsNookMono.GameWorld
 {
     public class World
     {
+        #region Singleton Implementation
+        private static World instance;
+        private static object _lock = new object();
+        private World() { }
+        public static World Current
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    lock (_lock)
+                    {
+                        if (instance == null)
+                        {
+                            instance = new World();
+                        }
+                    }
+                }
+                return instance;
+            }
+        }
+        #endregion
+
         #region Public Properties
         public Tile[,] Tiles;
         public int Width { get; set; }
@@ -23,7 +46,7 @@ namespace AemonsNookMono.GameWorld
         #endregion
 
         #region Constructors
-        public World(int width, int height)
+        public void InitWorld(int width, int height)
         {
             this.RoadTiles = new List<Tile>();
             this.SpawnTiles = new List<Tile>();
@@ -34,11 +57,11 @@ namespace AemonsNookMono.GameWorld
             initTiles(width, height);
             this.sizeX = width * TILE_DIMENSION_PIXELS;
             this.sizeY = height * TILE_DIMENSION_PIXELS;
-            this.startDrawX = (Graphics.Current().Device.Viewport.Width / 2) - (this.sizeX / 2);
-            this.startDrawY = (Graphics.Current().Device.Viewport.Height / 2) - (this.sizeY / 2);
-            Debugger.Current().CurrentWorld = this;
+            this.startDrawX = (Graphics.Current.Device.Viewport.Width / 2) - (this.sizeX / 2);
+            this.startDrawY = (Graphics.Current.Device.Viewport.Height / 2) - (this.sizeY / 2);
+            Debugger.Current.CurrentWorld = this;
         }
-        public World(Level level)
+        public void InitWorld(Level level)
         {
             this.RoadTiles = new List<Tile>();
             this.SpawnTiles = new List<Tile>();
@@ -49,9 +72,9 @@ namespace AemonsNookMono.GameWorld
             this.LoadLevel(level);
             this.sizeX = level.WIDTH * TILE_DIMENSION_PIXELS;
             this.sizeY = level.HEIGHT * TILE_DIMENSION_PIXELS;
-            this.startDrawX = (Graphics.Current().Device.Viewport.Width / 2) - (this.sizeX / 2);
-            this.startDrawY = (Graphics.Current().Device.Viewport.Height / 2) - (this.sizeY / 2);
-            Debugger.Current().CurrentWorld = this;
+            this.startDrawX = (Graphics.Current.Device.Viewport.Width / 2) - (this.sizeX / 2);
+            this.startDrawY = (Graphics.Current.Device.Viewport.Height / 2) - (this.sizeY / 2);
+            Debugger.Current.CurrentWorld = this;
         }
         #endregion
 
@@ -60,6 +83,15 @@ namespace AemonsNookMono.GameWorld
         {
             if (x < 0 || y < 0 || x > this.Width || y > this.Height) { throw new Exception("Attempt to retrieve Tile out of bounds!"); }
             return this.Tiles[y, x];
+        }
+        public Tile TileAtPixel(int pixelX, int pixelY)
+        {
+            if (pixelX < this.startDrawX || pixelY < this.startDrawY || pixelX > this.startDrawX + this.sizeX || pixelY > this.startDrawY + this.sizeY) { return null; }
+            int relativeX = pixelX - this.startDrawX;
+            int relativeY = pixelY - this.startDrawY;
+            int tileX = relativeX / TILE_DIMENSION_PIXELS;
+            int tileY = relativeY / TILE_DIMENSION_PIXELS;
+            return TileAt(tileX, tileY);
         }
         public Tile RetrieveRandomTile()
         {
@@ -70,8 +102,8 @@ namespace AemonsNookMono.GameWorld
         }
         public void Draw()
         {
-            Graphics.Current().SpriteB.Begin();
-            Graphics.Current().GraphicsDM.GraphicsDevice.Clear(Color.Black);
+            Graphics.Current.SpriteB.Begin();
+            Graphics.Current.GraphicsDM.GraphicsDevice.Clear(Color.Black);
 
             for (int row = 0; row < this.Height; row++)
             {
@@ -81,7 +113,7 @@ namespace AemonsNookMono.GameWorld
                 }
             }
             this.Resources.Draw(this.startDrawX, this.startDrawY);
-            Graphics.Current().SpriteB.End();
+            Graphics.Current.SpriteB.End();
         }
         #endregion
 
@@ -159,8 +191,8 @@ namespace AemonsNookMono.GameWorld
             this.initTiles(level.WIDTH, level.HEIGHT);
             this.sizeX = level.WIDTH * TILE_DIMENSION_PIXELS;
             this.sizeY = level.HEIGHT * TILE_DIMENSION_PIXELS;
-            this.startDrawX = (Graphics.Current().Device.Viewport.Width / 2) - (this.sizeX / 2);
-            this.startDrawY = (Graphics.Current().Device.Viewport.Height / 2) - (this.sizeY / 2);
+            this.startDrawX = (Graphics.Current.Device.Viewport.Width / 2) - (this.sizeX / 2);
+            this.startDrawY = (Graphics.Current.Device.Viewport.Height / 2) - (this.sizeY / 2);
 
             this.SetTileNeighbors();
 

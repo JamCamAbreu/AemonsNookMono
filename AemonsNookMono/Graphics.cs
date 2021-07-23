@@ -12,19 +12,22 @@ namespace AemonsNookMono
         private static Graphics instance;
         private static object _lock = new object();
         private Graphics() { }
-        public static Graphics Current()
+        public static Graphics Current
         {
-            if (instance == null)
+            get
             {
-                lock (_lock)
+                if (instance == null)
                 {
-                    if (instance == null)
+                    lock (_lock)
                     {
-                        instance = new Graphics();
+                        if (instance == null)
+                        {
+                            instance = new Graphics();
+                        }
                     }
                 }
+                return instance;
             }
-            return instance;
         }
         #endregion
 

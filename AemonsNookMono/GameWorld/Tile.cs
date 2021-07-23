@@ -104,40 +104,40 @@ namespace AemonsNookMono.GameWorld
             switch (this.Type)
             {
                 case Tile.TileType.Grass:
-                    Graphics.Current().SpriteB.Draw(Graphics.Current().SpritesByName["grass-a"], pos, Color.White);
+                    Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName["grass-a"], pos, Color.White);
                     break;
 
                 case Tile.TileType.Dirt:
                     // Underneath:
-                    Graphics.Current().SpriteB.Draw(Graphics.Current().SpritesByName["grass-a"], pos, Color.White);
+                    Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName["grass-a"], pos, Color.White);
 
                     spritename = $"dirt-{Tile.ShapeToString(this.Shape)}";
-                    Graphics.Current().SpriteB.Draw(Graphics.Current().SpritesByName[spritename], pos, Color.White);
+                    Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName[spritename], pos, Color.White);
                     break;
 
                 case Tile.TileType.Water:
-                    Graphics.Current().SpriteB.Draw(Graphics.Current().SpritesByName["grass-a"], pos, Color.White);
+                    Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName["grass-a"], pos, Color.White);
 
                     // Underneath:
                     spritename = $"dirt-{Tile.ShapeToString(this.Shape)}";
-                    Graphics.Current().SpriteB.Draw(Graphics.Current().SpritesByName[spritename], pos, Color.White);
+                    Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName[spritename], pos, Color.White);
 
                     spritename = $"water-{Tile.ShapeToString(this.Shape)}";
-                    Graphics.Current().SpriteB.Draw(Graphics.Current().SpritesByName[spritename], pos, Color.White);
+                    Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName[spritename], pos, Color.White);
                     break;
 
                 case TileType.Tree:
-                    Graphics.Current().SpriteB.Draw(Graphics.Current().SpritesByName["grass-a"], pos, Color.White);
+                    Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName["grass-a"], pos, Color.White);
                     break;
 
                 case TileType.Stone:
-                    Graphics.Current().SpriteB.Draw(Graphics.Current().SpritesByName["grass-a"], pos, Color.White);
+                    Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName["grass-a"], pos, Color.White);
                     break;
 
                 default:
                     throw new Exception("Attempt to draw a tile that is not supported yet!");
             }
-            if (Debugger.Current().DrawTileShapes) { Graphics.Current().SpriteB.DrawString(Graphics.Current().Fonts["debug"], this.Shape.ToString(), pos, Color.White); }
+            if (Debugger.Current.DrawTileShapes) { Graphics.Current.SpriteB.DrawString(Graphics.Current.Fonts["debug"], this.Shape.ToString(), pos, Color.White); }
         }
         #endregion
     }

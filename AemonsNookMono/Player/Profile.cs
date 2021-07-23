@@ -24,6 +24,7 @@ namespace AemonsNookMono.Player
         #region Stats
         public double TotalTimePlayed { get; set; }
         public int TotalWoodCollected { get; set; }
+        public int TotalStoneCollected { get; set; }
         #endregion
 
         public Profile(ProfileTheme theme)
@@ -66,5 +67,7 @@ namespace AemonsNookMono.Player
                     throw new Exception("Whoops! Theme does not exist.");
             }
         }
+
+
     }
 }

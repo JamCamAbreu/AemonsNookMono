@@ -19,8 +19,8 @@ namespace AemonsNookMono.Help
         
         public void Draw()
         {
-            int xpos = Cursor.Current().LastX;
-            int ypos = Cursor.Current().LastY;
+            int xpos = Cursor.Current.LastX;
+            int ypos = Cursor.Current.LastY;
 
             #region Kill
             if (kill && transparency > 0)
@@ -33,9 +33,9 @@ namespace AemonsNookMono.Help
             }
             #endregion
 
-            Graphics.Current().SpriteB.Begin();
-            Graphics.Current().SpriteB.DrawString(Graphics.Current().Fonts["debug"], Message, new Vector2(xpos + 12, ypos + 12), Color.White);
-            Graphics.Current().SpriteB.End();
+            Graphics.Current.SpriteB.Begin();
+            Graphics.Current.SpriteB.DrawString(Graphics.Current.Fonts["debug"], Message, new Vector2(xpos + 12, ypos + 12), Color.White);
+            Graphics.Current.SpriteB.End();
 
         }
 

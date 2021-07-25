@@ -1,6 +1,7 @@
 ﻿using AemonsNookMono.GameWorld.Effects;
 using AemonsNookMono.Levels;
 using AemonsNookMono.Resources;
+using AemonsNookMono.Structures;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -48,11 +49,10 @@ namespace AemonsNookMono.GameWorld
         public List<Tile> StoneTiles { get; set; }
         public List<Tile> WaterTiles { get; set; }
         public SortedResourceList Resources { get; set; }
-        
         #endregion
 
         #region Constructors
-        public void InitWorld(Level level)
+        public void Init(Level level)
         {
             this.RoadTiles = new List<Tile>();
             this.SpawnTiles = new List<Tile>();
@@ -78,7 +78,7 @@ namespace AemonsNookMono.GameWorld
         }
         public Tile TileAtPixel(int pixelX, int pixelY)
         {
-            if (pixelX < this.StartDrawX || pixelY < this.StartDrawY || pixelX > this.StartDrawX + this.sizeX || pixelY > this.StartDrawY + this.sizeY) { return null; }
+            if (pixelX < this.StartDrawX || pixelY < this.StartDrawY || pixelX >= this.StartDrawX + this.sizeX || pixelY >= this.StartDrawY + this.sizeY) { return null; }
             int relativeX = pixelX - this.StartDrawX;
             int relativeY = pixelY - this.StartDrawY;
             int tileX = relativeX / TILE_DIMENSION_PIXELS;

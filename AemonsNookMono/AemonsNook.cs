@@ -6,6 +6,7 @@ using AemonsNookMono.GameWorld;
 using System.Linq;
 using AemonsNookMono.Levels;
 using AemonsNookMono.GameWorld.Effects;
+using AemonsNookMono.Structures;
 
 namespace AemonsNookMono
 {
@@ -30,7 +31,9 @@ namespace AemonsNookMono
             Cursor.Current.Init();
 
             this.level = new Level1();
-            World.Current.InitWorld(this.level);
+            Buildings.Current.Init();
+            World.Current.Init(this.level);
+            
 
             base.Initialize(); // do this last
         }
@@ -40,6 +43,10 @@ namespace AemonsNookMono
             Graphics.Current.SpriteB = new SpriteBatch(Graphics.Current.GraphicsDM.GraphicsDevice);
             
             Graphics.Current.SpritesByName.Add("grass-a", Content.Load<Texture2D>("World/Terrain/Grass-a"));
+
+            #region Temp
+            Graphics.Current.SpritesByName.Add("building-temp1x1", Content.Load<Texture2D>("World/Buildings/TempBuilding1x1"));
+            #endregion
 
             #region Dirt
             Graphics.Current.SpritesByName.Add("dirt-corner-bottomleft", Content.Load<Texture2D>("World/Terrain/Dirt/Dirt-Corner-BottomLeft"));
@@ -99,6 +106,12 @@ namespace AemonsNookMono
             Graphics.Current.SpritesByName.Add("sparkle-5", Content.Load<Texture2D>("World/Effects/Sparkle/sparkle5"));
             #endregion
 
+            #region Buildings
+            Graphics.Current.SpritesByName.Add("building-placement-green", Content.Load<Texture2D>("World/Buildings/TileGreen"));
+            Graphics.Current.SpritesByName.Add("building-placement-orange", Content.Load<Texture2D>("World/Buildings/TileOrange"));
+            Graphics.Current.SpritesByName.Add("building-placement-red", Content.Load<Texture2D>("World/Buildings/TileRed"));
+            #endregion
+
             Graphics.Current.Fonts.Add("debug", Content.Load<SpriteFont>("Fonts/Consolas"));
         }
 
@@ -110,13 +123,14 @@ namespace AemonsNookMono
             #region TEST
             if (Keyboard.GetState().IsKeyDown(Keys.R))
             {
-                World.Current.InitWorld(this.level);
+                World.Current.Init(this.level);
             }
             #endregion
 
             Cursor.Current.Update(gameTime);
             Debugger.Current.Update(gameTime);
             World.Current.Update(gameTime);
+            Buildings.Current.Update();
             EffectsGenerator.Current.Update();
 
             base.Update(gameTime); // Do last
@@ -125,6 +139,7 @@ namespace AemonsNookMono
         protected override void Draw(GameTime gameTime)
         {
             World.Current.Draw();
+            Buildings.Current.Draw();
             EffectsGenerator.Current.Draw();
             Debugger.Current.Draw(gameTime);
             Cursor.Current.Draw();

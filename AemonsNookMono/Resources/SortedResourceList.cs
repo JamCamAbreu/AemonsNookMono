@@ -36,11 +36,11 @@ namespace AemonsNookMono.Resources
                 }
             }
         }
-        public void Draw(int startDrawX, int startDrawY)
+        public void Draw()
         {
             foreach (Resource r in this.Sorted.Values)
             {
-                r.Draw(startDrawX, startDrawY);
+                r.Draw();
             }
         }
     }

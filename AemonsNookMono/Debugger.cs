@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using AemonsNookMono.GameWorld.Effects;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -71,6 +72,7 @@ namespace AemonsNookMono
                 {
                     debugMessages.Add($"Resource Count: {CurrentWorld.Resources.Sorted.Count}");
                 }
+                debugMessages.Add($"Temp Effects Count: {EffectsGenerator.Current.CountTotalEffects()}");
             }
             #endregion
 

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using AemonsNookMono.GameWorld;
 using System.Linq;
 using AemonsNookMono.Levels;
+using AemonsNookMono.GameWorld.Effects;
 
 namespace AemonsNookMono
 {
@@ -90,6 +91,14 @@ namespace AemonsNookMono
             Graphics.Current.SpritesByName.Add("stone-6", Content.Load<Texture2D>("World/Terrain/Stone/Stone6"));
             #endregion
 
+            #region Effects
+            Graphics.Current.SpritesByName.Add("sparkle-1", Content.Load<Texture2D>("World/Effects/Sparkle/sparkle1"));
+            Graphics.Current.SpritesByName.Add("sparkle-2", Content.Load<Texture2D>("World/Effects/Sparkle/sparkle2"));
+            Graphics.Current.SpritesByName.Add("sparkle-3", Content.Load<Texture2D>("World/Effects/Sparkle/sparkle3"));
+            Graphics.Current.SpritesByName.Add("sparkle-4", Content.Load<Texture2D>("World/Effects/Sparkle/sparkle4"));
+            Graphics.Current.SpritesByName.Add("sparkle-5", Content.Load<Texture2D>("World/Effects/Sparkle/sparkle5"));
+            #endregion
+
             Graphics.Current.Fonts.Add("debug", Content.Load<SpriteFont>("Fonts/Consolas"));
         }
 
@@ -107,6 +116,8 @@ namespace AemonsNookMono
 
             Cursor.Current.Update(gameTime);
             Debugger.Current.Update(gameTime);
+            World.Current.Update(gameTime);
+            EffectsGenerator.Current.Update();
 
             base.Update(gameTime); // Do last
         }
@@ -114,6 +125,7 @@ namespace AemonsNookMono
         protected override void Draw(GameTime gameTime)
         {
             World.Current.Draw();
+            EffectsGenerator.Current.Draw();
             Debugger.Current.Draw(gameTime);
             Cursor.Current.Draw();
             base.Draw(gameTime);

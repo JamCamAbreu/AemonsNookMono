@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using AemonsNookMono.GameWorld.Effects;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -93,13 +94,17 @@ namespace AemonsNookMono.GameWorld
             this.Type = type;
             this.IsMapEdge = false;
             this.MapEdgeId = -1;
+            this.ran = new Random();
         }
         #endregion
 
         #region Interface
-        public void Draw(int startDrawX, int startDrawY)
+        public void Update()
         {
-            Vector2 pos = new Vector2(startDrawX + RelativeX, startDrawY + RelativeY);
+        }
+        public void Draw()
+        {
+            Vector2 pos = new Vector2(World.Current.StartDrawX + RelativeX, World.Current.StartDrawY + RelativeY);
             string spritename;
             switch (this.Type)
             {
@@ -139,6 +144,10 @@ namespace AemonsNookMono.GameWorld
             }
             if (Debugger.Current.DrawTileShapes) { Graphics.Current.SpriteB.DrawString(Graphics.Current.Fonts["debug"], this.Shape.ToString(), pos, Color.White); }
         }
+        #endregion
+
+        #region Internal Properties
+        Random ran { get; set; }
         #endregion
     }
 }

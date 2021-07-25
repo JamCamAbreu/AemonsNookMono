@@ -17,6 +17,6 @@ namespace AemonsNookMono.Resources
             this.PosY = y;
             this.TileOn = tile;
         }
-        public abstract void Draw(int startDrawX, int startDrawY);
+        public abstract void Draw();
     }
 }

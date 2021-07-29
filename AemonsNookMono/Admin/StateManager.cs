@@ -1,6 +1,7 @@
 ﻿using AemonsNookMono.GameWorld;
 using AemonsNookMono.GameWorld.Effects;
 using AemonsNookMono.Levels;
+using AemonsNookMono.Menus;
 using AemonsNookMono.Structures;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -18,6 +19,7 @@ namespace AemonsNookMono.Admin
             MainMenu,
             Overworld,
             World,
+            BuildSelection,
             Pause,
             Exit
         }
@@ -28,7 +30,8 @@ namespace AemonsNookMono.Admin
         private static object _lock = new object();
         private StateManager()
         {
-            this.CurrentState = State.MainMenu;
+            this.CurrentState = State.World;
+            this.CurrentPauseMenu = null;
         }
         public static StateManager Current
         {
@@ -51,6 +54,7 @@ namespace AemonsNookMono.Admin
 
         #region Public Properties
         public State CurrentState { get; set; }
+        public PauseMenu CurrentPauseMenu { get; set; }
         #endregion
 
         #region Temp
@@ -71,22 +75,26 @@ namespace AemonsNookMono.Admin
         }
         public void Update(GameTime gameTime)
         {
-            #region TEMP
-            if (Keyboard.GetState().IsKeyDown(Keys.R))
+            if (this.CurrentState != State.Pause)
             {
-                World.Current.Init(this.level);
-            }
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-            {
-                this.CurrentState = State.Exit;
-            }
-            #endregion
+                #region TEMP
+                if (Keyboard.GetState().IsKeyDown(Keys.R))
+                {
+                    World.Current.Init(this.level);
+                }
+                if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                {
+                    this.CurrentState = State.Exit;
+                }
+                #endregion
 
-            Cursor.Current.Update(gameTime);
+                Cursor.Current.Update(gameTime);
+                World.Current.Update(gameTime);
+                Buildings.Current.Update();
+                EffectsGenerator.Current.Update();
+            }
             Debugger.Current.Update(gameTime);
-            World.Current.Update(gameTime);
-            Buildings.Current.Update();
-            EffectsGenerator.Current.Update();
+            InputManager.Current.Update();
         }
         public void Draw(GameTime gameTime)
         {

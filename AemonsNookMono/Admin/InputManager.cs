@@ -1,5 +1,6 @@
 ﻿using AemonsNookMono.GameWorld;
 using AemonsNookMono.Resources;
+using AemonsNookMono.Structures;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ namespace AemonsNookMono.Admin
         private InputManager()
         {
             this.LeftMouseWait = false;
+            this.EnterWait = false;
         }
         public static InputManager Current
         {
@@ -52,13 +54,21 @@ namespace AemonsNookMono.Admin
                 this.HandleLeftClick(mousestate.X, mousestate.Y);
             }
             if (this.LeftMouseWait && mousestate.LeftButton == ButtonState.Released) { this.LeftMouseWait = false; }
+
+            if (!this.EnterWait && Keyboard.GetState().IsKeyDown(Keys.Enter))
+            {
+                this.EnterWait = true;
+                this.HandleEnter();
+            }
+            if (this.EnterWait && Keyboard.GetState().IsKeyUp(Keys.Enter)) { this.EnterWait = false; }
         }
         #endregion
 
         #region Helper Methods
         private void HandleLeftClick(int x, int y)
         {
-            switch (StateManager.Current.CurrentState)
+            StateManager.State curState = StateManager.Current.CurrentState;
+            switch (curState)
             {
                 case StateManager.State.MainMenu:
                     // Check for buttons
@@ -68,6 +78,15 @@ namespace AemonsNookMono.Admin
                     // Check for buttons
                     // Check for Gui things
                     // Check for interactibles
+                    break;
+
+                case StateManager.State.BuildSelection:
+                    if (Buildings.Current.Selection != null)
+                    {
+                        Buildings.Current.Selection.Build();
+                        Buildings.Current.Selection = null;
+                        StateManager.Current.CurrentState = StateManager.State.World;
+                    }
                     break;
 
                 case StateManager.State.World:
@@ -93,10 +112,28 @@ namespace AemonsNookMono.Admin
                     break;
             }
         }
+        private void HandleEnter()
+        {
+            StateManager.State state = StateManager.Current.CurrentState;
+            if (state == StateManager.State.World || state == StateManager.State.BuildSelection)
+            {
+                StateManager.Current.CurrentPauseMenu = new Menus.PauseMenu(state);
+                StateManager.Current.CurrentState = StateManager.State.Pause;
+            }
+            if (state == StateManager.State.Pause)
+            {
+                if (StateManager.Current.CurrentPauseMenu != null)
+                {
+                    StateManager.Current.CurrentState = StateManager.Current.CurrentPauseMenu.OriginalState;
+                    StateManager.Current.CurrentPauseMenu = null;
+                }
+            }
+        }
         #endregion
 
         #region Internal
         private bool LeftMouseWait { get; set; }
+        private bool EnterWait { get; set; }
         #endregion
     }
 }

@@ -48,29 +48,25 @@ namespace AemonsNookMono.Structures
         }
         public void Update()
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.D1))
+            if (this.Selection == null && Keyboard.GetState().IsKeyDown(Keys.D1))
             {
                 this.Selection = new BuildingSelection(BuildingInfo.Type.STOCKPILE);
+                StateManager.Current.CurrentState = StateManager.State.BuildSelection;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.D2))
+            if (this.Selection == null && Keyboard.GetState().IsKeyDown(Keys.D2))
             {
                 this.Selection = new BuildingSelection(BuildingInfo.Type.BOOTH_FISH);
+                StateManager.Current.CurrentState = StateManager.State.BuildSelection;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.D3))
+            if (this.Selection == null && Keyboard.GetState().IsKeyDown(Keys.D3))
             {
                 this.Selection = new BuildingSelection(BuildingInfo.Type.BOOTH_GEMS);
+                StateManager.Current.CurrentState = StateManager.State.BuildSelection;
             }
-
             if (this.Selection != null)
             {
                 this.Selection.Update();
-                if (Mouse.GetState().LeftButton == ButtonState.Pressed) // Todo Move this to input manager
-                {
-                    this.Selection.Build();
-                    this.Selection = null;
-                }
             }
-
             foreach (Building b in this.AllBuildings)
             {
                 b.Update();

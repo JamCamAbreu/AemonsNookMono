@@ -22,7 +22,7 @@ namespace AemonsNookMono
 
         protected override void Initialize()
         {
-            Graphics.Current.Init(this.GraphicsDevice, true);
+            Graphics.Current.Init(this.GraphicsDevice, false);
             StateManager.Current.Init();
 
             base.Initialize(); // do this last

@@ -80,6 +80,10 @@ namespace AemonsNookMono.Admin
             }
             #endregion
 
+            #region State Manager
+            debugMessages.Add($"Game State: {StateManager.Current.CurrentState}");
+            #endregion
+
             debugMessages.Add($"--------------------------------");
 
             int maxLength = 0;

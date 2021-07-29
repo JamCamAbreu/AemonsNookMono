@@ -27,10 +27,10 @@ namespace AemonsNookMono.Structures
         public void Draw()
         {
             Graphics.Current.SpriteB.Draw(
-                Graphics.Current.SpritesByName["building-placement-green"], 
+                Graphics.Current.SpritesByName["building-placement-green"],
                 new Vector2(
-                    World.Current.StartDrawX + this.OriginTile.RelativeX + (this.RelativeX * World.TILE_DIMENSION_PIXELS), 
-                    World.Current.StartDrawY + this.OriginTile.RelativeY + (this.RelativeY * World.TILE_DIMENSION_PIXELS)), 
+                    World.Current.StartDrawX + this.OriginTile.RelativeX + (this.RelativeX * World.TILE_DIMENSION_PIXELS),
+                    World.Current.StartDrawY + this.OriginTile.RelativeY + (this.RelativeY * World.TILE_DIMENSION_PIXELS)),
                 Color.White);
         }
         #endregion

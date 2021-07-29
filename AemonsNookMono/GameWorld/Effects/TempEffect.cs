@@ -42,12 +42,6 @@ namespace AemonsNookMono.GameWorld.Effects
             {
                 this.Dead = true;
             }
-            #endregion
-        }
-
-        public virtual void Draw()
-        {
-            Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName[$"{this.spriteBaseName}-{this.curFrame}"], new Vector2(World.Current.StartDrawX + xpos, World.Current.StartDrawY + ypos), Color.White);
 
             this.spriteAlarm--;
             if (this.spriteAlarm <= 0)
@@ -55,6 +49,12 @@ namespace AemonsNookMono.GameWorld.Effects
                 this.IncrementFrame();
                 this.spriteAlarm = this.speed;
             }
+            #endregion
+        }
+
+        public virtual void Draw()
+        {
+            Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName[$"{this.spriteBaseName}-{this.curFrame}"], new Vector2(World.Current.StartDrawX + xpos, World.Current.StartDrawY + ypos), Color.White);
         }
         #endregion
 

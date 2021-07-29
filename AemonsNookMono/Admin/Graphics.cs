@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AemonsNookMono
+namespace AemonsNookMono.Admin
 {
     public sealed class Graphics
     {

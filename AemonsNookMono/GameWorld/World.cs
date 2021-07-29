@@ -2,6 +2,7 @@
 using AemonsNookMono.Levels;
 using AemonsNookMono.Resources;
 using AemonsNookMono.Structures;
+using AemonsNookMono.Admin;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -71,6 +72,11 @@ namespace AemonsNookMono.GameWorld
         #endregion
 
         #region Interface
+        public bool InsideBounds(int pixelX, int pixelY)
+        {
+            if (pixelX < this.StartDrawX || pixelY < this.StartDrawY || pixelX >= this.StartDrawX + this.sizeX || pixelY >= this.StartDrawY + this.sizeY) { return false; }
+            return true;
+        }
         public Tile TileAt(int x, int y)
         {
             if (x < 0 || y < 0 || x > this.Width || y > this.Height) { throw new Exception("Attempt to retrieve Tile out of bounds!"); }
@@ -78,7 +84,7 @@ namespace AemonsNookMono.GameWorld
         }
         public Tile TileAtPixel(int pixelX, int pixelY)
         {
-            if (pixelX < this.StartDrawX || pixelY < this.StartDrawY || pixelX >= this.StartDrawX + this.sizeX || pixelY >= this.StartDrawY + this.sizeY) { return null; }
+            if (!this.InsideBounds(pixelX, pixelY)) { return null; }
             int relativeX = pixelX - this.StartDrawX;
             int relativeY = pixelY - this.StartDrawY;
             int tileX = relativeX / TILE_DIMENSION_PIXELS;
@@ -269,6 +275,7 @@ namespace AemonsNookMono.GameWorld
                     offsetY = ran.Next(-mid * 2 + pad, -pad);
                     Tree t = new Tree(tile.RelativeX + offsetX, tile.RelativeY + offsetY, tile);
                     this.Resources.Add(t);
+                    tile.Resources.Add(t);
                 }
             }
         }
@@ -288,6 +295,7 @@ namespace AemonsNookMono.GameWorld
                     offsetY = ran.Next(-mid + pad, mid * 2 - pad);
                     Stone s = new Stone(tile.RelativeX + offsetX, tile.RelativeY + offsetY, tile);
                     this.Resources.Add(s);
+                    tile.Resources.Add(s);
                 }
             }
         }

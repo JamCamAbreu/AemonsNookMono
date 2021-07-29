@@ -7,16 +7,12 @@ using System.Linq;
 using AemonsNookMono.Levels;
 using AemonsNookMono.GameWorld.Effects;
 using AemonsNookMono.Structures;
+using AemonsNookMono.Admin;
 
 namespace AemonsNookMono
 {
     public class AemonsNook : Game
     {
-
-        #region Temp
-        public Level level { get; set; }
-        #endregion
-
         public AemonsNook()
         {
             Graphics.Current.GraphicsDM = new GraphicsDeviceManager(this);
@@ -26,14 +22,8 @@ namespace AemonsNookMono
 
         protected override void Initialize()
         {
-            Graphics.Current.Init(this.GraphicsDevice, false);
-            Debugger.Current.Init();
-            Cursor.Current.Init();
-
-            this.level = new Level1();
-            Buildings.Current.Init();
-            World.Current.Init(this.level);
-            
+            Graphics.Current.Init(this.GraphicsDevice, true);
+            StateManager.Current.Init();
 
             base.Initialize(); // do this last
         }
@@ -106,10 +96,22 @@ namespace AemonsNookMono
             Graphics.Current.SpritesByName.Add("sparkle-5", Content.Load<Texture2D>("World/Effects/Sparkle/sparkle5"));
             #endregion
 
+            #region Decoration
+            Graphics.Current.SpritesByName.Add("decoration-flowers-1", Content.Load<Texture2D>("World/Terrain/Decoration/flowers-1"));
+            Graphics.Current.SpritesByName.Add("decoration-flowers-2", Content.Load<Texture2D>("World/Terrain/Decoration/flowers-2"));
+            Graphics.Current.SpritesByName.Add("decoration-flowers-3", Content.Load<Texture2D>("World/Terrain/Decoration/flowers-3"));
+            Graphics.Current.SpritesByName.Add("decoration-flowers-4", Content.Load<Texture2D>("World/Terrain/Decoration/flowers-4"));
+            #endregion
+
             #region Buildings
             Graphics.Current.SpritesByName.Add("building-placement-green", Content.Load<Texture2D>("World/Buildings/TileGreen"));
             Graphics.Current.SpritesByName.Add("building-placement-orange", Content.Load<Texture2D>("World/Buildings/TileOrange"));
             Graphics.Current.SpritesByName.Add("building-placement-red", Content.Load<Texture2D>("World/Buildings/TileRed"));
+
+            Graphics.Current.SpritesByName.Add("building-booth-fish", Content.Load<Texture2D>("World/Buildings/booth_fish"));
+            Graphics.Current.SpritesByName.Add("building-booth-jewels", Content.Load<Texture2D>("World/Buildings/Booth_Jewels"));
+            Graphics.Current.SpritesByName.Add("building-booth-produce", Content.Load<Texture2D>("World/Buildings/booth_produce"));
+            Graphics.Current.SpritesByName.Add("building-booth-seeds", Content.Load<Texture2D>("World/Buildings/Booth_Seeds"));
             #endregion
 
             Graphics.Current.Fonts.Add("debug", Content.Load<SpriteFont>("Fonts/Consolas"));
@@ -117,33 +119,19 @@ namespace AemonsNookMono
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            StateManager.Current.Update(gameTime);
 
-            #region TEST
-            if (Keyboard.GetState().IsKeyDown(Keys.R))
+            if (StateManager.Current.CurrentState == StateManager.State.Exit)
             {
-                World.Current.Init(this.level);
+                Exit();
             }
-            #endregion
-
-            Cursor.Current.Update(gameTime);
-            Debugger.Current.Update(gameTime);
-            World.Current.Update(gameTime);
-            Buildings.Current.Update();
-            EffectsGenerator.Current.Update();
 
             base.Update(gameTime); // Do last
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            World.Current.Draw();
-            Buildings.Current.Draw();
-            EffectsGenerator.Current.Draw();
-            Debugger.Current.Draw(gameTime);
-            Cursor.Current.Draw();
-            base.Draw(gameTime);
+            StateManager.Current.Draw(gameTime);
         }
     }
 

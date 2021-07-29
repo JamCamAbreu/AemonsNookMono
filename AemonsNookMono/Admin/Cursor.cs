@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 
-namespace AemonsNookMono
+namespace AemonsNookMono.Admin
 {
     public sealed class Cursor
     {

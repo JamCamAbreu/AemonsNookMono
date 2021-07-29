@@ -1,8 +1,11 @@
 ﻿using AemonsNookMono.GameWorld.Effects;
+using AemonsNookMono.Admin;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using AemonsNookMono.Resources;
 
 namespace AemonsNookMono.GameWorld
 {
@@ -82,6 +85,8 @@ namespace AemonsNookMono.GameWorld
         public Tile TileRight { get; set; }
         public Tile TileBelow { get; set; }
         public Tile TileLeft { get; set; }
+        public List<Resource> Resources { get; set; }
+        public List<TileDecoration> Decorations { get; set; }
         #endregion
 
         #region Constructors
@@ -95,6 +100,21 @@ namespace AemonsNookMono.GameWorld
             this.IsMapEdge = false;
             this.MapEdgeId = -1;
             this.ran = new Random();
+            this.Decorations = new List<TileDecoration>();
+            this.Resources = new List<Resource>();
+
+            if (type == TileType.Grass)
+            {
+                if (this.ran.Next(0, 5) == 0)
+                {
+                    int flowertype = this.ran.Next(1, 4);
+                    int pad = 8;
+                    int ranx = this.ran.Next(pad, World.TILE_DIMENSION_PIXELS - 16 - pad);
+                    int rany = this.ran.Next(pad, World.TILE_DIMENSION_PIXELS - 16 - pad);
+                    int rot = 90 * (this.ran.Next(0, 3));
+                    this.Decorations.Add(new TileDecoration($"decoration-flowers-{flowertype}", RelativeX + ranx, RelativeY + rany, rot));
+                }
+            }
         }
         #endregion
 
@@ -110,6 +130,17 @@ namespace AemonsNookMono.GameWorld
             {
                 case Tile.TileType.Grass:
                     Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName["grass-a"], pos, Color.White);
+                    if (this.Decorations.Count > 0)
+                    {
+                        foreach (TileDecoration decor in this.Decorations)
+                        {
+                            Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName[decor.Sprite], new Vector2(World.Current.StartDrawX + decor.Coord.X, World.Current.StartDrawY + decor.Coord.Y), Color.White);
+                            //Graphics.Current.SpriteB.Draw(
+                            //    Graphics.Current.SpritesByName[decor.Sprite], 
+                            //    new Vector2(pos.X + decor.RelativeX, pos.Y + decor.RelativeY), 
+                            //    null, Color.White, decor.RotationDegrees, new Vector2(0,0), 1, SpriteEffects.None, 1);
+                        }
+                    }
                     break;
 
                 case Tile.TileType.Dirt:

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Input;
+﻿using AemonsNookMono.Admin;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -51,11 +52,19 @@ namespace AemonsNookMono.Structures
             {
                 this.Selection = new BuildingSelection(BuildingInfo.Type.STOCKPILE);
             }
+            if (Keyboard.GetState().IsKeyDown(Keys.D2))
+            {
+                this.Selection = new BuildingSelection(BuildingInfo.Type.BOOTH_FISH);
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.D3))
+            {
+                this.Selection = new BuildingSelection(BuildingInfo.Type.BOOTH_GEMS);
+            }
 
             if (this.Selection != null)
             {
                 this.Selection.Update();
-                if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+                if (Mouse.GetState().LeftButton == ButtonState.Pressed) // Todo Move this to input manager
                 {
                     this.Selection.Build();
                     this.Selection = null;

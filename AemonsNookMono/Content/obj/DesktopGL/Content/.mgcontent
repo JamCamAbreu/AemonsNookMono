@@ -7,6 +7,10 @@
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/Fonts/Arial.spritefont</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/Fonts/Consolas.spritefont</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/Fonts/CourierNew.spritefont</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Buildings/booth_fish.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Buildings/Booth_Jewels.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Buildings/booth_produce.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Buildings/Booth_Seeds.png</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Buildings/TempBuilding1x1.png</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Buildings/TileGreen.png</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Buildings/TileOrange.png</File>
@@ -34,6 +38,10 @@
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Peeps/Peep-royal.png</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Peeps/Peep-white.png</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Peeps/SpeachBubble.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Decoration/flowers-1.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Decoration/flowers-2.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Decoration/flowers-3.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Decoration/flowers-4.png</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Dirt/Dirt-Corner-BottomLeft.png</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Dirt/Dirt-Corner-BottomRight.png</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Dirt/Dirt-CornerTopLeft.png</File>
@@ -73,6 +81,14 @@
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Water/Water-Vertical.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

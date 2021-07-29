@@ -1,4 +1,6 @@
-﻿using AemonsNookMono.GameWorld.Effects;
+﻿using AemonsNookMono;
+using AemonsNookMono.GameWorld;
+using AemonsNookMono.GameWorld.Effects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -6,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AemonsNookMono
+namespace AemonsNookMono.Admin
 {
     public sealed class Debugger
     {
@@ -35,7 +37,7 @@ namespace AemonsNookMono
 
         #region Public Properties
         public bool DrawTileShapes { get; set; }
-        public GameWorld.World CurrentWorld { get; set; }
+        public World CurrentWorld { get; set; }
         #endregion
 
         #region Interface
@@ -54,6 +56,8 @@ namespace AemonsNookMono
         {
             Graphics.Current.SpriteB.Begin();
             List<string> debugMessages = new List<string>();
+
+            debugMessages.Add($"----------- DEBUGGER -----------");
 
             #region FPS
             debugMessages.Add($"FPS: {this.fps.AverageFramesPerSecond}");
@@ -75,6 +79,8 @@ namespace AemonsNookMono
                 debugMessages.Add($"Temp Effects Count: {EffectsGenerator.Current.CountTotalEffects()}");
             }
             #endregion
+
+            debugMessages.Add($"--------------------------------");
 
             int maxLength = 0;
             foreach (string message in debugMessages)

@@ -250,14 +250,19 @@ namespace AemonsNookMono.Structures
             switch (t)
             {
                 case Type.STOCKPILE:
+                    return "building-temp1x1";
                 case Type.WOODSHOP:
                 case Type.TAVERN:
                 case Type.ARCHERY:
                 case Type.BLACKSMITH:
                 case Type.BOOTH_PRODUCE:
+                    return "building-booth-produce";
                 case Type.BOOTH_FISH:
+                    return "building-booth-fish";
                 case Type.BOOTH_GEMS:
+                    return "building-booth-jewels";
                 case Type.BOOTH_SEEDS:
+                    return "building-booth-seeds";
                 case Type.BUTCHER:
                 case Type.STABLES:
                 case Type.TANNER:

@@ -88,3 +88,11 @@ C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.
 C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\World\Buildings\TileGreen.xnb
 C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\World\Buildings\TileOrange.xnb
 C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\World\Buildings\TileRed.xnb
+C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\World\Buildings\booth_fish.xnb
+C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\World\Buildings\Booth_Jewels.xnb
+C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\World\Buildings\booth_produce.xnb
+C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\World\Buildings\Booth_Seeds.xnb
+C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\World\Terrain\Decoration\flowers-1.xnb
+C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\World\Terrain\Decoration\flowers-2.xnb
+C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\World\Terrain\Decoration\flowers-3.xnb
+C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\World\Terrain\Decoration\flowers-4.xnb

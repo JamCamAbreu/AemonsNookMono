@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using AemonsNookMono.Resources;
+using System.Linq;
 
 namespace AemonsNookMono.GameWorld
 {
@@ -108,11 +109,11 @@ namespace AemonsNookMono.GameWorld
                 if (this.ran.Next(0, 5) == 0)
                 {
                     int flowertype = this.ran.Next(1, 4);
-                    int pad = 8;
-                    int ranx = this.ran.Next(pad, World.TILE_DIMENSION_PIXELS - 16 - pad);
-                    int rany = this.ran.Next(pad, World.TILE_DIMENSION_PIXELS - 16 - pad);
-                    int rot = 90 * (this.ran.Next(0, 3));
-                    this.Decorations.Add(new TileDecoration($"decoration-flowers-{flowertype}", RelativeX + ranx, RelativeY + rany, rot));
+                    int pad = 6;
+                    int ranx = this.ran.Next(pad, World.TILE_DIMENSION_PIXELS/2 - pad);
+                    int rany = this.ran.Next(pad, World.TILE_DIMENSION_PIXELS/2 - pad);
+                    float rot = 0.25f * (float)ran.Next(1, 4);
+                    this.Decorations.Add(new TileDecoration($"decoration-flowers-{flowertype}", new Vector2(RelativeX + ranx, RelativeY + rany), rot, new Vector2(8, 8)));
                 }
             }
         }
@@ -121,6 +122,7 @@ namespace AemonsNookMono.GameWorld
         #region Interface
         public void Update()
         {
+            this.Resources.RemoveAll(r => r.Life <= 0);
         }
         public void Draw()
         {
@@ -134,11 +136,10 @@ namespace AemonsNookMono.GameWorld
                     {
                         foreach (TileDecoration decor in this.Decorations)
                         {
-                            Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName[decor.Sprite], new Vector2(World.Current.StartDrawX + decor.Coord.X, World.Current.StartDrawY + decor.Coord.Y), Color.White);
-                            //Graphics.Current.SpriteB.Draw(
-                            //    Graphics.Current.SpritesByName[decor.Sprite], 
-                            //    new Vector2(pos.X + decor.RelativeX, pos.Y + decor.RelativeY), 
-                            //    null, Color.White, decor.RotationDegrees, new Vector2(0,0), 1, SpriteEffects.None, 1);
+                            Graphics.Current.SpriteB.Draw(
+                                Graphics.Current.SpritesByName[decor.Sprite],
+                                World.Current.StartDraw + decor.Coord + decor.Mid,
+                                null, Color.White, decor.Rotation, decor.Mid, 1, SpriteEffects.None, 1);
                         }
                     }
                     break;
@@ -174,6 +175,10 @@ namespace AemonsNookMono.GameWorld
                     throw new Exception("Attempt to draw a tile that is not supported yet!");
             }
             if (Debugger.Current.DrawTileShapes) { Graphics.Current.SpriteB.DrawString(Graphics.Current.Fonts["debug"], this.Shape.ToString(), pos, Color.White); }
+        }
+        public void HandleLeftClick()
+        {
+            Debugger.Current.AddTempString($"You clicked on a {this.Type} tile at {this.Column},{this.Row}!");
         }
         #endregion
 

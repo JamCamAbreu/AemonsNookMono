@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AemonsNookMono.GameWorld;
+using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -9,46 +11,78 @@ namespace AemonsNookMono.Admin
         #region Enums
         public enum CollisionShape
         {
-            Box,
-            Oval
+            Rectangle,
+            Circle
         }
         #endregion
 
         #region Constructor
-        public Collision(int originX, int originY, int width, int height, CollisionShape s)
+        public Collision(CollisionShape s, int centerX, int centerY, int width, int height)
         {
-            this.OriginX = originX;
-            this.OriginY = originY;
-            this.CollisionWidth = width;
-            this.CollisionHeight = height;
+            if (s == CollisionShape.Circle && width != height)
+            {
+                throw new Exception($"Bro. Ovals are not great, let's chill with that idea and stick with perfect circles and rectangles");
+            }
+
+            this.CenterX = centerX;
+            this.CenterY = centerY;
+            this.Width = width;
+            this.Height = height;
             this.Shape = s;
         }
         #endregion
 
         #region Public Properties
         public CollisionShape Shape { get; set; }
-        public int OriginX { get; set; }
-        public int OriginY { get; set; }
-        public int CollisionWidth { get; set; }
-        public int CollisionHeight { get; set; }
+        public int CenterX { get; set; }
+        public int CenterY { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
         #endregion
 
         #region Interface
         public bool IsCollision(int x, int y)
         {
-            throw new NotImplementedException();
-            //if (this.Shape == CollisionShape.Box)
-            //{
-                // Simple four-point check
-            //}
-            //else if (this.Shape == CollisionShape.Oval)
-            //{
-                // To implement, use a line of circles (one per pixel height) and use the ovals width as the circle radius
-                // Make sure to subtract the width from the height before determining how many circles to draw (if height == width, than only one circle is needed because it IS a cirlce)
-            //}
+            if (this.Shape == CollisionShape.Rectangle)
+            {
+                if (x >= (World.Current.StartDrawX + this.CenterX - this.Width/2) && x <= (World.Current.StartDrawX + this.CenterX + this.Width/2) &&
+                    y >= (World.Current.StartDrawY + this.CenterY - this.Height/2) && y <= (World.Current.StartDrawY + this.CenterY + this.Height/2)) 
+                { return true; }
+            }
+            else if (this.Shape == CollisionShape.Circle)
+            {
+                int startX = World.Current.StartDrawX + this.CenterX;
+                int startY = World.Current.StartDrawY + this.CenterY;
 
-            //return false;
+                if (this.WithinRadius(this.Width, x, y, startX, startY)) { return true; }
+                else return false;
+            }
+
+            return false;
         }
         #endregion
+
+        #region Internal
+        private bool WithinRadius(int radius, int x1, int y1, int x2, int y2)
+        {
+            if (radius <= 1) { throw new Exception("Bro, seriously?"); }
+            int approxDist = IntSqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)); // Pythagorean brah.
+            if (radius >= approxDist) { return true; }
+            else return false;
+        }
+        private int IntSqrt(int num)
+        {
+            if (0 == num) { return 0; }  // Avoid zero divide  
+            int n = (num / 2) + 1;       // Initial estimate, never low  
+            int n1 = (n + (num / n)) / 2;
+            while (n1 < n)
+            {
+                n = n1;
+                n1 = (n + (num / n)) / 2;
+            } // end while  
+            return n;
+        }
+        #endregion
+
     }
 }

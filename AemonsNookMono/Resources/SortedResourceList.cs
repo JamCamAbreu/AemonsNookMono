@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace AemonsNookMono.Resources
@@ -34,6 +35,18 @@ namespace AemonsNookMono.Resources
                         collision++;
                     }
                 }
+            }
+        }
+        public void Update()
+        {
+            foreach (Resource r in this.Sorted.Values)
+            {
+                r.Update();
+            }
+            var removeList = this.Sorted.Where(s => s.Value.Life <= 0).Select(s => s.Key).ToList();
+            foreach (var key in removeList)
+            {
+                this.Sorted.Remove(key);
             }
         }
         public void Draw()

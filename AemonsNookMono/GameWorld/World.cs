@@ -40,6 +40,7 @@ namespace AemonsNookMono.GameWorld
         #region Public Properties
         public int StartDrawX = 0;
         public int StartDrawY = 0;
+        public Vector2 StartDraw { get { return new Vector2(StartDrawX, StartDrawY); } }
         public const int TILE_DIMENSION_PIXELS = 32;
         public Tile[,] Tiles;
         public int Width { get; set; }
@@ -119,6 +120,7 @@ namespace AemonsNookMono.GameWorld
             {
                 t.Update();
             }
+            this.Resources.Update();
         }
         #endregion
 

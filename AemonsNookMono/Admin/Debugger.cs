@@ -41,11 +41,22 @@ namespace AemonsNookMono.Admin
         #endregion
 
         #region Interface
+        public void AddTempString(string message)
+        {
+            this.tempStrings.Insert(0, message);
+            if (this.tempStrings.Count > 6)
+            {
+                this.tempStrings.RemoveRange(6, this.tempStrings.Count - 6);
+            }
+        }
         public void Init()
         {
             fps = new FrameCounter();
             screenWidthPixels = Graphics.Current.Device.Viewport.Width;
+            screenHeightPixels = Graphics.Current.Device.Viewport.Height;
             this.DrawTileShapes = false;
+            this.tempStrings = new List<string>();
+            this.maxTempStrings = 6;
         }
         public void Update(GameTime gameTime)
         {
@@ -55,8 +66,9 @@ namespace AemonsNookMono.Admin
         public void Draw(GameTime gameTime)
         {
             Graphics.Current.SpriteB.Begin();
-            List<string> debugMessages = new List<string>();
 
+            #region Top Right Panel
+            List<string> debugMessages = new List<string>();
             debugMessages.Add($"----------- DEBUGGER -----------");
 
             #region FPS
@@ -99,6 +111,21 @@ namespace AemonsNookMono.Admin
                 Graphics.Current.SpriteB.DrawString(Graphics.Current.Fonts["debug"], message, new Vector2(screenWidthPixels - requiredWidth, PAD + (ROW_HEIGHT * row)), Color.White);
                 row++;
             }
+            #endregion
+
+            #region Bottom Console
+            row = 1;
+            foreach (string message in tempStrings)
+            {
+                string msg;
+                if (row == 1) { msg = $">> {message}"; }
+                else { msg = message; }
+                float transparency = 1.0f - ((float)(row - 1) / (float)maxTempStrings);
+                Color stringcolor = Color.White * transparency;
+                Graphics.Current.SpriteB.DrawString(Graphics.Current.Fonts["debug"], msg, new Vector2(8, screenHeightPixels - PAD - (ROW_HEIGHT*row)), stringcolor);
+                row++;
+            }
+            #endregion
 
             Graphics.Current.SpriteB.End();
         }
@@ -107,8 +134,11 @@ namespace AemonsNookMono.Admin
         #region Private Properties
         private FrameCounter fps { get; set; }
         private int screenWidthPixels { get; set; }
+        private int screenHeightPixels { get; set; }
         private const int ROW_HEIGHT = 16;
         private const int PAD = 4;
+        private List<string> tempStrings { get; set; }
+        private int maxTempStrings { get; set; }
         #endregion
     }
     public class FrameCounter

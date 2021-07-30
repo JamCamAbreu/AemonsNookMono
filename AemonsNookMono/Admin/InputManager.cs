@@ -93,16 +93,25 @@ namespace AemonsNookMono.Admin
                     // todo: Help system / popups
                     // Todo: buttons
                     // Todo: Gui
+
+                    // Resources:
+                    foreach (Resource r in World.Current.Resources.Sorted.Values)
+                    {
+                        if (r.IsCollision(x, y))
+                        {
+                            r.HandleLeftClick();
+                            return;
+                        }
+                    }
+
+                    // Tiles
                     if (World.Current.InsideBounds(x, y))
                     {
                         Tile curTile = World.Current.TileAtPixel(x, y);
                         if (curTile != null)
                         {
-                            foreach (Resource r in curTile.Resources)
-                            {
-                                // Check resource's collision
-                            }
-                            // click tile (Tile.HandleInput(InputType.LeftMouse))
+                            curTile.HandleLeftClick();
+                            return;
                         }
                     }
                     break;
@@ -111,6 +120,8 @@ namespace AemonsNookMono.Admin
                     // Check for buttons
                     break;
             }
+
+            Debugger.Current.AddTempString("[Clicked Empty]");
         }
         private void HandleEnter()
         {

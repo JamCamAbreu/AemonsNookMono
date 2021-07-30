@@ -8,10 +8,11 @@ namespace AemonsNookMono.GameWorld
     public class TileDecoration
     {
         #region Constructor
-        public TileDecoration(string sprite, int x, int y, int r)
+        public TileDecoration(string sprite, Vector2 pos, float r, Vector2 spriteMidpoint)
         {
-            this.Coord = new Vector2(x, y);
-            this.RotationDegrees = r;
+            this.Coord = pos;
+            this.Mid = spriteMidpoint;
+            this.Rotation = r;
             this.Sprite = sprite;
         }
         #endregion
@@ -19,7 +20,8 @@ namespace AemonsNookMono.GameWorld
         #region Public Properties
         public string Sprite { get; set; }
         public Vector2 Coord { get; set; }
-        public int RotationDegrees { get; set; }
+        public Vector2 Mid { get; set; }
+        public float Rotation { get; set; }
         #endregion
     }
 }

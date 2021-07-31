@@ -45,16 +45,13 @@ namespace AemonsNookMono.Admin
         {
             if (this.Shape == CollisionShape.Rectangle)
             {
-                if (x >= (World.Current.StartDrawX + this.CenterX - this.Width/2) && x <= (World.Current.StartDrawX + this.CenterX + this.Width/2) &&
-                    y >= (World.Current.StartDrawY + this.CenterY - this.Height/2) && y <= (World.Current.StartDrawY + this.CenterY + this.Height/2)) 
+                if (x >= (this.CenterX - this.Width/2) && x <= (this.CenterX + this.Width/2) &&
+                    y >= (this.CenterY - this.Height/2) && y <= (this.CenterY + this.Height/2)) 
                 { return true; }
             }
             else if (this.Shape == CollisionShape.Circle)
             {
-                int startX = World.Current.StartDrawX + this.CenterX;
-                int startY = World.Current.StartDrawY + this.CenterY;
-
-                if (this.WithinRadius(this.Width, x, y, startX, startY)) { return true; }
+                if (this.WithinRadius(this.Width, x, y, this.CenterX, this.CenterY)) { return true; }
                 else return false;
             }
 

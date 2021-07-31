@@ -275,7 +275,7 @@ namespace AemonsNookMono.GameWorld
                 {
                     offsetX = ran.Next(-mid + pad, mid - pad);
                     offsetY = ran.Next(-mid * 2 + pad, -pad);
-                    Tree t = new Tree(tile.RelativeX + offsetX, tile.RelativeY + offsetY, tile);
+                    Tree t = new Tree(this.StartDrawX + tile.RelativeX + offsetX, this.StartDrawY + tile.RelativeY + offsetY, tile);
                     this.Resources.Add(t);
                     tile.Resources.Add(t);
                 }
@@ -295,7 +295,7 @@ namespace AemonsNookMono.GameWorld
                 {
                     offsetX = ran.Next(-mid + pad, mid * 2 - pad);
                     offsetY = ran.Next(-mid + pad, mid * 2 - pad);
-                    Stone s = new Stone(tile.RelativeX + offsetX, tile.RelativeY + offsetY, tile);
+                    Stone s = new Stone(this.StartDrawX + tile.RelativeX + offsetX, this.StartDrawY + tile.RelativeY + offsetY, tile);
                     this.Resources.Add(s);
                     tile.Resources.Add(s);
                 }

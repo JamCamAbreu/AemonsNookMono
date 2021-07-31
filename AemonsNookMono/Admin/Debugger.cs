@@ -3,6 +3,7 @@ using AemonsNookMono.GameWorld;
 using AemonsNookMono.GameWorld.Effects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -76,9 +77,7 @@ namespace AemonsNookMono.Admin
             #endregion
 
             #region Mouse Hover
-            debugMessages.Add($"Mouse: {Cursor.Current.LastX}, {Cursor.Current.LastY}");
-            debugMessages.Add($"MouseTm: {Cursor.Current.Timer}");
-            debugMessages.Add($"MouseTrig: " + (Cursor.Current.Triggered ? "True" : "False"));
+            debugMessages.Add($"Mouse: {Mouse.GetState().X}, {Mouse.GetState().Y}");
             #endregion
 
             #region World

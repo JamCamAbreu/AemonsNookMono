@@ -1,9 +1,11 @@
 ﻿using AemonsNookMono.GameWorld;
+using AemonsNookMono.Menus;
 using AemonsNookMono.Resources;
 using AemonsNookMono.Structures;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace AemonsNookMono.Admin
@@ -17,6 +19,12 @@ namespace AemonsNookMono.Admin
         }
         #endregion
 
+        #region Internal
+        private bool LeftMouseWait { get; set; }
+        private bool EnterWait { get; set; }
+        private bool EscapeWait { get; set; }
+        #endregion
+
         #region Singleton Implementation
         private static InputManager instance;
         private static object _lock = new object();
@@ -24,6 +32,7 @@ namespace AemonsNookMono.Admin
         {
             this.LeftMouseWait = false;
             this.EnterWait = false;
+            this.EscapeWait = false;
         }
         public static InputManager Current
         {
@@ -47,6 +56,8 @@ namespace AemonsNookMono.Admin
         #region Interface
         public void Update()
         {
+            // Todo: use function pointers or reflection to refactor this?
+            #region TODO NEEDS REFACTOR
             var mousestate = Mouse.GetState();
             if (!this.LeftMouseWait && mousestate.LeftButton == ButtonState.Pressed)
             {
@@ -61,6 +72,14 @@ namespace AemonsNookMono.Admin
                 this.HandleEnter();
             }
             if (this.EnterWait && Keyboard.GetState().IsKeyUp(Keys.Enter)) { this.EnterWait = false; }
+
+            if (!this.EscapeWait && Keyboard.GetState().IsKeyDown(Keys.Escape))
+            {
+                this.EscapeWait = true;
+                this.HandleEscape();
+            }
+            if (this.EscapeWait && Keyboard.GetState().IsKeyUp(Keys.Escape)) { this.EscapeWait = false; }
+            #endregion
         }
         #endregion
 
@@ -117,7 +136,34 @@ namespace AemonsNookMono.Admin
                     break;
 
                 case StateManager.State.Pause:
-                    // Check for buttons
+                    if (MenuManager.Current.Top != null && MenuManager.Current.Top is PauseMenu)
+                    {
+                        PauseMenu pmenu = MenuManager.Current.Top as PauseMenu; 
+                        if (pmenu != null)
+                        {
+                            if (pmenu.Buttons[0].MyCollision.IsCollision(x, y))
+                            {
+                                StateManager.Current.CurrentState = pmenu.OriginalState;
+                                MenuManager.Current.CloseTop();
+                                return;
+                            }
+                            else if (pmenu.Buttons[1].MyCollision.IsCollision(x, y))
+                            {
+                                Debugger.Current.AddTempString($"You clicked on the {pmenu.Buttons[1].Name} button!");
+                                return;
+                            }
+                            else if (pmenu.Buttons[2].MyCollision.IsCollision(x, y))
+                            {
+                                Debugger.Current.AddTempString($"You clicked on the {pmenu.Buttons[2].Name} button!");
+                                return;
+                            }
+                            else if (pmenu.Buttons[3].MyCollision.IsCollision(x, y))
+                            {
+                                StateManager.Current.CurrentState = StateManager.State.Exit;
+                                return;
+                            }
+                        }
+                    }
                     break;
             }
 
@@ -128,23 +174,41 @@ namespace AemonsNookMono.Admin
             StateManager.State state = StateManager.Current.CurrentState;
             if (state == StateManager.State.World || state == StateManager.State.BuildSelection)
             {
-                StateManager.Current.CurrentPauseMenu = new Menus.PauseMenu(state);
                 StateManager.Current.CurrentState = StateManager.State.Pause;
+                MenuManager.Current.AddMenu(new PauseMenu(state));
+
             }
             if (state == StateManager.State.Pause)
             {
-                if (StateManager.Current.CurrentPauseMenu != null)
+
+                if (MenuManager.Current.Top != null && MenuManager.Current.Top is PauseMenu)
                 {
-                    StateManager.Current.CurrentState = StateManager.Current.CurrentPauseMenu.OriginalState;
-                    StateManager.Current.CurrentPauseMenu = null;
+                    StateManager.Current.CurrentState = (MenuManager.Current.Top as PauseMenu).OriginalState;
+                    MenuManager.Current.CloseTop();
+                }
+            }
+        }
+        private void HandleEscape()
+        {
+            StateManager.State state = StateManager.Current.CurrentState;
+            if (state == StateManager.State.World || state == StateManager.State.BuildSelection)
+            {
+                StateManager.Current.CurrentState = StateManager.State.Pause;
+                MenuManager.Current.AddMenu(new PauseMenu(state));
+
+            }
+            if (state == StateManager.State.Pause)
+            {
+
+                if (MenuManager.Current.Top != null && MenuManager.Current.Top is PauseMenu)
+                {
+                    StateManager.Current.CurrentState = (MenuManager.Current.Top as PauseMenu).OriginalState;
+                    MenuManager.Current.CloseTop();
                 }
             }
         }
         #endregion
 
-        #region Internal
-        private bool LeftMouseWait { get; set; }
-        private bool EnterWait { get; set; }
-        #endregion
+
     }
 }

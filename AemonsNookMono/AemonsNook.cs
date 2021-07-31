@@ -115,6 +115,8 @@ namespace AemonsNookMono
             #endregion
 
             Graphics.Current.Fonts.Add("debug", Content.Load<SpriteFont>("Fonts/Consolas"));
+            Graphics.Current.Fonts.Add("arial", Content.Load<SpriteFont>("Fonts/Arial"));
+            Graphics.Current.Fonts.Add("couriernew", Content.Load<SpriteFont>("Fonts/CourierNew"));
         }
 
         protected override void Update(GameTime gameTime)

@@ -31,7 +31,6 @@ namespace AemonsNookMono.Admin
         private StateManager()
         {
             this.CurrentState = State.World;
-            this.CurrentPauseMenu = null;
         }
         public static StateManager Current
         {
@@ -54,7 +53,6 @@ namespace AemonsNookMono.Admin
 
         #region Public Properties
         public State CurrentState { get; set; }
-        public PauseMenu CurrentPauseMenu { get; set; }
         #endregion
 
         #region Temp
@@ -81,18 +79,15 @@ namespace AemonsNookMono.Admin
                 if (Keyboard.GetState().IsKeyDown(Keys.R))
                 {
                     World.Current.Init(this.level);
-                }
-                if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                {
-                    this.CurrentState = State.Exit;
-                }
+                }               
                 #endregion
-
-                Cursor.Current.Update(gameTime);
+                
                 World.Current.Update(gameTime);
                 Buildings.Current.Update();
                 EffectsGenerator.Current.Update();
+                Cursor.Current.Update(gameTime);
             }
+            MenuManager.Current.Update();
             Debugger.Current.Update(gameTime);
             InputManager.Current.Update();
         }
@@ -101,8 +96,10 @@ namespace AemonsNookMono.Admin
             World.Current.Draw();
             Buildings.Current.Draw();
             EffectsGenerator.Current.Draw();
-            Debugger.Current.Draw(gameTime);
             Cursor.Current.Draw();
+            MenuManager.Current.Draw();
+            Debugger.Current.Draw(gameTime);
+            
         }
         #endregion
 

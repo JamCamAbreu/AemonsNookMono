@@ -1,4 +1,5 @@
 ﻿using AemonsNookMono.GameWorld;
+using AemonsNookMono.Resources;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -37,7 +38,7 @@ namespace AemonsNookMono.Admin
         public int Timer;
         public int LastX;
         public int LastY;
-        public int HoverTriggerFrames = 27;
+        public int HoverTriggerFrames = 25;
         public bool Triggered;
         public Help.HoverBox CurrentHoverBox { get; set; }
         #endregion
@@ -91,14 +92,25 @@ namespace AemonsNookMono.Admin
         {
             this.Triggered = true;
 
+            foreach (Resource r in World.Current.Resources.Sorted.Values)
+            {
+                if (r.IsCollision(this.LastX, this.LastY))
+                {
+                    this.CurrentHoverBox = new Help.HoverBox($"{r.Type}");
+                    return;
+                }
+            }
+
             Tile t = World.Current.TileAtPixel(this.LastX, this.LastY);
             if (t != null)
             {
-                this.CurrentHoverBox = new Help.HoverBox($"Tile ({t.Column}, {t.Row})\nType: {t.Type}");
+                this.CurrentHoverBox = new Help.HoverBox($"{t.Type} Tile");
+                return;
             }
             else
             {
                 this.CurrentHoverBox = new Help.HoverBox("Nothing here.");
+                return;
             }
         }
         #endregion

@@ -9,21 +9,25 @@ namespace AemonsNookMono.Menus
     public class PauseMenu : Menu
     {
         #region Constructors
-        public PauseMenu(StateManager.State originalState) : base()
+        public PauseMenu(StateManager.State originalState) 
+            : base("Pause",
+                  (int)((float)Graphics.Current.ScreenHeight * 0.6f), 
+                  (int)((float)Graphics.Current.ScreenWidth * 0.4f),
+                  Graphics.Current.ScreenMidX,
+                  Graphics.Current.ScreenMidY,
+                  ((int)((float)Graphics.Current.ScreenHeight * 0.6f)/16),
+                  (int)((float)Graphics.Current.ScreenWidth * 0.4f)/16,
+                  Color.SaddleBrown,
+                  string.Empty)
         {
             this.OriginalState = originalState;
-            this.Height = (int)((float)Graphics.Current.ScreenHeight * 0.6f);
-            this.Width = Graphics.Current.ScreenWidth / 3;
-            this.backPanel = new Panel(this.Width, this.Height, Color.Black, Color.SaddleBrown, 0.9f);
-            this.title = "Pause Menu";
 
-            this.InnerPad = this.Height / 16;
-            this.TopY = Graphics.Current.ScreenMidY - this.Height / 2;
+            this.AddDynamicButton("Continue", null, Color.Red);
+            this.AddDynamicButton("Profile", null, Color.Blue);
+            this.AddDynamicButton("Options", null, Color.Purple);
+            this.AddDynamicButton("Save / Exit Level", null, Color.Green);
 
-            this.AddButton("Continue", null, Color.Red);
-            this.AddButton("Profile", null, Color.Blue);
-            this.AddButton("Options", null, Color.Purple);
-            this.AddButton("Save / Exit Level", null, Color.Green);
+            Cursor.Current.CurrentHoverBox = null;
         }
         #endregion
 
@@ -32,27 +36,52 @@ namespace AemonsNookMono.Menus
         #endregion
 
         #region Interface
-
         public override void Draw(bool isTop)
         {
-            Graphics.Current.SpriteB.Begin();
-            int titlex = Graphics.Current.CenterStringX(Graphics.Current.ScreenMidX, this.title, "couriernew");
-            int titley = this.TopY - 32;
-            Graphics.Current.SpriteB.DrawString(Graphics.Current.Fonts["couriernew"], this.title, new Vector2(titlex, titley), Color.White);
-            Graphics.Current.SpriteB.End();
-
-            this.backPanel.Draw(Graphics.Current.ScreenMidX, Graphics.Current.ScreenMidY);
-
-            foreach (Button b in this.Buttons)
+            if (isTop)
             {
-                b.Draw();
+                base.Draw(isTop);
             }
         }
-        #endregion
 
-        #region Internal
-        protected Panel backPanel { get; set; }
-        protected string title { get; set; }
+        public override bool HandleLeftClick(int x, int y)
+        {
+            Button clicked = this.CheckButtonCollisions(x, y);
+            if (clicked != null)
+            {
+                Debugger.Current.AddTempString($"You clicked on the {clicked.Name} button!");
+                switch (clicked.Name)
+                {
+                    case "Continue":
+                        StateManager.Current.CurrentState = this.OriginalState;
+                        MenuManager.Current.CloseTop();
+                        return true;
+
+                    case "Profile":
+                        Menu profileMenu = new Menu("Profile", 400, 400, Graphics.Current.ScreenMidX, Graphics.Current.ScreenMidY, 16, 16, Color.Purple, string.Empty);
+                        profileMenu.AddDynamicButton("Option 1", null, Color.DarkOliveGreen);
+                        profileMenu.AddDynamicButton("Option 2", null, Color.DarkOliveGreen);
+                        profileMenu.AddDynamicButton("Option 3", null, Color.DarkOliveGreen);
+                        profileMenu.AddDynamicButton("Option 4", null, Color.DarkOliveGreen);
+                        profileMenu.AddDynamicButton("Option 5", null, Color.DarkOliveGreen);
+                        profileMenu.AddDynamicButton("Back", null, Color.DarkOliveGreen);
+                        MenuManager.Current.AddMenu(profileMenu);
+                        return true;
+
+                    case "Options":
+                        MenuManager.Current.AddMenu(new PauseOptionsMenu());
+                        return true;
+
+                    case "Save / Exit Level":
+                        StateManager.Current.CurrentState = StateManager.State.Exit;
+                        return true;
+
+                    default:
+                        break;
+                }
+            }
+            return base.HandleLeftClick(x, y);
+        }
         #endregion
     }
 }

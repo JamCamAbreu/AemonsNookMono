@@ -114,6 +114,14 @@ namespace AemonsNookMono
             Graphics.Current.SpritesByName.Add("building-booth-seeds", Content.Load<Texture2D>("World/Buildings/Booth_Seeds"));
             #endregion
 
+            #region Menus
+            Graphics.Current.SpritesByName.Add("menu-bullet-selected", Content.Load<Texture2D>("Menus/BulletSelected"));
+            Graphics.Current.SpritesByName.Add("menu-bullet-selected-hover", Content.Load<Texture2D>("Menus/BulletSelectedHover"));
+            Graphics.Current.SpritesByName.Add("menu-bullet-unselected", Content.Load<Texture2D>("Menus/BulletUnselected"));
+            Graphics.Current.SpritesByName.Add("menu-bullet-unselected-hover", Content.Load<Texture2D>("Menus/BulletUnselectedHover"));
+            Graphics.Current.SpritesByName.Add("menu-bullet-unselected-click", Content.Load<Texture2D>("Menus/BulletUnselectedClick"));
+            #endregion
+
             Graphics.Current.Fonts.Add("debug", Content.Load<SpriteFont>("Fonts/Consolas"));
             Graphics.Current.Fonts.Add("arial", Content.Load<SpriteFont>("Fonts/Arial"));
             Graphics.Current.Fonts.Add("couriernew", Content.Load<SpriteFont>("Fonts/CourierNew"));

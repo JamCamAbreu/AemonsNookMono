@@ -8,7 +8,7 @@ namespace AemonsNookMono.Menus
     {
         public ButtonSprite(string spriteNormal, string spriteHover, string spriteClick)
         {
-            if (!string.IsNullOrEmpty(spriteNormal) || !string.IsNullOrEmpty(spriteHover) || !string.IsNullOrEmpty(spriteClick))
+            if (string.IsNullOrEmpty(spriteNormal) || string.IsNullOrEmpty(spriteHover) || string.IsNullOrEmpty(spriteClick))
             {
                 throw new Exception("Misuse of Button Sprite!");
             }

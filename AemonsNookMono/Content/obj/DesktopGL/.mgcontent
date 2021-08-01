@@ -7,6 +7,11 @@
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/Fonts/Arial.spritefont</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/Fonts/Consolas.spritefont</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/Fonts/CourierNew.spritefont</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/Menus/BulletSelected.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/Menus/BulletSelectedHover.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/Menus/BulletUnselected.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/Menus/BulletUnselectedClick.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/Menus/BulletUnselectedHover.png</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Buildings/booth_fish.png</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Buildings/Booth_Jewels.png</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Buildings/booth_produce.png</File>
@@ -81,6 +86,11 @@
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Water/Water-Vertical.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

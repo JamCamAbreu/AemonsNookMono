@@ -21,7 +21,7 @@ namespace AemonsNookMono.Admin
         {
             if (s == CollisionShape.Circle && width != height)
             {
-                throw new Exception($"Bro. Ovals are not great, let's chill with that idea and stick with perfect circles and rectangles");
+                throw new Exception($"Bro. Ovals are not great, let's chill with that idea and stick with perfect circles. Remember, opt for multiple simple collisions rather than a single complex collision");
             }
 
             this.CenterX = centerX;

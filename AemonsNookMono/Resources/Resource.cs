@@ -8,6 +8,12 @@ namespace AemonsNookMono.Resources
 {
     public abstract class Resource
     {
+        public enum ResourceType
+        {
+            Tree,
+            Stone
+        }
+        public ResourceType Type { get; set; }
         public int PosX { get; set; }
         public int PosY { get; set; }
         public Tile TileOn { get; set; }

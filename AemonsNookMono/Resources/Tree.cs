@@ -11,6 +11,8 @@ namespace AemonsNookMono.Resources
     {
         public Tree(int x, int y, Tile tile) : base(x, y, tile)
         {
+            this.Type = ResourceType.Tree;
+
             Random ran = new Random();
             this.Version = ran.Next(1, 6);
 

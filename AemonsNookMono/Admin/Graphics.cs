@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using AemonsNookMono.GameWorld;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -41,6 +42,30 @@ namespace AemonsNookMono.Admin
         public GraphicsDeviceManager GraphicsDM { get; set; }
         public SpriteBatch SpriteB { get; set; }
         public GraphicsDevice Device { get; set; }
+        private bool fullscreen { get; set; }
+        public bool FullScreen
+        {
+            get { return this.fullscreen; }
+            set
+            {
+                this.fullscreen = value;
+                if (value == true)
+                {
+                    this.GraphicsDM.PreferredBackBufferWidth = this.Device.DisplayMode.Width;
+                    this.GraphicsDM.PreferredBackBufferHeight = this.Device.DisplayMode.Height;
+                    this.GraphicsDM.IsFullScreen = true;
+                    this.GraphicsDM.ApplyChanges();
+                    World.Current.Refresh();
+                }
+                else
+                {
+                    this.GraphicsDM.PreferredBackBufferWidth = 1400;
+                    this.GraphicsDM.PreferredBackBufferHeight = 900;
+                    this.GraphicsDM.ApplyChanges();
+                    World.Current.Refresh();
+                }
+            }
+        }
         #endregion
 
         #region Interface
@@ -50,20 +75,7 @@ namespace AemonsNookMono.Admin
             this.Fonts = new Dictionary<string, SpriteFont>();
             this.Device = gd;
 
-            if (fullscreen)
-            {
-                this.GraphicsDM.PreferredBackBufferWidth = this.Device.DisplayMode.Width;
-                this.GraphicsDM.PreferredBackBufferHeight = this.Device.DisplayMode.Height;
-                this.GraphicsDM.IsFullScreen = true;
-                this.GraphicsDM.ApplyChanges();
-            }
-            else
-            {
-                this.GraphicsDM.PreferredBackBufferWidth = 1400;
-                this.GraphicsDM.PreferredBackBufferHeight = 900;
-                this.GraphicsDM.ApplyChanges();
-            }
-
+            this.FullScreen = fullscreen;
         }
         public int ScreenMidX { get { return Graphics.Current.Device.Viewport.Width / 2; } }
         public int ScreenMidY { get { return Graphics.Current.Device.Viewport.Height / 2; } }

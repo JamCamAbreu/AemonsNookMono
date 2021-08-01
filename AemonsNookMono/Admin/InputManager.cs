@@ -2,6 +2,7 @@
 using AemonsNookMono.Menus;
 using AemonsNookMono.Resources;
 using AemonsNookMono.Structures;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
@@ -141,27 +142,30 @@ namespace AemonsNookMono.Admin
                         PauseMenu pmenu = MenuManager.Current.Top as PauseMenu; 
                         if (pmenu != null)
                         {
-                            if (pmenu.Buttons[0].MyCollision.IsCollision(x, y))
+                            if (pmenu.HandleLeftClick(x, y) == true) { return; }
+                        }
+                    }
+                    if (MenuManager.Current.Top != null && MenuManager.Current.Top.MenuName == "Profile")
+                    {
+                        Menu profileMenu = MenuManager.Current.Top;
+                        Button clicked = profileMenu.CheckButtonCollisions(x, y);
+                        if (clicked != null)
+                        {
+                            Debugger.Current.AddTempString($"You clicked on the {clicked.Name} button!");
+                            if (clicked.Name == "Back")
                             {
-                                StateManager.Current.CurrentState = pmenu.OriginalState;
                                 MenuManager.Current.CloseTop();
                                 return;
                             }
-                            else if (pmenu.Buttons[1].MyCollision.IsCollision(x, y))
-                            {
-                                Debugger.Current.AddTempString($"You clicked on the {pmenu.Buttons[1].Name} button!");
-                                return;
-                            }
-                            else if (pmenu.Buttons[2].MyCollision.IsCollision(x, y))
-                            {
-                                Debugger.Current.AddTempString($"You clicked on the {pmenu.Buttons[2].Name} button!");
-                                return;
-                            }
-                            else if (pmenu.Buttons[3].MyCollision.IsCollision(x, y))
-                            {
-                                StateManager.Current.CurrentState = StateManager.State.Exit;
-                                return;
-                            }
+                            return;
+                        }
+                    }
+                    if (MenuManager.Current.Top != null && MenuManager.Current.Top.MenuName == "Options")
+                    {
+                        PauseOptionsMenu optionsMenu = MenuManager.Current.Top as PauseOptionsMenu;
+                        if (optionsMenu != null)
+                        {
+                            if (optionsMenu.HandleLeftClick(x, y) == true) { return; }
                         }
                     }
                     break;
@@ -195,7 +199,7 @@ namespace AemonsNookMono.Admin
             {
                 StateManager.Current.CurrentState = StateManager.State.Pause;
                 MenuManager.Current.AddMenu(new PauseMenu(state));
-
+                return;
             }
             if (state == StateManager.State.Pause)
             {
@@ -204,7 +208,13 @@ namespace AemonsNookMono.Admin
                 {
                     StateManager.Current.CurrentState = (MenuManager.Current.Top as PauseMenu).OriginalState;
                     MenuManager.Current.CloseTop();
+                    return;
                 }
+            }
+            if (MenuManager.Current.Top != null)
+            {
+                MenuManager.Current.Top.HandleEscape();
+                return;
             }
         }
         #endregion

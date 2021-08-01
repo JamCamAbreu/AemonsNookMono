@@ -70,6 +70,11 @@ namespace AemonsNookMono.GameWorld
             Debugger.Current.CurrentWorld = this;
             EffectsGenerator.Current.Init();
         }
+        public void Refresh()
+        {
+            this.StartDrawX = (Graphics.Current.Device.Viewport.Width / 2) - (this.sizeX / 2);
+            this.StartDrawY = (Graphics.Current.Device.Viewport.Height / 2) - (this.sizeY / 2);
+        }
         #endregion
 
         #region Interface

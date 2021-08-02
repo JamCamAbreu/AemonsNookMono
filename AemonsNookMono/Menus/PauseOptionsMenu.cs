@@ -28,21 +28,22 @@ namespace AemonsNookMono.Menus
 
             ButtonSprite bulletUnselectedSprites = new ButtonSprite("menu-bullet-unselected", "menu-bullet-unselected-hover", "menu-bullet-unselected-click");
             ButtonSprite bulletSelectedSprites = new ButtonSprite("menu-bullet-selected", "menu-bullet-selected-hover", "menu-bullet-selected-hover");
+            int spriteDim = 50;
+            int collisionDim = 18;
             if (Graphics.Current.FullScreen == true)
             {
-                this.AddStaticButton("Windowed", 50, 50, this.CenterX - (this.Width / 4) - 25, this.DynamicButtons[1].ScreenY, bulletUnselectedSprites, null, Collision.CollisionShape.Circle);
-                this.AddStaticButton("Fullscreen", 50, 50, this.CenterX + (this.Width / 4) - 25, this.DynamicButtons[1].ScreenY, bulletSelectedSprites, null, Collision.CollisionShape.Circle);
-                this.StaticButtons[0].MyTextPosition = Button.TextPosition.Above;
-                this.StaticButtons[1].MyTextPosition = Button.TextPosition.Above;
+                this.AddStaticButton("Windowed", spriteDim, spriteDim, this.CenterX - (this.Width / 4), this.DynamicButtons[1].ScreenY, bulletUnselectedSprites, null, Collision.CollisionShape.Circle);
+                this.AddStaticButton("Fullscreen", spriteDim, spriteDim, this.CenterX + (this.Width / 4), this.DynamicButtons[1].ScreenY, bulletSelectedSprites, null, Collision.CollisionShape.Circle);
             }
             else
             {
-                this.AddStaticButton("Windowed", 50, 50, this.CenterX - this.Width / 4, this.DynamicButtons[1].ScreenY, bulletSelectedSprites, null, Collision.CollisionShape.Circle);
-                this.AddStaticButton("Fullscreen", 50, 50, this.CenterX + (this.Width / 4), this.DynamicButtons[1].ScreenY, bulletUnselectedSprites, null, Collision.CollisionShape.Circle);
-                this.StaticButtons[0].MyTextPosition = Button.TextPosition.Above;
-                this.StaticButtons[1].MyTextPosition = Button.TextPosition.Above;
+                this.AddStaticButton("Windowed", spriteDim, spriteDim, this.CenterX - (this.Width / 4), this.DynamicButtons[1].ScreenY, bulletSelectedSprites, null, Collision.CollisionShape.Circle);
+                this.AddStaticButton("Fullscreen", spriteDim, spriteDim, this.CenterX + (this.Width / 4), this.DynamicButtons[1].ScreenY, bulletUnselectedSprites, null, Collision.CollisionShape.Circle);
             }
-
+            this.StaticButtons[0].MyTextPosition = Button.TextPosition.Above;
+            this.StaticButtons[1].MyTextPosition = Button.TextPosition.Above;
+            this.StaticButtons[0].MyCollision = new Collision(Collision.CollisionShape.Circle, this.CenterX - (this.Width / 4), this.DynamicButtons[1].ScreenY, collisionDim, collisionDim);
+            this.StaticButtons[1].MyCollision = new Collision(Collision.CollisionShape.Circle, this.CenterX + (this.Width / 4), this.DynamicButtons[1].ScreenY, collisionDim, collisionDim);
         }
 
         public override void Draw(bool isTop)

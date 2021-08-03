@@ -21,9 +21,9 @@ namespace AemonsNookMono.Menus
             this.CenterX = x;
             this.CenterY = y;
             this.PadHeight = padHeight;
-            this.PadWidth = padWidth; // todo start here: when drawing pad the width according to this, not height
+            this.PadWidth = padWidth;
 
-            this.BackroundColor = color;
+            this.ForegroundColor = color;
             this.Sprite = sprite;
 
             this.TopY = this.CenterY - this.Height / 2;
@@ -52,11 +52,25 @@ namespace AemonsNookMono.Menus
         public int PadWidth { get; set; }
         public int TopY { get; set; }
         public int LeftX { get; set; }
-        public Color? BackroundColor { get; set; }
+        public Color? ForegroundColor { get; set; }
         public string Sprite { get; set; }
         #endregion
 
         #region Interface
+        public virtual void InitButtons()
+        {
+            List<Button> priorDynamic = new List<Button>();
+            foreach (Button b in this.DynamicButtons)
+            {
+                priorDynamic.Add(b);
+            }
+
+            this.DynamicButtons.Clear();
+            foreach (Button b in priorDynamic)
+            {
+                this.AddDynamicButton(b.Name, b.Sprites, b.PrimaryColor);
+            }
+        }
         public void AddDynamicButton(string name, ButtonSprite sprites = null, Color? color = null)
         {
             int numButtons = this.DynamicButtons.Count + 1;
@@ -148,6 +162,18 @@ namespace AemonsNookMono.Menus
                 }
             }
         }
+        public virtual void Refresh()
+        {
+            if (this.ForegroundColor != null)
+            {
+                this.backPanel = new Panel(this.Width, this.Height, Color.Black, this.ForegroundColor, 1);
+            }
+            if (!string.IsNullOrEmpty(this.Sprite))
+            {
+                this.backPanel = null;
+            }
+            //this.InitButtons();
+        }
         public virtual void Update()
         {
 
@@ -170,7 +196,7 @@ namespace AemonsNookMono.Menus
         }
         #endregion
 
-            #region Internal
+        #region Internal
         protected Panel backPanel { get; set; }
         #endregion
     }

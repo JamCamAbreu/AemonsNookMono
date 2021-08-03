@@ -74,6 +74,14 @@ namespace AemonsNookMono.GameWorld
         {
             this.StartDrawX = (Graphics.Current.Device.Viewport.Width / 2) - (this.sizeX / 2);
             this.StartDrawY = (Graphics.Current.Device.Viewport.Height / 2) - (this.sizeY / 2);
+            if (this.Resources != null && this.Resources.Sorted != null && this.Resources.Sorted.Count > 0)
+            {
+                foreach (Resource r in this.Resources.Sorted.Values)
+                {
+                    r.PosX = this.StartDrawX + r.TileOn.RelativeX + r.TileRelativeX;
+                    r.PosY = this.StartDrawY + r.TileOn.RelativeY + r.TileRelativeY;
+                }
+            }
         }
         #endregion
 
@@ -281,6 +289,8 @@ namespace AemonsNookMono.GameWorld
                     offsetX = ran.Next(-mid + pad, mid - pad);
                     offsetY = ran.Next(-mid * 2 + pad, -pad);
                     Tree t = new Tree(this.StartDrawX + tile.RelativeX + offsetX, this.StartDrawY + tile.RelativeY + offsetY, tile);
+                    t.TileRelativeX = offsetX;
+                    t.TileRelativeY = offsetY;
                     this.Resources.Add(t);
                     tile.Resources.Add(t);
                 }
@@ -301,6 +311,8 @@ namespace AemonsNookMono.GameWorld
                     offsetX = ran.Next(-mid + pad, mid * 2 - pad);
                     offsetY = ran.Next(-mid + pad, mid * 2 - pad);
                     Stone s = new Stone(this.StartDrawX + tile.RelativeX + offsetX, this.StartDrawY + tile.RelativeY + offsetY, tile);
+                    s.TileRelativeX = offsetX;
+                    s.TileRelativeY = offsetY;
                     this.Resources.Add(s);
                     tile.Resources.Add(s);
                 }

@@ -1,5 +1,6 @@
 ﻿using AemonsNookMono.GameWorld;
 using AemonsNookMono.Menus;
+using AemonsNookMono.Player;
 using AemonsNookMono.Resources;
 using AemonsNookMono.Structures;
 using Microsoft.Xna.Framework;
@@ -157,10 +158,16 @@ namespace AemonsNookMono.Admin
                                 MenuManager.Current.CloseTop();
                                 return;
                             }
+                            if (clicked.Name == "Save")
+                            {
+                                //ProfileManager.Current.Loaded = new Profile(Profile.ProfileTheme.Bruno);
+                                //ProfileManager.Current.Loaded.TotalStoneCollected += 31;
+                                //SaveManager.Current.SaveProfile(ProfileManager.Current.Loaded);
+                            }
                             return;
                         }
                     }
-                    if (MenuManager.Current.Top != null && MenuManager.Current.Top.MenuName == "Options")
+                    if (MenuManager.Current.Top != null && MenuManager.Current.Top is PauseOptionsMenu)
                     {
                         PauseOptionsMenu optionsMenu = MenuManager.Current.Top as PauseOptionsMenu;
                         if (optionsMenu != null)

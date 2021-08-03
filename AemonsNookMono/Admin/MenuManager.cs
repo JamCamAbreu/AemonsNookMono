@@ -34,6 +34,13 @@ namespace AemonsNookMono.Admin
         #endregion
 
         #region Interface
+        public void Refresh()
+        {
+            foreach (Menu m in this.menuStack)
+            {
+                m.Refresh();
+            }
+        }
         public void AddMenu(Menu menu)
         {
             this.menuStack.Push(menu);

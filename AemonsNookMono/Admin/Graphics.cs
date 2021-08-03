@@ -53,9 +53,13 @@ namespace AemonsNookMono.Admin
                 {
                     this.GraphicsDM.PreferredBackBufferWidth = this.Device.DisplayMode.Width;
                     this.GraphicsDM.PreferredBackBufferHeight = this.Device.DisplayMode.Height;
-                    this.GraphicsDM.IsFullScreen = true;
+                    this.GraphicsDM.IsFullScreen = false;
                     this.GraphicsDM.ApplyChanges();
                     World.Current.Refresh();
+                    MenuManager.Current.Refresh();
+
+                    // Resources need to update their collisions
+                    // Menu stuff still not working 100%
                 }
                 else
                 {
@@ -63,6 +67,7 @@ namespace AemonsNookMono.Admin
                     this.GraphicsDM.PreferredBackBufferHeight = 900;
                     this.GraphicsDM.ApplyChanges();
                     World.Current.Refresh();
+                    MenuManager.Current.Refresh();
                 }
             }
         }

@@ -6,6 +6,16 @@ namespace AemonsNookMono.Player
 {
     public class Profile
     {
+        public Profile(ProfileTheme theme)
+        {
+            this.Theme = theme;
+
+            #region Zero Stats
+            TotalTimePlayed = 0;
+            TotalWoodCollected = 0;
+            TotalStoneCollected = 0;
+            #endregion
+        }
         public enum ProfileTheme
         {
         // -----------------------------------------------------------
@@ -19,55 +29,19 @@ namespace AemonsNookMono.Player
             Jade    //  brown       green       green       aqua
         }
         public ProfileTheme Theme { get; set; }
-        public string CharacterName { get; set; }
+        public string CharacterName
+        {
+            get
+            {
+                return this.Theme.ToString();
+            }
+        }
 
         #region Stats
         public double TotalTimePlayed { get; set; }
         public int TotalWoodCollected { get; set; }
         public int TotalStoneCollected { get; set; }
         #endregion
-
-        public Profile(ProfileTheme theme)
-        {
-            this.Theme = theme;
-
-            #region Zero Stats
-            TotalTimePlayed = 0;
-            TotalWoodCollected = 0;
-            #endregion
-
-            switch (theme)
-            {
-
-                case ProfileTheme.Aemon:
-                    this.CharacterName = "Aemon";
-                    break;
-
-                case ProfileTheme.Aletha:
-                    this.CharacterName = "Aletha";
-                    break;
-
-                case ProfileTheme.Jose:
-                    this.CharacterName = "Jose";
-                    break;
-
-                case ProfileTheme.Helga:
-                    this.CharacterName = "Helga";
-                    break;
-
-                case ProfileTheme.Bruno:
-                    this.CharacterName = "Bruno";
-                    break;
-
-                case ProfileTheme.Jade:
-                    this.CharacterName = "Jade";
-                    break;
-
-                default:
-                    throw new Exception("Whoops! Theme does not exist.");
-            }
-        }
-
 
     }
 }

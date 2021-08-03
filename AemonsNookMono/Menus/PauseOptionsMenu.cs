@@ -19,6 +19,12 @@ namespace AemonsNookMono.Menus
                   Color.SaddleBrown,
                   string.Empty)
         {
+            this.InitButtons();
+        }
+        public override void InitButtons()
+        {
+            this.DynamicButtons.Clear();
+            this.StaticButtons.Clear();
 
             this.AddDynamicButton("Option 1", null, Color.Blue);
             this.AddDynamicButton("");
@@ -45,7 +51,18 @@ namespace AemonsNookMono.Menus
             this.StaticButtons[0].MyCollision = new Collision(Collision.CollisionShape.Circle, this.CenterX - (this.Width / 4), this.DynamicButtons[1].ScreenY, collisionDim, collisionDim);
             this.StaticButtons[1].MyCollision = new Collision(Collision.CollisionShape.Circle, this.CenterX + (this.Width / 4), this.DynamicButtons[1].ScreenY, collisionDim, collisionDim);
         }
+        public override void Refresh()
+        {
+            this.Height = (int)((float)Graphics.Current.ScreenHeight * 0.6f);
+            this.Width = (int)((float)Graphics.Current.ScreenWidth * 0.4f);
+            this.CenterX = Graphics.Current.ScreenMidX;
+            this.CenterY = Graphics.Current.ScreenMidY;
+            this.PadHeight = ((int)((float)Graphics.Current.ScreenHeight * 0.6f) / 16);
+            this.PadWidth = (int)((float)Graphics.Current.ScreenWidth * 0.4f) / 16;
 
+            base.Refresh();
+            this.InitButtons();
+        }
         public override void Draw(bool isTop)
         {
             if (isTop)

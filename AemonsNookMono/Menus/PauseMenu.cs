@@ -21,12 +21,7 @@ namespace AemonsNookMono.Menus
                   string.Empty)
         {
             this.OriginalState = originalState;
-
-            this.AddDynamicButton("Continue", null, Color.Red);
-            this.AddDynamicButton("Profile", null, Color.Blue);
-            this.AddDynamicButton("Options", null, Color.Purple);
-            this.AddDynamicButton("Save / Exit Level", null, Color.Green);
-
+            this.InitButtons();
             Cursor.Current.CurrentHoverBox = null;
         }
         #endregion
@@ -36,6 +31,25 @@ namespace AemonsNookMono.Menus
         #endregion
 
         #region Interface
+        public override void InitButtons()
+        {
+            this.DynamicButtons.Clear();
+            this.AddDynamicButton("Continue", null, Color.Red);
+            this.AddDynamicButton("Profile", null, Color.Blue);
+            this.AddDynamicButton("Options", null, Color.Purple);
+            this.AddDynamicButton("Save / Exit Level", null, Color.Green);
+        }
+        public override void Refresh()
+        {
+            this.Height = (int)((float)Graphics.Current.ScreenHeight * 0.6f);
+            this.Width = (int)((float)Graphics.Current.ScreenWidth * 0.4f);
+            this.CenterX = Graphics.Current.ScreenMidX;
+            this.CenterY = Graphics.Current.ScreenMidY;
+            this.PadHeight = ((int)((float)Graphics.Current.ScreenHeight * 0.6f) / 16);
+            this.PadWidth = (int)((float)Graphics.Current.ScreenWidth * 0.4f) / 16;
+            base.Refresh();
+            this.InitButtons();
+        }
         public override void Draw(bool isTop)
         {
             if (isTop)
@@ -59,7 +73,7 @@ namespace AemonsNookMono.Menus
 
                     case "Profile":
                         Menu profileMenu = new Menu("Profile", 400, 400, Graphics.Current.ScreenMidX, Graphics.Current.ScreenMidY, 16, 16, Color.Purple, string.Empty);
-                        profileMenu.AddDynamicButton("Option 1", null, Color.DarkOliveGreen);
+                        profileMenu.AddDynamicButton("Save", null, Color.DarkOliveGreen);
                         profileMenu.AddDynamicButton("Option 2", null, Color.DarkOliveGreen);
                         profileMenu.AddDynamicButton("Option 3", null, Color.DarkOliveGreen);
                         profileMenu.AddDynamicButton("Option 4", null, Color.DarkOliveGreen);

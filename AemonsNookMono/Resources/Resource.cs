@@ -14,6 +14,8 @@ namespace AemonsNookMono.Resources
             Stone
         }
         public ResourceType Type { get; set; }
+        public int TileRelativeX { get; set; }
+        public int TileRelativeY { get; set; }
         public int PosX { get; set; }
         public int PosY { get; set; }
         public Tile TileOn { get; set; }

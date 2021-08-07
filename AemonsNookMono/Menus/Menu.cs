@@ -9,12 +9,12 @@ namespace AemonsNookMono.Menus
     public class Menu
     {
         #region Constructor
-        public Menu(string menuname, int width, int height, int x, int y, int padHeight, int padWidth, Color? color, string sprite)
+        public Menu(string menuname, int width, int height, int x, int y, int padWidth, int padHeight, Color? color, string sprite)
         {
             if ((padHeight * 2) >= height || (padWidth * 2) >= width) { throw new Exception("Desired padding is too large and malforms Menu."); }
 
             this.MenuName = menuname;
-            this.DynamicButtons = new List<Button>();
+            this.ButtonSpans = new List<ButtonSpan>();
             this.StaticButtons = new List<Button>();
             this.Width = width;
             this.Height = height;
@@ -42,7 +42,7 @@ namespace AemonsNookMono.Menus
 
         #region Public Properties
         public string MenuName { get; set; }
-        public List<Button> DynamicButtons { get; set; }
+        public List<ButtonSpan> ButtonSpans { get; set; }
         public List<Button> StaticButtons { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
@@ -59,52 +59,8 @@ namespace AemonsNookMono.Menus
         #region Interface
         public virtual void InitButtons()
         {
-            List<Button> priorDynamic = new List<Button>();
-            foreach (Button b in this.DynamicButtons)
-            {
-                priorDynamic.Add(b);
-            }
-
-            this.DynamicButtons.Clear();
-            foreach (Button b in priorDynamic)
-            {
-                this.AddDynamicButton(b.Name, b.Sprites, b.PrimaryColor);
-            }
         }
-        public void AddDynamicButton(string name, ButtonSprite sprites = null, Color? color = null)
-        {
-            int numButtons = this.DynamicButtons.Count + 1;
-            int rowHeight = (this.Height - this.PadHeight * 2) / ((numButtons * 2) - 1);
-            int buttonWidth = this.Width - this.PadWidth * 2;
 
-            // Prior buttons:
-            List<Button> priorButtons = new List<Button>();
-            priorButtons.AddRange(this.DynamicButtons);
-            this.DynamicButtons.Clear();
-            int rowNum = 0;
-            foreach (Button b in priorButtons)
-            {
-                if (string.IsNullOrEmpty(b.Name))
-                {
-                    this.DynamicButtons.Add(new Button(Graphics.Current.ScreenMidX, this.TopY + this.PadHeight + (rowHeight / 2) + (rowNum * rowHeight)));
-                }
-                else
-                {
-                    this.DynamicButtons.Add(new Button(b.Name, Graphics.Current.ScreenMidX, this.TopY + this.PadHeight + (rowHeight / 2) + (rowNum * rowHeight), buttonWidth, rowHeight, b.Sprites, b.PrimaryColor));
-                }
-                
-                rowNum += 2;
-            }
-
-            if (string.IsNullOrEmpty(name))
-            {
-                this.DynamicButtons.Add(new Button(Graphics.Current.ScreenMidX, this.TopY + this.PadHeight + (rowHeight / 2) + (rowNum * rowHeight)));
-            }
-            else
-            {
-                this.DynamicButtons.Add(new Button(name, Graphics.Current.ScreenMidX, this.TopY + this.PadHeight + (rowHeight / 2) + (rowNum * rowHeight), buttonWidth, rowHeight, sprites, color));
-            }
-        }
         public void AddStaticButton(string name, int width, int height, int screenX, int screenY, ButtonSprite sprites = null, Color? color = null, Collision.CollisionShape shape = Collision.CollisionShape.Rectangle)
         {
             this.StaticButtons.Add(new Button(name, screenX, screenY, width, height, sprites, color, shape));
@@ -112,13 +68,6 @@ namespace AemonsNookMono.Menus
 
         public Button CheckButtonCollisions(int x, int y)
         {
-            foreach (Button b in this.DynamicButtons)
-            {
-                if (b.MyCollision != null && b.MyCollision.IsCollision(x, y))
-                {
-                    return b;
-                }
-            }
             foreach (Button b in this.StaticButtons)
             {
                 if (b.MyCollision != null && b.MyCollision.IsCollision(x, y))
@@ -126,18 +75,34 @@ namespace AemonsNookMono.Menus
                     return b;
                 }
             }
+
+            foreach (ButtonSpan span in this.ButtonSpans)
+            {
+                Button b;
+                b = span.CheckButtonCollisions(x, y);
+                if (b != null) { return b; }
+            }
+
             return null;
         }
         public Button GetButton(string name)
         {
-            foreach (Button b in this.DynamicButtons)
-            {
-                if (b.Name == name) { return b; }
-            }
             foreach (Button b in this.StaticButtons)
             {
-                if (b.Name == name) { return b; }
+                if (b.Name == name) 
+                { 
+                    return b; 
+                }
             }
+
+            foreach (ButtonSpan span in this.ButtonSpans)
+            {
+                if (span.ContainsButton(name))
+                {
+                    return span.GetButton(name);
+                }
+            }
+
             return null;
         }
         public virtual void Draw(bool isTop)
@@ -150,15 +115,16 @@ namespace AemonsNookMono.Menus
                 Graphics.Current.SpriteB.DrawString(Graphics.Current.Fonts["couriernew"], this.MenuName, new Vector2(titlex, titley), Color.White);
                 Graphics.Current.SpriteB.End();
 
-                this.backPanel.Draw(Graphics.Current.ScreenMidX, Graphics.Current.ScreenMidY);
+                this.backPanel.Draw(this.CenterX, this.CenterY);
 
-                foreach (Button b in this.DynamicButtons)
-                {
-                    b.Draw();
-                }
                 foreach (Button b in this.StaticButtons)
                 {
                     b.Draw();
+                }
+
+                foreach (ButtonSpan span in this.ButtonSpans)
+                {
+                    span.Draw();
                 }
             }
         }
@@ -172,7 +138,6 @@ namespace AemonsNookMono.Menus
             {
                 this.backPanel = null;
             }
-            //this.InitButtons();
         }
         public virtual void Update()
         {
@@ -180,11 +145,19 @@ namespace AemonsNookMono.Menus
         }
         public virtual bool HandleLeftClick(int x, int y)
         {
-            Button backbutton = this.GetButton("Back");
-            if (backbutton != null && backbutton.MyCollision != null && backbutton.MyCollision.IsCollision(x, y))
+            Button clicked = this.CheckButtonCollisions(x, y);
+            if (clicked != null)
             {
-                MenuManager.Current.CloseTop();
-                return true;
+                switch (clicked.Name)
+                {
+                    case "Back":
+                        MenuManager.Current.CloseTop();
+                        return true;
+
+                    default:
+                        Debugger.Current.AddTempString($"Button {clicked.Name} has no defined functionality yet.");
+                        return true;
+                }
             }
 
             return false;

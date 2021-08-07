@@ -5,9 +5,9 @@ using System.Text;
 
 namespace AemonsNookMono.Menus
 {
-    public class ButtonPanel
+    public class ButtonColor
     {
-        public ButtonPanel(int width, int height, int transparency, Color primary)
+        public ButtonColor(int width, int height, int transparency, Color primary)
         {
             Color hover = Color.Lerp(primary, Color.White, 0.25f);
             Color pressed = Color.Lerp(primary, Color.Black, 0.25f);

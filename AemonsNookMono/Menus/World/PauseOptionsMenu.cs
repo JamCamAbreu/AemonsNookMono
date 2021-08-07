@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AemonsNookMono.Menus
+namespace AemonsNookMono.Menus.World
 {
     public class PauseOptionsMenu : Menu
     {
@@ -23,33 +23,36 @@ namespace AemonsNookMono.Menus
         }
         public override void InitButtons()
         {
-            this.DynamicButtons.Clear();
             this.StaticButtons.Clear();
+            this.ButtonSpans.Clear();
 
-            this.AddDynamicButton("Option 1", null, Color.Blue);
-            this.AddDynamicButton("");
-            this.AddDynamicButton("Option 3", null, Color.Blue);
-            this.AddDynamicButton("Option 4", null, Color.Blue);
-            this.AddDynamicButton("Back", null, Color.Magenta);
+            ButtonSpan buttonSpan = new ButtonSpan(this.CenterX, this.CenterY, this.Width, this.Height, this.PadWidth, this.PadHeight, ButtonSpan.SpanType.Vertical);
+            buttonSpan.AddButton("button1", Color.Black);
+            buttonSpan.AddButton("", Color.DarkGreen);
+            buttonSpan.AddButton("button2", Color.Black);
+            buttonSpan.AddButton("button3", Color.DarkGreen);
+            buttonSpan.AddButton("Back", Color.Black);
+            this.ButtonSpans.Add(buttonSpan);
 
             ButtonSprite bulletUnselectedSprites = new ButtonSprite("menu-bullet-unselected", "menu-bullet-unselected-hover", "menu-bullet-unselected-click");
             ButtonSprite bulletSelectedSprites = new ButtonSprite("menu-bullet-selected", "menu-bullet-selected-hover", "menu-bullet-selected-hover");
             int spriteDim = 50;
             int collisionDim = 18;
+            int radioYPos = buttonSpan.Buttons[1].ScreenY;
             if (Graphics.Current.FullScreen == true)
             {
-                this.AddStaticButton("Windowed", spriteDim, spriteDim, this.CenterX - (this.Width / 4), this.DynamicButtons[1].ScreenY, bulletUnselectedSprites, null, Collision.CollisionShape.Circle);
-                this.AddStaticButton("Fullscreen", spriteDim, spriteDim, this.CenterX + (this.Width / 4), this.DynamicButtons[1].ScreenY, bulletSelectedSprites, null, Collision.CollisionShape.Circle);
+                this.AddStaticButton("Windowed", spriteDim, spriteDim, this.CenterX - (this.Width / 4), radioYPos, bulletUnselectedSprites, null, Collision.CollisionShape.Circle);
+                this.AddStaticButton("Fullscreen", spriteDim, spriteDim, this.CenterX + (this.Width / 4), radioYPos, bulletSelectedSprites, null, Collision.CollisionShape.Circle);
             }
             else
             {
-                this.AddStaticButton("Windowed", spriteDim, spriteDim, this.CenterX - (this.Width / 4), this.DynamicButtons[1].ScreenY, bulletSelectedSprites, null, Collision.CollisionShape.Circle);
-                this.AddStaticButton("Fullscreen", spriteDim, spriteDim, this.CenterX + (this.Width / 4), this.DynamicButtons[1].ScreenY, bulletUnselectedSprites, null, Collision.CollisionShape.Circle);
+                this.AddStaticButton("Windowed", spriteDim, spriteDim, this.CenterX - (this.Width / 4), radioYPos, bulletSelectedSprites, null, Collision.CollisionShape.Circle);
+                this.AddStaticButton("Fullscreen", spriteDim, spriteDim, this.CenterX + (this.Width / 4), radioYPos, bulletUnselectedSprites, null, Collision.CollisionShape.Circle);
             }
-            this.StaticButtons[0].MyTextPosition = Button.TextPosition.Above;
-            this.StaticButtons[1].MyTextPosition = Button.TextPosition.Above;
-            this.StaticButtons[0].MyCollision = new Collision(Collision.CollisionShape.Circle, this.CenterX - (this.Width / 4), this.DynamicButtons[1].ScreenY, collisionDim, collisionDim);
-            this.StaticButtons[1].MyCollision = new Collision(Collision.CollisionShape.Circle, this.CenterX + (this.Width / 4), this.DynamicButtons[1].ScreenY, collisionDim, collisionDim);
+            this.StaticButtons[0].TitlePosition = Button.TextPosition.Above;
+            this.StaticButtons[1].TitlePosition = Button.TextPosition.Above;
+            this.StaticButtons[0].MyCollision = new Collision(Collision.CollisionShape.Circle, this.CenterX - (this.Width / 4), radioYPos, collisionDim, collisionDim);
+            this.StaticButtons[1].MyCollision = new Collision(Collision.CollisionShape.Circle, this.CenterX + (this.Width / 4), radioYPos, collisionDim, collisionDim);
         }
         public override void Refresh()
         {
@@ -79,13 +82,6 @@ namespace AemonsNookMono.Menus
                 Debugger.Current.AddTempString($"You clicked on the {clicked.Name} button!");
                 switch (clicked.Name)
                 {
-                    case "Back":
-                        MenuManager.Current.CloseTop();
-                        return true;
-
-                    case "Option 1":
-                        return true;
-
                     case "Windowed":
                         this.GetButton("Fullscreen").Sprites = new ButtonSprite("menu-bullet-unselected", "menu-bullet-unselected-hover", "menu-bullet-unselected-click");
                         clicked.Sprites = new ButtonSprite("menu-bullet-selected", "menu-bullet-selected-hover", "menu-bullet-selected-hover");
@@ -98,11 +94,8 @@ namespace AemonsNookMono.Menus
                         //Graphics.Current.FullScreen = true;
                         return true;
 
-                    case "Option 4":
-                        return true;
-
                     default:
-                        break;
+                        return base.HandleLeftClick(x, y);
                 }
             }
             return base.HandleLeftClick(x, y);

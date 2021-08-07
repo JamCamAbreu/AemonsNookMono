@@ -120,6 +120,19 @@ namespace AemonsNookMono
             Graphics.Current.SpritesByName.Add("menu-bullet-unselected", Content.Load<Texture2D>("Menus/BulletUnselected"));
             Graphics.Current.SpritesByName.Add("menu-bullet-unselected-hover", Content.Load<Texture2D>("Menus/BulletUnselectedHover"));
             Graphics.Current.SpritesByName.Add("menu-bullet-unselected-click", Content.Load<Texture2D>("Menus/BulletUnselectedClick"));
+
+            Graphics.Current.SpritesByName.Add("menu-world-check", Content.Load<Texture2D>("Menus/WorldMenu/buttonCheck"));
+            Graphics.Current.SpritesByName.Add("menu-world-check-hover", Content.Load<Texture2D>("Menus/WorldMenu/buttonCheckHover"));
+            Graphics.Current.SpritesByName.Add("menu-world-circle", Content.Load<Texture2D>("Menus/WorldMenu/buttonCircle"));
+            Graphics.Current.SpritesByName.Add("menu-world-circle-hover", Content.Load<Texture2D>("Menus/WorldMenu/buttonCircleHover"));
+            Graphics.Current.SpritesByName.Add("menu-world-diamond", Content.Load<Texture2D>("Menus/WorldMenu/buttonDiamond"));
+            Graphics.Current.SpritesByName.Add("menu-world-diamond-hover", Content.Load<Texture2D>("Menus/WorldMenu/buttonDiamondHover"));
+            Graphics.Current.SpritesByName.Add("menu-world-gear", Content.Load<Texture2D>("Menus/WorldMenu/buttonGear"));
+            Graphics.Current.SpritesByName.Add("menu-world-gear-hover", Content.Load<Texture2D>("Menus/WorldMenu/buttonGearHover"));
+            Graphics.Current.SpritesByName.Add("menu-world-pentagon", Content.Load<Texture2D>("Menus/WorldMenu/buttonPentagon"));
+            Graphics.Current.SpritesByName.Add("menu-world-pentagon-hover", Content.Load<Texture2D>("Menus/WorldMenu/buttonPentagonHover"));
+            Graphics.Current.SpritesByName.Add("menu-world-square", Content.Load<Texture2D>("Menus/WorldMenu/buttonSquare"));
+            Graphics.Current.SpritesByName.Add("menu-world-square-hover", Content.Load<Texture2D>("Menus/WorldMenu/buttonSquareHover"));
             #endregion
 
             Graphics.Current.Fonts.Add("debug", Content.Load<SpriteFont>("Fonts/Consolas"));

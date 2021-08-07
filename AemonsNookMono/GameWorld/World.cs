@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using AemonsNookMono.Menus;
+using AemonsNookMono.Menus.World;
 
 namespace AemonsNookMono.GameWorld
 {
@@ -69,6 +71,8 @@ namespace AemonsNookMono.GameWorld
             this.StartDrawY = (Graphics.Current.Device.Viewport.Height / 2) - (this.sizeY / 2);
             Debugger.Current.CurrentWorld = this;
             EffectsGenerator.Current.Init();
+
+            MenuManager.Current.AddMenu(new WorldMenu());
         }
         public void Refresh()
         {
@@ -125,6 +129,7 @@ namespace AemonsNookMono.GameWorld
                 }
             }
             this.Resources.Draw();
+
             Graphics.Current.SpriteB.End();
         }
         public void Update(GameTime gameTime)

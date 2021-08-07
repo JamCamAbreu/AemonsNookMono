@@ -4,19 +4,19 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AemonsNookMono.Menus
+namespace AemonsNookMono.Menus.World
 {
     public class PauseMenu : Menu
     {
         #region Constructors
         public PauseMenu(StateManager.State originalState) 
             : base("Pause",
-                  (int)((float)Graphics.Current.ScreenHeight * 0.6f), 
-                  (int)((float)Graphics.Current.ScreenWidth * 0.4f),
+                  (int)((float)Graphics.Current.ScreenWidth * 0.4f), 
+                  (int)((float)Graphics.Current.ScreenHeight * 0.6f),
                   Graphics.Current.ScreenMidX,
                   Graphics.Current.ScreenMidY,
-                  ((int)((float)Graphics.Current.ScreenHeight * 0.6f)/16),
-                  (int)((float)Graphics.Current.ScreenWidth * 0.4f)/16,
+                  ((int)((float)Graphics.Current.ScreenWidth * 0.4f)/16),
+                  (int)((float)Graphics.Current.ScreenHeight * 0.6f)/16,
                   Color.SaddleBrown,
                   string.Empty)
         {
@@ -33,11 +33,12 @@ namespace AemonsNookMono.Menus
         #region Interface
         public override void InitButtons()
         {
-            this.DynamicButtons.Clear();
-            this.AddDynamicButton("Continue", null, Color.Red);
-            this.AddDynamicButton("Profile", null, Color.Blue);
-            this.AddDynamicButton("Options", null, Color.Purple);
-            this.AddDynamicButton("Save / Exit Level", null, Color.Green);
+            this.ButtonSpans.Clear();
+            ButtonSpan buttons = new ButtonSpan(this.CenterX, this.CenterY, this.Width, this.Height, this.PadWidth, this.PadHeight, ButtonSpan.SpanType.Vertical);
+            buttons.AddButton("Options", Color.DarkGreen);
+            buttons.AddButton("Save / Exit Level", Color.Black);
+            buttons.AddButton("Back", Color.DarkGreen);
+            this.ButtonSpans.Add(buttons);
         }
         public override void Refresh()
         {
@@ -66,22 +67,6 @@ namespace AemonsNookMono.Menus
                 Debugger.Current.AddTempString($"You clicked on the {clicked.Name} button!");
                 switch (clicked.Name)
                 {
-                    case "Continue":
-                        StateManager.Current.CurrentState = this.OriginalState;
-                        MenuManager.Current.CloseTop();
-                        return true;
-
-                    case "Profile":
-                        Menu profileMenu = new Menu("Profile", 400, 400, Graphics.Current.ScreenMidX, Graphics.Current.ScreenMidY, 16, 16, Color.Purple, string.Empty);
-                        profileMenu.AddDynamicButton("Save", null, Color.DarkOliveGreen);
-                        profileMenu.AddDynamicButton("Option 2", null, Color.DarkOliveGreen);
-                        profileMenu.AddDynamicButton("Option 3", null, Color.DarkOliveGreen);
-                        profileMenu.AddDynamicButton("Option 4", null, Color.DarkOliveGreen);
-                        profileMenu.AddDynamicButton("Option 5", null, Color.DarkOliveGreen);
-                        profileMenu.AddDynamicButton("Back", null, Color.DarkOliveGreen);
-                        MenuManager.Current.AddMenu(profileMenu);
-                        return true;
-
                     case "Options":
                         MenuManager.Current.AddMenu(new PauseOptionsMenu());
                         return true;
@@ -90,8 +75,13 @@ namespace AemonsNookMono.Menus
                         StateManager.Current.CurrentState = StateManager.State.Exit;
                         return true;
 
+                    case "Back":
+                        StateManager.Current.CurrentState = this.OriginalState;
+                        MenuManager.Current.CloseTop();
+                        return true;
+
                     default:
-                        break;
+                        return base.HandleLeftClick(x, y);
                 }
             }
             return base.HandleLeftClick(x, y);

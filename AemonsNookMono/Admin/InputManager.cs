@@ -1,5 +1,6 @@
 ﻿using AemonsNookMono.GameWorld;
 using AemonsNookMono.Menus;
+using AemonsNookMono.Menus.World;
 using AemonsNookMono.Player;
 using AemonsNookMono.Resources;
 using AemonsNookMono.Structures;
@@ -113,6 +114,17 @@ namespace AemonsNookMono.Admin
                 case StateManager.State.World:
                     // todo: Help system / popups
                     // Todo: buttons
+
+                    // buttons:
+                    if (MenuManager.Current.Top != null && MenuManager.Current.Top is WorldMenu)
+                    {
+                        WorldMenu menu = MenuManager.Current.Top as WorldMenu;
+                        if (menu != null)
+                        {
+                            if (menu.HandleLeftClick(x, y) == true) { return; }
+                        }
+                    }
+
                     // Todo: Gui
 
                     // Resources:
@@ -146,25 +158,12 @@ namespace AemonsNookMono.Admin
                             if (pmenu.HandleLeftClick(x, y) == true) { return; }
                         }
                     }
-                    if (MenuManager.Current.Top != null && MenuManager.Current.Top.MenuName == "Profile")
+                    if (MenuManager.Current.Top != null && MenuManager.Current.Top is ProfileMenu)
                     {
-                        Menu profileMenu = MenuManager.Current.Top;
-                        Button clicked = profileMenu.CheckButtonCollisions(x, y);
-                        if (clicked != null)
+                        ProfileMenu profileMenu = MenuManager.Current.Top as ProfileMenu;
+                        if (profileMenu != null)
                         {
-                            Debugger.Current.AddTempString($"You clicked on the {clicked.Name} button!");
-                            if (clicked.Name == "Back")
-                            {
-                                MenuManager.Current.CloseTop();
-                                return;
-                            }
-                            if (clicked.Name == "Save")
-                            {
-                                //ProfileManager.Current.Loaded = new Profile(Profile.ProfileTheme.Bruno);
-                                //ProfileManager.Current.Loaded.TotalStoneCollected += 31;
-                                //SaveManager.Current.SaveProfile(ProfileManager.Current.Loaded);
-                            }
-                            return;
+                            if (profileMenu.HandleLeftClick(x, y) == true) { return; }
                         }
                     }
                     if (MenuManager.Current.Top != null && MenuManager.Current.Top is PauseOptionsMenu)
@@ -187,7 +186,6 @@ namespace AemonsNookMono.Admin
             {
                 StateManager.Current.CurrentState = StateManager.State.Pause;
                 MenuManager.Current.AddMenu(new PauseMenu(state));
-
             }
             if (state == StateManager.State.Pause)
             {

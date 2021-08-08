@@ -22,9 +22,9 @@ namespace AemonsNookMono
 
         protected override void Initialize()
         {
-            Graphics.Current.Init(this.GraphicsDevice, false);
+            Graphics.Current.Init(this.GraphicsDevice, this.Window, false);
             StateManager.Current.Init();
-
+            this.Window.AllowUserResizing = true;
             base.Initialize(); // do this last
         }
 
@@ -36,6 +36,11 @@ namespace AemonsNookMono
 
             #region Temp
             Graphics.Current.SpritesByName.Add("building-temp1x1", Content.Load<Texture2D>("World/Buildings/TempBuilding1x1"));
+            #endregion
+
+            #region Debug
+            Graphics.Current.SpritesByName.Add("debug-square", Content.Load<Texture2D>("Debug/collisionSquare10by10"));
+            Graphics.Current.SpritesByName.Add("debug-circle", Content.Load<Texture2D>("Debug/collisionCircle10by10"));
             #endregion
 
             #region Dirt

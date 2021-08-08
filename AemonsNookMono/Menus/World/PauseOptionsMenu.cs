@@ -27,17 +27,17 @@ namespace AemonsNookMono.Menus.World
             this.ButtonSpans.Clear();
 
             ButtonSpan buttonSpan = new ButtonSpan(this.CenterX, this.CenterY, this.Width, this.Height, this.PadWidth, this.PadHeight, ButtonSpan.SpanType.Vertical);
-            buttonSpan.AddButton("button1", Color.Black);
-            buttonSpan.AddButton("", Color.DarkGreen);
-            buttonSpan.AddButton("button2", Color.Black);
-            buttonSpan.AddButton("button3", Color.DarkGreen);
+            buttonSpan.AddButton("Show Circle Collisions", Color.DarkGreen);
+            buttonSpan.AddButton("", Color.Black);
+            buttonSpan.AddButton("", Color.Black);
+            buttonSpan.AddButton("", Color.Black);
             buttonSpan.AddButton("Back", Color.Black);
             this.ButtonSpans.Add(buttonSpan);
 
-            ButtonSprite bulletUnselectedSprites = new ButtonSprite("menu-bullet-unselected", "menu-bullet-unselected-hover", "menu-bullet-unselected-click");
-            ButtonSprite bulletSelectedSprites = new ButtonSprite("menu-bullet-selected", "menu-bullet-selected-hover", "menu-bullet-selected-hover");
+            ButtonSprite bulletUnselectedSprites = new ButtonSprite("menu-bullet-unselected", "menu-bullet-unselected-hover", "menu-bullet-unselected-click", 50, 50);
+            ButtonSprite bulletSelectedSprites = new ButtonSprite("menu-bullet-selected", "menu-bullet-selected-hover", "menu-bullet-selected-hover", 50, 50);
             int spriteDim = 50;
-            int collisionDim = 18;
+            int collisionDim = 50;
             int radioYPos = buttonSpan.Buttons[1].ScreenY;
             if (Graphics.Current.FullScreen == true)
             {
@@ -51,8 +51,8 @@ namespace AemonsNookMono.Menus.World
             }
             this.StaticButtons[0].TitlePosition = Button.TextPosition.Above;
             this.StaticButtons[1].TitlePosition = Button.TextPosition.Above;
-            this.StaticButtons[0].MyCollision = new Collision(Collision.CollisionShape.Circle, this.CenterX - (this.Width / 4), radioYPos, collisionDim, collisionDim);
-            this.StaticButtons[1].MyCollision = new Collision(Collision.CollisionShape.Circle, this.CenterX + (this.Width / 4), radioYPos, collisionDim, collisionDim);
+            this.StaticButtons[0].InitCollision(Collision.CollisionShape.Circle, this.CenterX - (this.Width / 4), radioYPos, collisionDim, collisionDim);
+            this.StaticButtons[1].InitCollision(Collision.CollisionShape.Circle, this.CenterX + (this.Width / 4), radioYPos, collisionDim, collisionDim);
         }
         public override void Refresh()
         {
@@ -83,15 +83,20 @@ namespace AemonsNookMono.Menus.World
                 switch (clicked.Name)
                 {
                     case "Windowed":
-                        this.GetButton("Fullscreen").Sprites = new ButtonSprite("menu-bullet-unselected", "menu-bullet-unselected-hover", "menu-bullet-unselected-click");
-                        clicked.Sprites = new ButtonSprite("menu-bullet-selected", "menu-bullet-selected-hover", "menu-bullet-selected-hover");
-                        //Graphics.Current.FullScreen = false;
+                        this.GetButton("Fullscreen").Sprites = new ButtonSprite("menu-bullet-unselected", "menu-bullet-unselected-hover", "menu-bullet-unselected-click", 50, 50);
+                        clicked.Sprites = new ButtonSprite("menu-bullet-selected", "menu-bullet-selected-hover", "menu-bullet-selected-hover", 50, 50);
+                        Graphics.Current.FullScreen = false;
                         return true;
 
                     case "Fullscreen":
-                        this.GetButton("Windowed").Sprites = new ButtonSprite("menu-bullet-unselected", "menu-bullet-unselected-hover", "menu-bullet-unselected-click");
-                        clicked.Sprites = new ButtonSprite("menu-bullet-selected", "menu-bullet-selected-hover", "menu-bullet-selected-hover");
-                        //Graphics.Current.FullScreen = true;
+                        this.GetButton("Windowed").Sprites = new ButtonSprite("menu-bullet-unselected", "menu-bullet-unselected-hover", "menu-bullet-unselected-click", 50, 50);
+                        clicked.Sprites = new ButtonSprite("menu-bullet-selected", "menu-bullet-selected-hover", "menu-bullet-selected-hover", 50, 50);
+                        Graphics.Current.FullScreen = true;
+                        return true;
+
+                    case "Show Circle Collisions":
+                        if (Debugger.Current.ShowCircleCollisions == true) { Debugger.Current.ShowCircleCollisions = false; }
+                        else { Debugger.Current.ShowCircleCollisions = true; }
                         return true;
 
                     default:

@@ -42,6 +42,7 @@ namespace AemonsNookMono.Admin
         public GraphicsDeviceManager GraphicsDM { get; set; }
         public SpriteBatch SpriteB { get; set; }
         public GraphicsDevice Device { get; set; }
+        public GameWindow Window { get; set; }
         private bool fullscreen { get; set; }
         public bool FullScreen
         {
@@ -52,33 +53,41 @@ namespace AemonsNookMono.Admin
                 if (value == true)
                 {
                     this.GraphicsDM.PreferredBackBufferWidth = this.Device.DisplayMode.Width;
-                    this.GraphicsDM.PreferredBackBufferHeight = this.Device.DisplayMode.Height;
+                    this.GraphicsDM.PreferredBackBufferHeight = this.Device.DisplayMode.Height - 72; // typical size of taskbar
+                    
                     this.GraphicsDM.IsFullScreen = false;
                     this.GraphicsDM.ApplyChanges();
                     World.Current.Refresh();
                     MenuManager.Current.Refresh();
+                    Debugger.Current.Refresh();
+                    //this.Window.IsBorderless = true;
+                    this.Window.Position = new Point(0, 32);
+                    
 
                     // Resources need to update their collisions
-                    // Menu stuff still not working 100%
                 }
                 else
                 {
                     this.GraphicsDM.PreferredBackBufferWidth = 1400;
                     this.GraphicsDM.PreferredBackBufferHeight = 900;
+                    this.GraphicsDM.IsFullScreen = false;
                     this.GraphicsDM.ApplyChanges();
                     World.Current.Refresh();
                     MenuManager.Current.Refresh();
+                    Debugger.Current.Refresh();
+                    this.Window.IsBorderless = false;
                 }
             }
         }
         #endregion
 
         #region Interface
-        public void Init(GraphicsDevice gd, bool fullscreen = false)
+        public void Init(GraphicsDevice gd, GameWindow window, bool fullscreen = false)
         {
             this.SpritesByName = new Dictionary<string, Texture2D>();
             this.Fonts = new Dictionary<string, SpriteFont>();
             this.Device = gd;
+            this.Window = window;
 
             this.FullScreen = fullscreen;
         }

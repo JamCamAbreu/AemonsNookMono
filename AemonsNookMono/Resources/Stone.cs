@@ -16,6 +16,22 @@ namespace AemonsNookMono.Resources
             Random ran = new Random();
             this.Version = ran.Next(1, 6);
 
+            this.SetCollisions();
+        }
+        public override void Draw()
+        {
+            string spritestring = $"stone-{this.Version}";
+            Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName[spritestring], new Vector2(PosX, PosY), Color.White);
+        }
+        public override void HandleLeftClick()
+        {
+            Debugger.Current.AddTempString($"You clicked on a Stone!");
+            base.HandleLeftClick();
+        }
+
+        public void SetCollisions()
+        {
+            this.Collisions.Clear();
             int radius;
             switch (this.Version)
             {
@@ -35,18 +51,8 @@ namespace AemonsNookMono.Resources
                     radius = 6;
                     break;
             }
-            Collision RockCollision = new Collision(Collision.CollisionShape.Circle, x + 8, y + 8, radius, radius);
+            Collision RockCollision = new Collision(Collision.CollisionShape.Circle, this.PosX + 8, this.PosY + 8, radius, radius);
             this.Collisions.Add(RockCollision);
-        }
-        public override void Draw()
-        {
-            string spritestring = $"stone-{this.Version}";
-            Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName[spritestring], new Vector2(PosX, PosY), Color.White);
-        }
-        public override void HandleLeftClick()
-        {
-            Debugger.Current.AddTempString($"You clicked on a Stone!");
-            base.HandleLeftClick();
         }
     }
 }

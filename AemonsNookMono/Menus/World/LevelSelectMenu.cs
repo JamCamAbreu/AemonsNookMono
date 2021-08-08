@@ -3,6 +3,7 @@ using AemonsNookMono.Levels;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace AemonsNookMono.Menus.World
@@ -13,16 +14,18 @@ namespace AemonsNookMono.Menus.World
         public LevelSelectMenu(StateManager.State originalState) :
             base("Level Select",
           (int)((float)Graphics.Current.ScreenWidth * 0.75f),
-          (int)((float)Graphics.Current.ScreenHeight * 0.4f),
+          (int)((float)Graphics.Current.ScreenHeight * 0.6f),
           Graphics.Current.ScreenMidX,
           Graphics.Current.ScreenMidY,
-          ((int)((float)Graphics.Current.ScreenWidth * 0.75f) / 16),
-          (int)((float)Graphics.Current.ScreenHeight * 0.4f) / 16,
-          Color.LightGreen,
+          16,
+          16,
+          Color.SaddleBrown,
           string.Empty)
         {
             this.InitButtons();
             this.OriginalState = originalState;
+            this.customLevelWidth = 20;
+            this.customLevelHeight = 20;
         }
 
         #region Public Properties
@@ -43,26 +46,32 @@ namespace AemonsNookMono.Menus.World
 
             ButtonSpan levelButtons = new ButtonSpan(this.CenterX, rows.Buttons[0].ScreenY, this.Width, rows.Buttons[0].Height, this.PadWidth, 0, ButtonSpan.SpanType.Horizontal);
             levelButtons.AddButton("Small Meadow", Color.DarkGreen);
-            levelButtons.AddButton("Cedric's Pass", Color.Black);
+            levelButtons.AddButton("Cedric's Pass", Color.DarkGreen);
             this.ButtonSpans.Add(levelButtons);
 
-            ButtonSpan editorButtons = new ButtonSpan(this.CenterX, rows.Buttons[1].ScreenY, this.Width, rows.Buttons[1].Height, this.PadWidth, 0, ButtonSpan.SpanType.Horizontal);
-            editorButtons.AddButton("Width", Color.DarkOliveGreen);
-            editorButtons.AddButton("", null);
-            editorButtons.AddButton("Height", Color.DarkOliveGreen);
-            editorButtons.AddButton("", null);
-            editorButtons.AddButton("", null); // Editor Left
-            editorButtons.AddButton("", null); // Editor Right
+            ButtonSpan editorButtons = new ButtonSpan(this.CenterX + (this.Width)/4, rows.Buttons[1].ScreenY, this.Width / 2, (int)((float)rows.Buttons[1].Height * 1.25f), this.PadWidth * 4, this.PadHeight, ButtonSpan.SpanType.Horizontal);
+            editorButtons.AddButton("Width", null, false);
+            editorButtons.AddButton("Height", null, false);
+            editorButtons.AddButton("Editor", Color.DarkOliveGreen);
             this.ButtonSpans.Add(editorButtons);
 
-            this.AddStaticButton("Editor",
-                editorButtons.Buttons[0].Width * 2,
-                editorButtons.Buttons[0].Height,
-                (editorButtons.Buttons[4].ScreenX + editorButtons.Buttons[5].ScreenX) / 2,
-                editorButtons.Buttons[0].ScreenY,
-                null,
-                Color.Goldenrod,
-                Collision.CollisionShape.Rectangle);
+            int colNum = 0;
+            ButtonSpan WidthButtons = new ButtonSpan(editorButtons.Buttons[colNum].ScreenX, editorButtons.Buttons[colNum].ScreenY, editorButtons.Buttons[colNum].Width, editorButtons.Buttons[colNum].Height, 4, 4, ButtonSpan.SpanType.Vertical);
+            WidthButtons.AddButton("WidthTitle", null, false);
+            WidthButtons.AddButton("widthplus", Color.DarkOliveGreen);
+            WidthButtons.AddButton("widthminus", Color.DarkOliveGreen);
+            WidthButtons.Buttons[1].Title = "+";
+            WidthButtons.Buttons[2].Title = "-";
+            this.ButtonSpans.Add(WidthButtons);
+
+            colNum = 1;
+            ButtonSpan HeightButtons = new ButtonSpan(editorButtons.Buttons[colNum].ScreenX, editorButtons.Buttons[colNum].ScreenY, editorButtons.Buttons[colNum].Width, editorButtons.Buttons[colNum].Height, 4, 4, ButtonSpan.SpanType.Vertical);
+            HeightButtons.AddButton("HeightTitle", null, false);
+            HeightButtons.AddButton("heightplus", Color.DarkOliveGreen);
+            HeightButtons.AddButton("heightminus", Color.DarkOliveGreen);
+            HeightButtons.Buttons[1].Title = "+";
+            HeightButtons.Buttons[2].Title = "-";
+            this.ButtonSpans.Add(HeightButtons);
         }
         public override void Refresh()
         {
@@ -80,6 +89,29 @@ namespace AemonsNookMono.Menus.World
             if (isTop)
             {
                 base.Draw(isTop);
+
+                Graphics.Current.SpriteB.Begin();
+                Button widthButton = this.GetButton("WidthTitle");
+                if (widthButton != null) 
+                {
+                    string wstring = $"Width: {this.customLevelWidth.ToString()}";
+                    Vector2 size = Graphics.Current.Fonts["couriernew"].MeasureString(wstring);
+                    int x = widthButton.ScreenX - ((int)size.X / 2);
+                    int y = widthButton.ScreenY - ((int)size.Y / 2);
+                    Graphics.Current.SpriteB.DrawString(Graphics.Current.Fonts["couriernew"], wstring, new Vector2(x, y), Color.White);
+                }
+
+                Button heightButton = this.GetButton("HeightTitle");
+                if (heightButton != null)
+                {
+                    string hstring = $"Height: {this.customLevelHeight.ToString()}";
+                    Vector2 size = Graphics.Current.Fonts["couriernew"].MeasureString(hstring);
+                    int x = heightButton.ScreenX - ((int)size.X / 2);
+                    int y = heightButton.ScreenY - ((int)size.Y / 2);
+                    Graphics.Current.SpriteB.DrawString(Graphics.Current.Fonts["couriernew"], hstring, new Vector2(x, y), Color.White);
+                }
+
+                Graphics.Current.SpriteB.End();
             }
         }
 
@@ -92,18 +124,19 @@ namespace AemonsNookMono.Menus.World
                 switch (clicked.Name)
                 {
                     case "Editor":
-                        StateManager.Current.CurrentState = this.OriginalState;
-                        Level created = this.GenerateBlankLevel(20, 20); // todo, pull values from some kind of integer controls
+                        StateManager.Current.CurrentState = StateManager.State.LevelEditor;
+                        Level created = this.GenerateBlankLevel(this.customLevelWidth, this.customLevelHeight);
                         GameWorld.World.Current.Init(created);
+                        MenuManager.Current.AddMenu(new EditorTileMenu());
                         return true;
 
                     case "Small Meadow":
-                        StateManager.Current.CurrentState = this.OriginalState;
+                        StateManager.Current.CurrentState = StateManager.State.World;
                         GameWorld.World.Current.Init(new Levels.SmallMeadow());
                         return true;
 
                     case "Cedric's Pass":
-                        StateManager.Current.CurrentState = this.OriginalState;
+                        StateManager.Current.CurrentState = StateManager.State.World;
                         GameWorld.World.Current.Init(new Levels.CedricsPass());
                         return true;
 
@@ -111,6 +144,22 @@ namespace AemonsNookMono.Menus.World
                         StateManager.Current.CurrentState = this.OriginalState;
                         MenuManager.Current.CloseTop();
                         return true;
+
+                    case "widthplus":
+                        if (this.customLevelWidth < 30) { this.customLevelWidth += 1; }
+                        break;
+
+                    case "widthminus":
+                        if (this.customLevelWidth > 10) { this.customLevelWidth -= 1; }
+                        break;
+
+                    case "heightplus":
+                        if (this.customLevelHeight < 25) { this.customLevelHeight += 1; }
+                        break;
+
+                    case "heightminus":
+                        if (this.customLevelHeight > 10) { this.customLevelHeight -= 1; }
+                        break;
 
                     default:
                         return base.HandleLeftClick(x, y);
@@ -122,6 +171,8 @@ namespace AemonsNookMono.Menus.World
 
 
         #region Internal
+        protected int customLevelHeight { get; set; }
+        protected int customLevelWidth { get; set; }
         protected Level GenerateBlankLevel(int width, int height)
         {
             Level lev = new Level();

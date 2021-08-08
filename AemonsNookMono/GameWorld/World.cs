@@ -72,6 +72,7 @@ namespace AemonsNookMono.GameWorld
             Debugger.Current.CurrentWorld = this;
             EffectsGenerator.Current.Init();
 
+            MenuManager.Current.ClearAllMenus();
             MenuManager.Current.AddMenu(new WorldMenu());
         }
         public void Refresh()
@@ -84,6 +85,9 @@ namespace AemonsNookMono.GameWorld
                 {
                     r.PosX = this.StartDrawX + r.TileOn.RelativeX + r.TileRelativeX;
                     r.PosY = this.StartDrawY + r.TileOn.RelativeY + r.TileRelativeY;
+                    if (r is Tree) { (r as Tree).SetCollisions(); }
+                    else if (r is Stone) { (r as Stone).SetCollisions(); }
+                    else { throw new NotImplementedException(); }
                 }
             }
         }

@@ -50,6 +50,7 @@ namespace AemonsNookMono.Menus
 
             int cellHeight = this.Height - (this.PadHeight * 2); // default
             int cellWidth = this.Width - this.PadWidth * 2; // default
+
             if (this.Type == SpanType.Vertical)
             {
                 cellHeight = (this.Height - this.PadHeight * 2) / ((numButtons * 2) - 1);
@@ -79,12 +80,15 @@ namespace AemonsNookMono.Menus
 
                 if (priorButton.Active)
                 {
-                    priorButton.MyCollision = new Collision(priorButton.Shape, priorButton.ScreenX, priorButton.ScreenY, cellWidth, cellHeight);
+                    int collisionWidth = cellWidth;
+                    int collisionHeight = cellHeight;
                     if (priorButton.Sprites != null)
                     {
-                        throw new NotImplementedException();
+                        collisionWidth = priorButton.Sprites.SpriteWidth;
+                        collisionHeight = priorButton.Sprites.SpriteHeight;
                     }
-                    else if (priorButton.PrimaryColor != null)
+                    priorButton.InitCollision(priorButton.Shape, priorButton.ScreenX, priorButton.ScreenY, collisionWidth, collisionHeight);
+                    if (priorButton.PrimaryColor != null)
                     {
                         priorButton.ButtonColor = new ButtonColor(cellWidth, cellHeight, 1, (Color)priorButton.PrimaryColor);
                     }
@@ -110,12 +114,17 @@ namespace AemonsNookMono.Menus
 
                 button.Width = cellWidth;
                 button.Height = cellHeight;
-                button.MyCollision = new Collision(button.Shape, button.ScreenX, button.ScreenY, cellWidth, cellHeight);
+
+                int collisionWidth = cellWidth;
+                int collisionHeight = cellHeight;
                 if (button.Sprites != null)
                 {
-                    throw new NotImplementedException();
+                    collisionWidth = button.Sprites.SpriteWidth;
+                    collisionHeight = button.Sprites.SpriteHeight;
                 }
-                else if (button.PrimaryColor != null)
+                button.InitCollision(button.Shape, button.ScreenX, button.ScreenY, collisionWidth, collisionHeight);
+
+                if (button.PrimaryColor != null)
                 {
                     button.ButtonColor = new ButtonColor(cellWidth, cellHeight, 1, (Color)button.PrimaryColor);
                 }
@@ -124,14 +133,14 @@ namespace AemonsNookMono.Menus
             }
             #endregion
         }
-        public void AddButton(string name, Color? primaryColor)
+        public void AddButton(string name, Color? primaryColor, bool active = true)
         {
-            Button created = new Button(name, 0, 0, this.PadWidth * 2, this.PadHeight * 2, null, primaryColor, Collision.CollisionShape.Rectangle, !string.IsNullOrEmpty(name));
+            Button created = new Button(name, 0, 0, this.PadWidth * 2, this.PadHeight * 2, null, primaryColor, Collision.CollisionShape.Rectangle, active && !string.IsNullOrEmpty(name));
             this.AddButton(created);
         }
-        public void AddButton(string name, ButtonSprite sprites, Collision.CollisionShape shape)
+        public void AddButton(string name, ButtonSprite sprites, Collision.CollisionShape shape, bool active = true)
         {
-            Button created = new Button(name, 0, 0, this.PadWidth * 2, this.PadHeight * 2, sprites, null, shape, !string.IsNullOrEmpty(name));
+            Button created = new Button(name, 0, 0, this.PadWidth * 2, this.PadHeight * 2, sprites, null, shape, active && !string.IsNullOrEmpty(name));
             this.AddButton(created);
         }
         public void Draw()

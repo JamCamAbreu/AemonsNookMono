@@ -22,6 +22,7 @@ namespace AemonsNookMono.Menus
         public Button(string name, int x, int y, int width, int height, ButtonSprite sprites, Color? color, Collision.CollisionShape collisionShape = Collision.CollisionShape.Rectangle, bool active = true)
         {
             this.Name = name;
+            this.Title = name;
             this.Active = active;
             this.Width = width;
             this.Height = height;
@@ -33,6 +34,15 @@ namespace AemonsNookMono.Menus
                 this.Sprites = sprites;
                 this.ButtonColor = null;
                 this.PrimaryColor = color;
+                if (collisionShape == Collision.CollisionShape.Circle)
+                {
+                    if (sprites.SpriteWidth > sprites.SpriteHeight) { MyCollision = new Collision(collisionShape, x, y, sprites.SpriteHeight, sprites.SpriteHeight); }
+                    else { MyCollision = new Collision(collisionShape, x, y, sprites.SpriteWidth, sprites.SpriteWidth); }
+                }
+                else
+                {
+                    MyCollision = new Collision(collisionShape, x, y, sprites.SpriteWidth, sprites.SpriteHeight);
+                }
             }
             else if (color != null)
             {
@@ -41,6 +51,7 @@ namespace AemonsNookMono.Menus
                 {
                     this.ButtonColor = new ButtonColor(width, height, 1, (Color)color);
                 }
+                MyCollision = new Collision(collisionShape, x, y, width, height);
             }
             else
             {
@@ -48,7 +59,7 @@ namespace AemonsNookMono.Menus
                 this.ButtonColor = null;
             }
             this.Shape = collisionShape;
-            MyCollision = new Collision(collisionShape, x, y, width, height);
+            
             this.TitlePosition = TextPosition.Inline;
             this.DisplayTitle = true;
         }
@@ -61,16 +72,34 @@ namespace AemonsNookMono.Menus
         public int Height { get; set; }
         public int ScreenX { get; set; }
         public int ScreenY { get; set; }
-        public Collision MyCollision { get; set; }
+        private Collision myCollision;
+        public Collision MyCollision
+        {
+            get { return myCollision; }
+            protected set { myCollision = value; }
+        }
         public Collision.CollisionShape Shape { get; set; }
         public ButtonSprite Sprites { get; set; }
         public ButtonColor ButtonColor { get; set; }
         public Color? PrimaryColor { get; set; }
+        public string Title { get; set; }
         public bool DisplayTitle { get; set; }
         public TextPosition TitlePosition { get; set; }
         #endregion
 
         #region Interface
+        public void InitCollision(Collision.CollisionShape shape, int x, int y, int width, int height)
+        {
+            if (shape == Collision.CollisionShape.Circle)
+            {
+                if (width > height) { this.MyCollision = new Collision(shape, x, y, height, height); }
+                else { this.MyCollision = new Collision(shape, x, y, width, width); }
+            }
+            else
+            {
+                this.MyCollision = new Collision(shape, x, y, width, height);
+            }
+        }
         public void Update()
         {
 
@@ -82,8 +111,8 @@ namespace AemonsNookMono.Menus
             MouseState mouse = Mouse.GetState();
             if (this.Sprites != null)
             {
-                int spriteX = this.ScreenX - (this.Width / 2);
-                int spriteY = this.ScreenY - (this.Height / 2);
+                int spriteX = this.ScreenX - (this.Sprites.SpriteWidth / 2);
+                int spriteY = this.ScreenY - (this.Sprites.SpriteHeight / 2);
                 if (this.MyCollision != null && this.MyCollision.IsCollision(mouse.X, mouse.Y))
                 {
                     if (mouse.LeftButton == ButtonState.Pressed)
@@ -125,18 +154,33 @@ namespace AemonsNookMono.Menus
                 }
             }
 
-            if (DisplayTitle && !string.IsNullOrEmpty(Name))
+            if (DisplayTitle && !string.IsNullOrEmpty(Title))
             {
-                int stringx = Graphics.Current.CenterStringX(this.ScreenX, this.Name, "couriernew");
+                int buttonHeight = this.Height;
+                if (this.Sprites != null) { buttonHeight = this.Sprites.SpriteHeight; }
+
+                int stringx = Graphics.Current.CenterStringX(this.ScreenX, this.Title, "couriernew");
                 int stringy = Graphics.Current.CenterStringY(this.ScreenY, "couriernew");
 
                 int textAdjust = 0;
-                if (this.TitlePosition == TextPosition.Above) { textAdjust = -this.Height; }
+                if (this.TitlePosition == TextPosition.Above) { textAdjust = -buttonHeight; }
                 else if (this.TitlePosition == TextPosition.Inline) { textAdjust = 0; }
-                else if (this.TitlePosition == TextPosition.Below) { textAdjust = this.Height; }
+                else if (this.TitlePosition == TextPosition.Below) { textAdjust = buttonHeight; }
 
                 Graphics.Current.SpriteB.Begin();
-                Graphics.Current.SpriteB.DrawString(Graphics.Current.Fonts["couriernew"], this.Name, new Vector2(stringx, stringy + textAdjust), Color.White);
+                Graphics.Current.SpriteB.DrawString(Graphics.Current.Fonts["couriernew"], this.Title, new Vector2(stringx, stringy + textAdjust), Color.White);
+                Graphics.Current.SpriteB.End();
+            }
+
+            if (Debugger.Current.ShowCircleCollisions && this.MyCollision != null && this.MyCollision.Shape == Collision.CollisionShape.Circle)
+            {
+                int spriteX = this.MyCollision.CenterX - (this.Sprites.SpriteWidth / 2);
+                int spriteY = this.MyCollision.CenterY - (this.Sprites.SpriteHeight / 2);
+
+                Collision col = this.MyCollision;
+                float scale = Math.Max((float)this.MyCollision.Width / 10f, 1);
+                Graphics.Current.SpriteB.Begin();
+                Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName["debug-circle"], new Vector2(spriteX, spriteY), null, Color.White, 0, Vector2.Zero, scale, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 1);
                 Graphics.Current.SpriteB.End();
             }
         }

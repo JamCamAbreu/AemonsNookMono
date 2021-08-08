@@ -36,8 +36,10 @@ namespace AemonsNookMono.Menus.World
             this.ButtonSpans.Clear();
             ButtonSpan buttons = new ButtonSpan(this.CenterX, this.CenterY, this.Width, this.Height, this.PadWidth, this.PadHeight, ButtonSpan.SpanType.Vertical);
             buttons.AddButton("Options", Color.DarkGreen);
+            buttons.AddButton("", Color.DarkGreen);
+            buttons.AddButton("", Color.DarkGreen);
             buttons.AddButton("Save / Exit Level", Color.Black);
-            buttons.AddButton("Back", Color.DarkGreen);
+            buttons.AddButton("Back", Color.Black);
             this.ButtonSpans.Add(buttons);
         }
         public override void Refresh()

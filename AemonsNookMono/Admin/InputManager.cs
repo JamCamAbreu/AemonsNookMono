@@ -183,6 +183,27 @@ namespace AemonsNookMono.Admin
                         }
                     }
                     break;
+
+
+                case StateManager.State.LevelEditor:
+                    if (MenuManager.Current.Top != null && MenuManager.Current.Top is WorldMenu)
+                    {
+                        WorldMenu menu = MenuManager.Current.Top as WorldMenu;
+                        if (menu != null)
+                        {
+                            if (menu.HandleLeftClick(x, y) == true) { return; }
+                        }
+                    }
+                    if (MenuManager.Current.Top != null && MenuManager.Current.Top is EditorTileMenu)
+                    {
+                        EditorTileMenu menu = MenuManager.Current.Top as EditorTileMenu;
+                        if (menu != null)
+                        {
+                            if (menu.HandleLeftClick(x, y) == true) { return; }
+                        }
+                    }
+
+                    break;
             }
 
             Debugger.Current.AddTempString("[Clicked Empty]");

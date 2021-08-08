@@ -39,6 +39,7 @@ namespace AemonsNookMono.Admin
         #region Public Properties
         public bool DrawTileShapes { get; set; }
         public World CurrentWorld { get; set; }
+        public bool ShowCircleCollisions { get; set; }
         #endregion
 
         #region Interface
@@ -50,14 +51,20 @@ namespace AemonsNookMono.Admin
                 this.tempStrings.RemoveRange(6, this.tempStrings.Count - 6);
             }
         }
+        public void Refresh()
+        {
+            this.screenWidthPixels = Graphics.Current.Device.Viewport.Width;
+            this.screenHeightPixels = Graphics.Current.Device.Viewport.Height;
+        }
         public void Init()
         {
             fps = new FrameCounter();
-            screenWidthPixels = Graphics.Current.Device.Viewport.Width;
-            screenHeightPixels = Graphics.Current.Device.Viewport.Height;
+            this.screenWidthPixels = Graphics.Current.Device.Viewport.Width;
+            this.screenHeightPixels = Graphics.Current.Device.Viewport.Height;
             this.DrawTileShapes = false;
             this.tempStrings = new List<string>();
             this.maxTempStrings = 6;
+            this.ShowCircleCollisions = false;
         }
         public void Update(GameTime gameTime)
         {
@@ -93,6 +100,13 @@ namespace AemonsNookMono.Admin
 
             #region State Manager
             debugMessages.Add($"Game State: {StateManager.Current.CurrentState}");
+            #endregion
+
+            #region Menu Manager
+            debugMessages.Add($"Menu Count: {MenuManager.Current.Count}");
+
+            string menuname = MenuManager.Current.Top?.MenuName ?? "None";
+            debugMessages.Add($"Top Menu: {menuname}");
             #endregion
 
             debugMessages.Add($"--------------------------------");

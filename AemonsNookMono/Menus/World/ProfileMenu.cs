@@ -16,7 +16,7 @@ namespace AemonsNookMono.Menus.World
                   Graphics.Current.ScreenMidY,
                   ((int)((float)Graphics.Current.ScreenWidth * 0.75f) / 16),
                   (int)((float)Graphics.Current.ScreenHeight * 0.4f) / 16,
-                  Color.RoyalBlue,
+                  Color.SaddleBrown,
                   string.Empty)
         {
             this.InitButtons();
@@ -33,11 +33,11 @@ namespace AemonsNookMono.Menus.World
         {
             this.ButtonSpans.Clear();
             ButtonSpan buttons = new ButtonSpan(this.CenterX, (int)(this.CenterY - this.Height * 0.25), this.Width, this.Height / 3, this.PadWidth, this.PadHeight, ButtonSpan.SpanType.Horizontal);
-            buttons.AddButton("Profile 1", Color.DarkGreen);
-            buttons.AddButton("Profile 2", Color.Black);
-            buttons.AddButton("Profile 3", Color.DarkGreen);
-            buttons.AddButton("Profile 4", Color.Black);
-            buttons.AddButton("Profile 5", Color.DarkGreen);
+            buttons.AddButton("Profile 1", Color.RoyalBlue);
+            buttons.AddButton("Profile 2", Color.RoyalBlue);
+            buttons.AddButton("Profile 3", Color.RoyalBlue);
+            buttons.AddButton("Profile 4", Color.RoyalBlue);
+            buttons.AddButton("Profile 5", Color.RoyalBlue);
             this.ButtonSpans.Add(buttons);
 
             Button BackButton = new Button(

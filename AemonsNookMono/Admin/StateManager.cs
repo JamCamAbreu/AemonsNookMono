@@ -21,6 +21,7 @@ namespace AemonsNookMono.Admin
             World,
             BuildSelection,
             Pause,
+            LevelEditor,
             Exit
         }
         #endregion

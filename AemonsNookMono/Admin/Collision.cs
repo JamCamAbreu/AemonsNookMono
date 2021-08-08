@@ -51,7 +51,7 @@ namespace AemonsNookMono.Admin
             }
             else if (this.Shape == CollisionShape.Circle)
             {
-                if (this.WithinRadius(this.Width, x, y, this.CenterX, this.CenterY)) { return true; }
+                if (this.WithinRadius(this.Width/2, x, y, this.CenterX, this.CenterY)) { return true; }
                 else return false;
             }
 
@@ -62,7 +62,7 @@ namespace AemonsNookMono.Admin
         #region Internal
         private bool WithinRadius(int radius, int x1, int y1, int x2, int y2)
         {
-            if (radius <= 1) { throw new Exception("Bro, seriously?"); }
+            if (radius < 1) { throw new Exception("Bro, seriously?"); }
             int approxDist = IntSqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)); // Pythagorean brah.
             if (radius >= approxDist) { return true; }
             else return false;

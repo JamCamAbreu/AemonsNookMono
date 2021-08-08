@@ -110,7 +110,7 @@ namespace AemonsNookMono.Menus
             if (isTop)
             {
                 Graphics.Current.SpriteB.Begin();
-                int titlex = Graphics.Current.CenterStringX(Graphics.Current.ScreenMidX, this.MenuName, "couriernew");
+                int titlex = Graphics.Current.CenterStringX(this.CenterX, this.MenuName, "couriernew");
                 int titley = this.TopY - 32;
                 Graphics.Current.SpriteB.DrawString(Graphics.Current.Fonts["couriernew"], this.MenuName, new Vector2(titlex, titley), Color.White);
                 Graphics.Current.SpriteB.End();

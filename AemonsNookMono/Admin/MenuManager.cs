@@ -49,6 +49,10 @@ namespace AemonsNookMono.Admin
         {
             this.menuStack.Pop();
         }
+        public void ClearAllMenus()
+        {
+            this.menuStack.Clear();
+        }
         public Menu Top
         {
             get
@@ -59,6 +63,24 @@ namespace AemonsNookMono.Admin
                 }
                 else return null;
             }
+        }
+        public int Count
+        {
+            get
+            {
+                return this.menuStack.Count;
+            }
+        }
+        public Menu RetrieveMenu(string name)
+        {
+            foreach (Menu menu in this.menuStack)
+            {
+                if (menu.MenuName == name)
+                {
+                    return menu;
+                }
+            }
+            return null;
         }
         public void Update()
         {

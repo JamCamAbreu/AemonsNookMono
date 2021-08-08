@@ -13,41 +13,37 @@ namespace AemonsNookMono.Menus.World
             : base(
                   "WorldMenu", // menu name
                   (int)((float)Graphics.Current.ScreenWidth * 0.5f), // width 
-                  (int)((float)Graphics.Current.ScreenHeight * 0.08f), // height
+                  (int)((float)Graphics.Current.ScreenHeight * 0.1f), // height
                   (int)((float)Graphics.Current.ScreenWidth * 0.25f), // x
-                  (int)((float)Graphics.Current.ScreenHeight * 0.04f), // y
-                  4, // pad height 
+                  (int)((float)Graphics.Current.ScreenHeight * 0.05f), // y
+                  12, // pad height 
                   4, // pad width
                   Color.DimGray, // foreground color
                   null) // sprite
         {
             this.InitButtons();
-            
         }
 
         public override void InitButtons()
         {
             this.StaticButtons.Clear();
+            this.ButtonSpans.Clear();
 
-            int numButtons = 5;
-            int buttonSize = 32;
-            int buttonWidth = (this.Width - (this.PadWidth * 2)) / ((numButtons));
-            int centerCol = buttonWidth / 2;
-            int startX = this.LeftX + this.PadWidth + centerCol - (buttonSize / 2);
+            ButtonSprite gear = new ButtonSprite("menu-world-gear", "menu-world-gear-hover", "menu-world-gear-hover", 32, 32);
+            ButtonSprite circle = new ButtonSprite("menu-world-circle", "menu-world-circle-hover", "menu-world-circle-hover", 32, 32);
+            ButtonSprite square = new ButtonSprite("menu-world-square", "menu-world-square-hover", "menu-world-square-hover", 32, 32);
+            ButtonSprite diamond = new ButtonSprite("menu-world-diamond", "menu-world-diamond-hover", "menu-world-diamond-hover", 32, 32);
+            ButtonSprite pentagon = new ButtonSprite("menu-world-pentagon", "menu-world-pentagon-hover", "menu-world-pentagon-hover", 32, 32);
 
-            ButtonSprite gear = new ButtonSprite("menu-world-gear", "menu-world-gear-hover", "menu-world-gear-hover");
-            ButtonSprite circle = new ButtonSprite("menu-world-circle", "menu-world-circle-hover", "menu-world-circle-hover");
-            ButtonSprite square = new ButtonSprite("menu-world-square", "menu-world-square-hover", "menu-world-square-hover");
-            ButtonSprite diamond = new ButtonSprite("menu-world-diamond", "menu-world-diamond-hover", "menu-world-diamond-hover");
-            ButtonSprite pentagon = new ButtonSprite("menu-world-pentagon", "menu-world-pentagon-hover", "menu-world-pentagon-hover");
+            ButtonSpan menuItems = new ButtonSpan(this.CenterX, this.CenterY - 12, this.Width, this.Height, this.PadWidth, this.PadHeight, ButtonSpan.SpanType.Horizontal);
+            menuItems.AddButton("Pause", gear, Collision.CollisionShape.Circle);
+            menuItems.AddButton("Profile", circle, Collision.CollisionShape.Circle);
+            menuItems.AddButton("Levels", square, Collision.CollisionShape.Rectangle);
+            //menuItems.AddButton("Option 4", diamond, Collision.CollisionShape.Circle);
+            //menuItems.AddButton("Option 5", pentagon, Collision.CollisionShape.Circle);
+            this.ButtonSpans.Add(menuItems);
 
-            int buttonYadjust = 13;
-            this.AddStaticButton("Pause", buttonSize, buttonSize, startX + (buttonWidth * 0), this.CenterY - buttonYadjust, gear, null, Collision.CollisionShape.Circle);
-            this.AddStaticButton("Profile", buttonSize, buttonSize, startX + (buttonWidth * 1), this.CenterY - buttonYadjust, circle, null, Collision.CollisionShape.Circle);
-            this.AddStaticButton("Levels", buttonSize, buttonSize, startX + (buttonWidth * 2), this.CenterY - buttonYadjust, square, null, Collision.CollisionShape.Circle);
-            this.AddStaticButton("Option 4", buttonSize, buttonSize, startX + (buttonWidth * 3), this.CenterY - buttonYadjust, diamond, null, Collision.CollisionShape.Circle);
-            this.AddStaticButton("Option 5", buttonSize, buttonSize, startX + (buttonWidth * 4), this.CenterY - buttonYadjust, pentagon, null, Collision.CollisionShape.Circle);
-            foreach (Button b in this.StaticButtons)
+            foreach (Button b in menuItems.Buttons)
             {
                 b.TitlePosition = Button.TextPosition.Below;
             }
@@ -57,7 +53,15 @@ namespace AemonsNookMono.Menus.World
         {
             base.Draw(true);
         }
-
+        public override void Refresh()
+        {
+            this.Width = (int)((float)Graphics.Current.ScreenWidth * 0.5f);
+            this.Height = (int)((float)Graphics.Current.ScreenHeight * 0.1f);
+            this.CenterX = (int)((float)Graphics.Current.ScreenWidth * 0.25f);
+            this.CenterY = (int)((float)Graphics.Current.ScreenHeight * 0.05f);
+            base.Refresh();
+            this.InitButtons();
+        }
         public override bool HandleLeftClick(int x, int y)
         {
             Button clicked = this.CheckButtonCollisions(x, y);
@@ -68,28 +72,18 @@ namespace AemonsNookMono.Menus.World
                 switch (clicked.Name)
                 {
                     case "Pause":
-                        
-                        if (state == StateManager.State.World || state == StateManager.State.BuildSelection)
-                        {
-                            StateManager.Current.CurrentState = StateManager.State.Pause;
-                            MenuManager.Current.AddMenu(new PauseMenu(state));
-                        }
+                        StateManager.Current.CurrentState = StateManager.State.Pause;
+                        MenuManager.Current.AddMenu(new PauseMenu(state));
                         return true;
 
                     case "Profile":
-                        if (state == StateManager.State.World || state == StateManager.State.BuildSelection)
-                        {
-                            StateManager.Current.CurrentState = StateManager.State.Pause;
-                            MenuManager.Current.AddMenu(new ProfileMenu(state));
-                        }
+                        StateManager.Current.CurrentState = StateManager.State.Pause;
+                        MenuManager.Current.AddMenu(new ProfileMenu(state));
                         return true;
 
                     case "Levels":
-                        if (state == StateManager.State.World || state == StateManager.State.BuildSelection)
-                        {
-                            StateManager.Current.CurrentState = StateManager.State.Pause;
-                            MenuManager.Current.AddMenu(new LevelSelectMenu(state));
-                        }
+                        StateManager.Current.CurrentState = StateManager.State.Pause;
+                        MenuManager.Current.AddMenu(new LevelSelectMenu(state));
                         return true;
 
                     default:

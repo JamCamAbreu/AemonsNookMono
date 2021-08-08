@@ -16,10 +16,7 @@ namespace AemonsNookMono.Resources
             Random ran = new Random();
             this.Version = ran.Next(1, 6);
 
-            Collision TrunkCollision = new Collision(Collision.CollisionShape.Rectangle, x + 16, y + 16, 6, 28);
-            Collision BranchesCollision = new Collision(Collision.CollisionShape.Circle, x + 16, y + 8, 16, 16);
-            this.Collisions.Add(TrunkCollision);
-            this.Collisions.Add(BranchesCollision);
+            this.SetCollisions();
         }
         public override void Draw()
         {
@@ -30,6 +27,14 @@ namespace AemonsNookMono.Resources
         {
             Debugger.Current.AddTempString($"You clicked on a Tree!");
             base.HandleLeftClick();
+        }
+        public void SetCollisions()
+        {
+            this.Collisions.Clear();
+            Collision TrunkCollision = new Collision(Collision.CollisionShape.Rectangle, this.PosX + 16, this.PosY + 16, 6, 28);
+            Collision BranchesCollision = new Collision(Collision.CollisionShape.Circle, this.PosX + 16, this.PosY + 8, 16, 16);
+            this.Collisions.Add(TrunkCollision);
+            this.Collisions.Add(BranchesCollision);
         }
     }
 }

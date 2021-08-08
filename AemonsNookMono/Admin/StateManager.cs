@@ -65,7 +65,7 @@ namespace AemonsNookMono.Admin
             Debugger.Current.Init();
             Cursor.Current.Init();
 
-            this.level = new Level1();
+            this.level = new SmallMeadow();
             //this.level = new Level2();
 
             Buildings.Current.Init();

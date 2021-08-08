@@ -4,12 +4,12 @@ using System.Text;
 
 namespace AemonsNookMono.Levels
 {
-    public abstract class Level
+    public class Level
     {
-        public abstract int WIDTH { get; }
-        public abstract int HEIGHT { get; }
-        protected abstract string ascii { get; }
-        public string RetrieveLevelCode()
+        public virtual int WIDTH { get; set; }
+        public virtual int HEIGHT { get; set; }
+        public virtual string ascii { get; set; }
+        public virtual string RetrieveLevelCode()
         {
             return System.Text.RegularExpressions.Regex.Replace(ascii, @"\s+", "");
         }

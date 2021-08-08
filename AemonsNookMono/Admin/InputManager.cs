@@ -174,6 +174,14 @@ namespace AemonsNookMono.Admin
                             if (optionsMenu.HandleLeftClick(x, y) == true) { return; }
                         }
                     }
+                    if (MenuManager.Current.Top != null && MenuManager.Current.Top is LevelSelectMenu)
+                    {
+                        LevelSelectMenu levelMenu = MenuManager.Current.Top as LevelSelectMenu;
+                        if (levelMenu != null)
+                        {
+                            if (levelMenu.HandleLeftClick(x, y) == true) { return; }
+                        }
+                    }
                     break;
             }
 

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AemonsNookMono.Levels
 {
-    public class Level1 : Level
+    public class SmallMeadow : Level
     {
         public override int WIDTH
         {
@@ -16,7 +16,7 @@ namespace AemonsNookMono.Levels
             get { return 11; }
         }
 
-        protected override string ascii
+        public override string ascii
         {
             get
             {

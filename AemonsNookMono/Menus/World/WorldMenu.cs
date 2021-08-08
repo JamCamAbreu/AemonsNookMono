@@ -44,7 +44,7 @@ namespace AemonsNookMono.Menus.World
             int buttonYadjust = 13;
             this.AddStaticButton("Pause", buttonSize, buttonSize, startX + (buttonWidth * 0), this.CenterY - buttonYadjust, gear, null, Collision.CollisionShape.Circle);
             this.AddStaticButton("Profile", buttonSize, buttonSize, startX + (buttonWidth * 1), this.CenterY - buttonYadjust, circle, null, Collision.CollisionShape.Circle);
-            this.AddStaticButton("Option 3", buttonSize, buttonSize, startX + (buttonWidth * 2), this.CenterY - buttonYadjust, square, null, Collision.CollisionShape.Circle);
+            this.AddStaticButton("Levels", buttonSize, buttonSize, startX + (buttonWidth * 2), this.CenterY - buttonYadjust, square, null, Collision.CollisionShape.Circle);
             this.AddStaticButton("Option 4", buttonSize, buttonSize, startX + (buttonWidth * 3), this.CenterY - buttonYadjust, diamond, null, Collision.CollisionShape.Circle);
             this.AddStaticButton("Option 5", buttonSize, buttonSize, startX + (buttonWidth * 4), this.CenterY - buttonYadjust, pentagon, null, Collision.CollisionShape.Circle);
             foreach (Button b in this.StaticButtons)
@@ -81,6 +81,14 @@ namespace AemonsNookMono.Menus.World
                         {
                             StateManager.Current.CurrentState = StateManager.State.Pause;
                             MenuManager.Current.AddMenu(new ProfileMenu(state));
+                        }
+                        return true;
+
+                    case "Levels":
+                        if (state == StateManager.State.World || state == StateManager.State.BuildSelection)
+                        {
+                            StateManager.Current.CurrentState = StateManager.State.Pause;
+                            MenuManager.Current.AddMenu(new LevelSelectMenu(state));
                         }
                         return true;
 

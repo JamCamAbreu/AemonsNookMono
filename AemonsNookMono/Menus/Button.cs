@@ -34,11 +34,18 @@ namespace AemonsNookMono.Menus
                 this.ButtonColor = null;
                 this.PrimaryColor = color;
             }
+            else if (color != null)
+            {
+                this.Sprites = null;
+                if (width > 0 && height > 0)
+                {
+                    this.ButtonColor = new ButtonColor(width, height, 1, (Color)color);
+                }
+            }
             else
             {
-                if (color == null) { throw new Exception("Whoops! Can't use a color button without a color!"); }
                 this.Sprites = null;
-                this.ButtonColor = new ButtonColor(width, height, 1, (Color)color);
+                this.ButtonColor = null;
             }
             this.Shape = collisionShape;
             MyCollision = new Collision(collisionShape, x, y, width, height);

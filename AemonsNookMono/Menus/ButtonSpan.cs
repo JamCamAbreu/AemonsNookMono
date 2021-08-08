@@ -73,12 +73,12 @@ namespace AemonsNookMono.Menus
                     priorButton.ScreenX = this.LeftX + this.PadWidth + (cellWidth / 2) + (cellNum * cellWidth);
                     priorButton.ScreenY = this.CenterY;
                 }
-                
+
+                priorButton.Width = cellWidth;
+                priorButton.Height = cellHeight;
 
                 if (priorButton.Active)
                 {
-                    priorButton.Width = cellWidth;
-                    priorButton.Height = cellHeight;
                     priorButton.MyCollision = new Collision(priorButton.Shape, priorButton.ScreenX, priorButton.ScreenY, cellWidth, cellHeight);
                     if (priorButton.Sprites != null)
                     {

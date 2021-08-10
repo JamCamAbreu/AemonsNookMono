@@ -140,6 +140,10 @@ namespace AemonsNookMono
             Graphics.Current.SpritesByName.Add("menu-world-square-hover", Content.Load<Texture2D>("Menus/WorldMenu/buttonSquareHover"));
             #endregion
 
+            #region Peeps
+            Graphics.Current.SpritesByName.Add("peep-royal", Content.Load<Texture2D>("World/Peeps/Peep-royal"));
+            #endregion
+
             Graphics.Current.Fonts.Add("debug", Content.Load<SpriteFont>("Fonts/Consolas"));
             Graphics.Current.Fonts.Add("arial", Content.Load<SpriteFont>("Fonts/Arial"));
             Graphics.Current.Fonts.Add("couriernew", Content.Load<SpriteFont>("Fonts/CourierNew"));

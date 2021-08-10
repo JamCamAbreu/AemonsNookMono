@@ -109,6 +109,10 @@ namespace AemonsNookMono.Admin
             debugMessages.Add($"Top Menu: {menuname}");
             #endregion
 
+            #region Peeps
+            debugMessages.Add($"Peep Count: {World.Current.Peeps.Count}");
+            #endregion
+
             debugMessages.Add($"--------------------------------");
 
             int maxLength = 0;

@@ -17,8 +17,8 @@ namespace AemonsNookMono.Menus.World
           (int)((float)Graphics.Current.ScreenHeight * 0.6f),
           Graphics.Current.ScreenMidX,
           Graphics.Current.ScreenMidY,
-          16,
-          16,
+          32,
+          32,
           Color.SaddleBrown,
           string.Empty)
         {
@@ -49,10 +49,13 @@ namespace AemonsNookMono.Menus.World
             levelButtons.AddButton("Cedric's Pass", Color.DarkGreen);
             this.ButtonSpans.Add(levelButtons);
 
-            ButtonSpan editorButtons = new ButtonSpan(this.CenterX + (this.Width)/4, rows.Buttons[1].ScreenY, this.Width / 2, (int)((float)rows.Buttons[1].Height * 1.25f), this.PadWidth * 4, this.PadHeight, ButtonSpan.SpanType.Horizontal);
+            ButtonSpan editorButtons = new ButtonSpan(
+                this.CenterX + (this.Width)/4, rows.Buttons[1].ScreenY, 
+                this.Width / 2, (int)((float)rows.Buttons[1].Height * 2), 
+                this.PadWidth, this.PadHeight, ButtonSpan.SpanType.Horizontal);
             editorButtons.AddButton("Width", null, false);
             editorButtons.AddButton("Height", null, false);
-            editorButtons.AddButton("Editor", Color.DarkOliveGreen);
+            editorButtons.AddButton("Create", Color.DarkOliveGreen);
             this.ButtonSpans.Add(editorButtons);
 
             int colNum = 0;
@@ -123,7 +126,7 @@ namespace AemonsNookMono.Menus.World
                 Debugger.Current.AddTempString($"You clicked on the {clicked.Name} button!");
                 switch (clicked.Name)
                 {
-                    case "Editor":
+                    case "Create":
                         StateManager.Current.CurrentState = StateManager.State.LevelEditor;
                         Level created = this.GenerateBlankLevel(this.customLevelWidth, this.customLevelHeight);
                         GameWorld.World.Current.Init(created);
@@ -147,19 +150,19 @@ namespace AemonsNookMono.Menus.World
 
                     case "widthplus":
                         if (this.customLevelWidth < 30) { this.customLevelWidth += 1; }
-                        break;
+                        return true;
 
                     case "widthminus":
                         if (this.customLevelWidth > 10) { this.customLevelWidth -= 1; }
-                        break;
+                        return true;
 
                     case "heightplus":
                         if (this.customLevelHeight < 25) { this.customLevelHeight += 1; }
-                        break;
+                        return true;
 
                     case "heightminus":
                         if (this.customLevelHeight > 10) { this.customLevelHeight -= 1; }
-                        break;
+                        return true;
 
                     default:
                         return base.HandleLeftClick(x, y);

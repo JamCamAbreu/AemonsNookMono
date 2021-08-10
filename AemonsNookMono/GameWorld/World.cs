@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using AemonsNookMono.Menus;
 using AemonsNookMono.Menus.World;
+using AemonsNookMono.Peeps;
 
 namespace AemonsNookMono.GameWorld
 {
@@ -53,6 +54,7 @@ namespace AemonsNookMono.GameWorld
         public List<Tile> StoneTiles { get; set; }
         public List<Tile> WaterTiles { get; set; }
         public SortedResourceList Resources { get; set; }
+        public List<Peep> Peeps { get; set; }
         #endregion
 
         #region Constructors
@@ -64,6 +66,7 @@ namespace AemonsNookMono.GameWorld
             this.StoneTiles = new List<Tile>();
             this.WaterTiles = new List<Tile>();
             this.Resources = new SortedResourceList();
+            this.Peeps = new List<Peep>();
             this.LoadLevel(level);
             this.sizeX = level.WIDTH * TILE_DIMENSION_PIXELS;
             this.sizeY = level.HEIGHT * TILE_DIMENSION_PIXELS;
@@ -134,6 +137,11 @@ namespace AemonsNookMono.GameWorld
             }
             this.Resources.Draw();
 
+            foreach (Peep peep in this.Peeps)
+            {
+                peep.Draw();
+            }
+
             Graphics.Current.SpriteB.End();
         }
         public void Update(GameTime gameTime)
@@ -143,6 +151,10 @@ namespace AemonsNookMono.GameWorld
                 t.Update();
             }
             this.Resources.Update();
+            foreach (Peep peep in this.Peeps)
+            {
+                peep.Update();
+            }
         }
         #endregion
 

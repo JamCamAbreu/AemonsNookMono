@@ -1,6 +1,7 @@
 ﻿using AemonsNookMono.GameWorld;
 using AemonsNookMono.Menus;
 using AemonsNookMono.Menus.World;
+using AemonsNookMono.Peeps;
 using AemonsNookMono.Player;
 using AemonsNookMono.Resources;
 using AemonsNookMono.Structures;
@@ -26,6 +27,7 @@ namespace AemonsNookMono.Admin
         private bool LeftMouseWait { get; set; }
         private bool EnterWait { get; set; }
         private bool EscapeWait { get; set; }
+        private bool ZeroWait { get; set; }
         #endregion
 
         #region Singleton Implementation
@@ -36,6 +38,7 @@ namespace AemonsNookMono.Admin
             this.LeftMouseWait = false;
             this.EnterWait = false;
             this.EscapeWait = false;
+            this.ZeroWait = false;
         }
         public static InputManager Current
         {
@@ -82,6 +85,13 @@ namespace AemonsNookMono.Admin
                 this.HandleEscape();
             }
             if (this.EscapeWait && Keyboard.GetState().IsKeyUp(Keys.Escape)) { this.EscapeWait = false; }
+
+            if (!this.ZeroWait && Keyboard.GetState().IsKeyDown(Keys.D0))
+            {
+                this.ZeroWait = true;
+                this.HandleZero();
+            }
+            if (this.ZeroWait && Keyboard.GetState().IsKeyUp(Keys.D0)) { this.ZeroWait = false; }
             #endregion
         }
         #endregion
@@ -250,6 +260,12 @@ namespace AemonsNookMono.Admin
                 MenuManager.Current.Top.HandleEscape();
                 return;
             }
+        }
+
+        private void HandleZero()
+        {
+            Peep p = new Peep();
+            World.Current.Peeps.Add(p);
         }
         #endregion
 

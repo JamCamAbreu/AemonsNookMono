@@ -16,8 +16,8 @@ namespace AemonsNookMono.Menus.World
                   (int)((float)Graphics.Current.ScreenHeight * 0.1f), // height
                   (int)((float)Graphics.Current.ScreenWidth * 0.25f), // x
                   (int)((float)Graphics.Current.ScreenHeight * 0.05f), // y
-                  12, // pad height 
-                  4, // pad width
+                  32, // pad height 
+                  32, // pad width
                   Color.DimGray, // foreground color
                   null) // sprite
         {
@@ -39,8 +39,8 @@ namespace AemonsNookMono.Menus.World
             menuItems.AddButton("Pause", gear, Collision.CollisionShape.Circle);
             menuItems.AddButton("Profile", circle, Collision.CollisionShape.Circle);
             menuItems.AddButton("Levels", square, Collision.CollisionShape.Rectangle);
-            //menuItems.AddButton("Option 4", diamond, Collision.CollisionShape.Circle);
-            //menuItems.AddButton("Option 5", pentagon, Collision.CollisionShape.Circle);
+            menuItems.AddButton("Option 4", diamond, Collision.CollisionShape.Circle);
+            menuItems.AddButton("Option 5", pentagon, Collision.CollisionShape.Circle);
             this.ButtonSpans.Add(menuItems);
 
             foreach (Button b in menuItems.Buttons)

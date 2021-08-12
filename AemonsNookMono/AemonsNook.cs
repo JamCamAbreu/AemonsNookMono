@@ -41,6 +41,9 @@ namespace AemonsNookMono
             #region Debug
             Graphics.Current.SpritesByName.Add("debug-square", Content.Load<Texture2D>("Debug/collisionSquare10by10"));
             Graphics.Current.SpritesByName.Add("debug-circle", Content.Load<Texture2D>("Debug/collisionCircle10by10"));
+            Graphics.Current.SpritesByName.Add("debug-tile-green", Content.Load<Texture2D>("Debug/TileGreen"));
+            Graphics.Current.SpritesByName.Add("debug-tile-orange", Content.Load<Texture2D>("Debug/TileOrange"));
+            Graphics.Current.SpritesByName.Add("debug-tile-red", Content.Load<Texture2D>("Debug/TileRed"));
             #endregion
 
             #region Dirt

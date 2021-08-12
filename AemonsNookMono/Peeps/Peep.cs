@@ -41,7 +41,7 @@ namespace AemonsNookMono.Peeps
         #region Interface
         public void Update()
         {
-            if (CurrentTask == null)
+            if (this.CurrentTask == null)
             {
                 if (Tasks.Count > 0)
                 {
@@ -56,15 +56,19 @@ namespace AemonsNookMono.Peeps
                 }
             }
 
-            if (CurrentTask != null)
+            if (this.CurrentTask != null)
             {
-                CurrentTask.Update();
-                if (CurrentTask.Finished) { this.CurrentTask = null; }
+                this.CurrentTask.Update();
+                if (this.CurrentTask.Finished) { this.CurrentTask = null; }
             }
         }
         public void Draw()
         {
             Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName["peep-royal"], new Vector2(this.CenterX, this.CenterY), Color.White);
+            if (this.CurrentTask != null)
+            {
+                this.CurrentTask.Draw();
+            }
         }
         #endregion
     }

@@ -63,21 +63,9 @@ namespace AemonsNookMono.Admin
         private bool WithinRadius(int radius, int x1, int y1, int x2, int y2)
         {
             if (radius < 1) { throw new Exception("Bro, seriously?"); }
-            int approxDist = IntSqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)); // Pythagorean brah.
+            int approxDist = Global.ApproxDist(x1, y1, x2, y2);
             if (radius >= approxDist) { return true; }
             else return false;
-        }
-        private int IntSqrt(int num)
-        {
-            if (0 == num) { return 0; }  // Avoid zero divide  
-            int n = (num / 2) + 1;       // Initial estimate, never low  
-            int n1 = (n + (num / n)) / 2;
-            while (n1 < n)
-            {
-                n = n1;
-                n1 = (n + (num / n)) / 2;
-            } // end while  
-            return n;
         }
         #endregion
 

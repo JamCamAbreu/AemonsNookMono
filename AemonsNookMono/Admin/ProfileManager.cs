@@ -30,24 +30,23 @@ namespace AemonsNookMono.Admin
         }
         #endregion
 
-        private Profile loadedProfile { get; set; }
+        private Profile loaded { get; set; }
         public Profile Loaded
         {
             get
             {
-                if (this.loadedProfile != null)
+                if (loaded == null)
                 {
-                    return loadedProfile;
+                    Profile Default = SaveManager.Current.LoadProfile(Profile.ProfileTheme.Bruno.ToString());
+                    if (Default == null)
+                    {
+                        Default = new Profile(Profile.ProfileTheme.Bruno);
+                    }
+                    loaded = Default;
                 }
-                else
-                {
-                    throw new Exception("Attempt to retrieve null profile. Is it safe to do so?");
-                }
+                return loaded;
             }
-            set
-            {
-                this.loadedProfile = value;
-            }
+            set { this.loaded = value; }
         }
     }
 }

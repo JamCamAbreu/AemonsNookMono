@@ -115,3 +115,6 @@ C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.
 C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\Menus\WorldMenu\buttonSquareHover.xnb
 C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\Debug\collisionCircle10by10.xnb
 C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\Debug\collisionSquare10by10.xnb
+C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\Debug\TileGreen.xnb
+C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\Debug\TileOrange.xnb
+C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\Debug\TileRed.xnb

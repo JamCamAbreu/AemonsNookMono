@@ -264,8 +264,16 @@ namespace AemonsNookMono.Admin
 
         private void HandleZero()
         {
-            Peep p = new Peep();
-            World.Current.Peeps.Add(p);
+            //for (int i = 0; i < 1000; i++)
+            //{
+            //    Peep p = new Peep();
+            //    World.Current.Peeps.Add(p);
+            //}
+            if (ProfileManager.Current.Loaded != null)
+            {
+                SaveManager.Current.SaveProfile(ProfileManager.Current.Loaded);
+            }
+            
         }
         #endregion
 

@@ -38,42 +38,38 @@ namespace AemonsNookMono.Menus.World
         {
             this.ButtonSpans.Clear();
 
-            ButtonSpan rows = new ButtonSpan(this.CenterX, this.CenterY, this.Width, this.Height, this.PadWidth, this.PadHeight, ButtonSpan.SpanType.Vertical);
-            rows.AddButton("", null);
-            rows.AddButton("", null);
-            rows.AddButton("Back", Color.Black);
+            Span rows = new Span(this.CenterX, this.CenterY, this.Width, this.Height, this.PadWidth, this.PadHeight, Span.SpanType.Vertical);
+            rows.AddButtonColor("", "", null);
+            rows.AddButtonColor("", "", null);
+            rows.AddButtonColor("Back", "Back", Color.Black);
             this.ButtonSpans.Add(rows);
 
-            ButtonSpan levelButtons = new ButtonSpan(this.CenterX, rows.Buttons[0].ScreenY, this.Width, rows.Buttons[0].Height, this.PadWidth, 0, ButtonSpan.SpanType.Horizontal);
-            levelButtons.AddButton("Small Meadow", Color.DarkGreen);
-            levelButtons.AddButton("Cedric's Pass", Color.DarkGreen);
+            Span levelButtons = new Span(this.CenterX, rows.Cells[0].ScreenY, this.Width, rows.Cells[0].Height, this.PadWidth, 0, Span.SpanType.Horizontal);
+            levelButtons.AddButtonColor("Small Meadow", "Small Meadow", Color.DarkGreen);
+            levelButtons.AddButtonColor("Cedric's Pass", "Cedric's Pass", Color.DarkGreen);
             this.ButtonSpans.Add(levelButtons);
 
-            ButtonSpan editorButtons = new ButtonSpan(
-                this.CenterX + (this.Width)/4, rows.Buttons[1].ScreenY, 
-                this.Width / 2, (int)((float)rows.Buttons[1].Height * 2), 
-                this.PadWidth, this.PadHeight, ButtonSpan.SpanType.Horizontal);
-            editorButtons.AddButton("Width", null, false);
-            editorButtons.AddButton("Height", null, false);
-            editorButtons.AddButton("Create", Color.DarkOliveGreen);
+            Span editorButtons = new Span(
+                this.CenterX + (this.Width)/4, rows.Cells[1].ScreenY, 
+                this.Width / 2, (int)((float)rows.Cells[1].Height * 2), 
+                this.PadWidth, this.PadHeight, Span.SpanType.Horizontal);
+            editorButtons.AddButtonColor("Width", "Width", null, false);
+            editorButtons.AddButtonColor("Height",  "Height", null, false);
+            editorButtons.AddButtonColor("Create",  "Create", Color.DarkOliveGreen);
             this.ButtonSpans.Add(editorButtons);
 
             int colNum = 0;
-            ButtonSpan WidthButtons = new ButtonSpan(editorButtons.Buttons[colNum].ScreenX, editorButtons.Buttons[colNum].ScreenY, editorButtons.Buttons[colNum].Width, editorButtons.Buttons[colNum].Height, 4, 4, ButtonSpan.SpanType.Vertical);
-            WidthButtons.AddButton("WidthTitle", null, false);
-            WidthButtons.AddButton("widthplus", Color.DarkOliveGreen);
-            WidthButtons.AddButton("widthminus", Color.DarkOliveGreen);
-            WidthButtons.Buttons[1].Title = "+";
-            WidthButtons.Buttons[2].Title = "-";
+            Span WidthButtons = new Span(editorButtons.Cells[colNum].ScreenX, editorButtons.Cells[colNum].ScreenY, editorButtons.Cells[colNum].Width, editorButtons.Cells[colNum].Height, 4, 4, Span.SpanType.Vertical);
+            WidthButtons.AddButtonColor("WidthTitle", string.Empty, null, false);
+            WidthButtons.AddButtonColor("widthplus", "+", Color.DarkOliveGreen);
+            WidthButtons.AddButtonColor("widthminus", "-", Color.DarkOliveGreen);
             this.ButtonSpans.Add(WidthButtons);
 
             colNum = 1;
-            ButtonSpan HeightButtons = new ButtonSpan(editorButtons.Buttons[colNum].ScreenX, editorButtons.Buttons[colNum].ScreenY, editorButtons.Buttons[colNum].Width, editorButtons.Buttons[colNum].Height, 4, 4, ButtonSpan.SpanType.Vertical);
-            HeightButtons.AddButton("HeightTitle", null, false);
-            HeightButtons.AddButton("heightplus", Color.DarkOliveGreen);
-            HeightButtons.AddButton("heightminus", Color.DarkOliveGreen);
-            HeightButtons.Buttons[1].Title = "+";
-            HeightButtons.Buttons[2].Title = "-";
+            Span HeightButtons = new Span(editorButtons.Cells[colNum].ScreenX, editorButtons.Cells[colNum].ScreenY, editorButtons.Cells[colNum].Width, editorButtons.Cells[colNum].Height, 4, 4, Span.SpanType.Vertical);
+            HeightButtons.AddButtonColor("HeightTitle", string.Empty, null, false);
+            HeightButtons.AddButtonColor("heightplus", "+", Color.DarkOliveGreen);
+            HeightButtons.AddButtonColor("heightminus", "-", Color.DarkOliveGreen);
             this.ButtonSpans.Add(HeightButtons);
         }
         public override void Refresh()
@@ -123,8 +119,8 @@ namespace AemonsNookMono.Menus.World
             Button clicked = this.CheckButtonCollisions(x, y);
             if (clicked != null)
             {
-                Debugger.Current.AddTempString($"You clicked on the {clicked.Name} button!");
-                switch (clicked.Name)
+                Debugger.Current.AddTempString($"You clicked on the {clicked.ButtonCode} button!");
+                switch (clicked.ButtonCode)
                 {
                     case "Create":
                         StateManager.Current.CurrentState = StateManager.State.LevelEditor;

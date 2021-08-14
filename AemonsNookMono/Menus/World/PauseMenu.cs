@@ -34,13 +34,13 @@ namespace AemonsNookMono.Menus.World
         public override void InitButtons()
         {
             this.ButtonSpans.Clear();
-            ButtonSpan buttons = new ButtonSpan(this.CenterX, this.CenterY, this.Width, this.Height, this.PadWidth, this.PadHeight, ButtonSpan.SpanType.Vertical);
-            buttons.AddButton("Options", Color.DarkGreen);
-            buttons.AddButton("", Color.DarkGreen);
-            buttons.AddButton("", Color.DarkGreen);
-            buttons.AddButton("Save / Exit Level", Color.Black);
-            buttons.AddButton("Back", Color.Black);
-            this.ButtonSpans.Add(buttons);
+            Span cells = new Span(this.CenterX, this.CenterY, this.Width, this.Height, this.PadWidth, this.PadHeight, Span.SpanType.Vertical);
+            cells.AddButtonColor("Options", "Options", Color.DarkGreen);
+            cells.AddText("Here is some test text.");
+            cells.AddText("Aemon's nook is a really neat game! This game has things in it that you have never seen before! Step right up folks!");
+            cells.AddButtonColor("Save / Exit Level", "Save / Exit Level", Color.Black);
+            cells.AddButtonColor("Back", "Back", Color.Black);
+            this.ButtonSpans.Add(cells);
         }
         public override void Refresh()
         {
@@ -66,8 +66,8 @@ namespace AemonsNookMono.Menus.World
             Button clicked = this.CheckButtonCollisions(x, y);
             if (clicked != null)
             {
-                Debugger.Current.AddTempString($"You clicked on the {clicked.Name} button!");
-                switch (clicked.Name)
+                Debugger.Current.AddTempString($"You clicked on the {clicked.ButtonCode} button!");
+                switch (clicked.ButtonCode)
                 {
                     case "Options":
                         MenuManager.Current.AddMenu(new PauseOptionsMenu());

@@ -7,7 +7,7 @@ using System.Text;
 
 namespace AemonsNookMono.Menus
 {
-    public class Button
+    public class Button : Cell
     {
         #region Enums
         public enum TextPosition
@@ -19,10 +19,10 @@ namespace AemonsNookMono.Menus
         #endregion
 
         #region Constructor
-        public Button(string name, int x, int y, int width, int height, ButtonSprite sprites, Color? color, Collision.CollisionShape collisionShape = Collision.CollisionShape.Rectangle, bool active = true)
+        public Button(string name, string title, int x, int y, int width, int height, ButtonSprite sprites, Color? color, Collision.CollisionShape collisionShape = Collision.CollisionShape.Rectangle, bool active = true)
         {
-            this.Name = name;
-            this.Title = name;
+            this.ButtonCode = name;
+            this.Title = title;
             this.Active = active;
             this.Width = width;
             this.Height = height;
@@ -49,7 +49,7 @@ namespace AemonsNookMono.Menus
                 this.Sprites = null;
                 if (width > 0 && height > 0)
                 {
-                    this.ButtonColor = new ButtonColor(width, height, 1, (Color)color);
+                    this.ButtonColor = new ButtonColor(width, height, this.ScreenX, this.ScreenY, 1, (Color)color);
                 }
                 MyCollision = new Collision(collisionShape, x, y, width, height);
             }
@@ -61,17 +61,12 @@ namespace AemonsNookMono.Menus
             this.Shape = collisionShape;
             
             this.TitlePosition = TextPosition.Inline;
-            this.DisplayTitle = true;
         }
         #endregion
 
         #region Public Properties
-        public string Name { get; set; }
-        public bool Active { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
-        public int ScreenX { get; set; }
-        public int ScreenY { get; set; }
+        public string ButtonCode { get; set; }
+        
         private Collision myCollision;
         public Collision MyCollision
         {
@@ -88,6 +83,29 @@ namespace AemonsNookMono.Menus
         #endregion
 
         #region Interface
+        public override void Refresh(int width, int height, int screenx, int screeny)
+        {
+            this.Width = width;
+            this.Height = height;
+            this.ScreenX = screenx;
+            this.ScreenY = screeny;
+
+            if (this.Active)
+            {
+                int collisionWidth = width;
+                int collisionHeight = height;
+                if (this.Sprites != null)
+                {
+                    collisionWidth = this.Sprites.SpriteWidth;
+                    collisionHeight = this.Sprites.SpriteHeight;
+                }
+                this.InitCollision(this.Shape, this.ScreenX, this.ScreenY, collisionWidth, collisionHeight);
+                if (this.PrimaryColor != null)
+                {
+                    this.ButtonColor = new ButtonColor(width, height, this.ScreenX, this.ScreenY, 1, (Color)this.PrimaryColor);
+                }
+            }
+        }
         public void InitCollision(Collision.CollisionShape shape, int x, int y, int width, int height)
         {
             if (shape == Collision.CollisionShape.Circle)
@@ -100,11 +118,11 @@ namespace AemonsNookMono.Menus
                 this.MyCollision = new Collision(shape, x, y, width, height);
             }
         }
-        public void Update()
+        public override void Update()
         {
 
         }
-        public void Draw()
+        public override void Draw()
         {
             if (!this.Active) { return; }
 
@@ -141,26 +159,26 @@ namespace AemonsNookMono.Menus
                 {
                     if (mouse.LeftButton == ButtonState.Pressed)
                     {
-                        this.ButtonColor.Pressed.Draw(this.ScreenX, this.ScreenY);
+                        this.ButtonColor.Pressed.Draw();
                     }
                     else
                     {
-                        this.ButtonColor.Hover.Draw(this.ScreenX, this.ScreenY);
+                        this.ButtonColor.Hover.Draw();
                     }
                 }
                 else  if (this.ButtonColor != null)
                 { 
-                    this.ButtonColor.Normal.Draw(this.ScreenX, this.ScreenY); 
+                    this.ButtonColor.Normal.Draw(); 
                 }
             }
 
-            if (DisplayTitle && !string.IsNullOrEmpty(Title))
+            if (!string.IsNullOrEmpty(Title))
             {
                 int buttonHeight = this.Height;
                 if (this.Sprites != null) { buttonHeight = this.Sprites.SpriteHeight; }
 
                 int stringx = Graphics.Current.CenterStringX(this.ScreenX, this.Title, "couriernew");
-                int stringy = Graphics.Current.CenterStringY(this.ScreenY, "couriernew");
+                int stringy = Graphics.Current.CenterStringY(this.ScreenY, this.Title, "couriernew");
 
                 int textAdjust = 0;
                 if (this.TitlePosition == TextPosition.Above) { textAdjust = -buttonHeight; }

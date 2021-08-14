@@ -35,15 +35,15 @@ namespace AemonsNookMono.Menus.World
             ButtonSprite diamond = new ButtonSprite("menu-world-diamond", "menu-world-diamond-hover", "menu-world-diamond-hover", 32, 32);
             ButtonSprite pentagon = new ButtonSprite("menu-world-pentagon", "menu-world-pentagon-hover", "menu-world-pentagon-hover", 32, 32);
 
-            ButtonSpan menuItems = new ButtonSpan(this.CenterX, this.CenterY - 12, this.Width, this.Height, this.PadWidth, this.PadHeight, ButtonSpan.SpanType.Horizontal);
-            menuItems.AddButton("Pause", gear, Collision.CollisionShape.Circle);
-            menuItems.AddButton("Profile", circle, Collision.CollisionShape.Circle);
-            menuItems.AddButton("Levels", square, Collision.CollisionShape.Rectangle);
-            menuItems.AddButton("Option 4", diamond, Collision.CollisionShape.Circle);
-            menuItems.AddButton("Option 5", pentagon, Collision.CollisionShape.Circle);
+            Span menuItems = new Span(this.CenterX, this.CenterY - 12, this.Width, this.Height, this.PadWidth, this.PadHeight, Span.SpanType.Horizontal);
+            menuItems.AddButtonSprite("Pause", "Pause", gear, Collision.CollisionShape.Circle);
+            menuItems.AddButtonSprite("Profile", "Profile", circle, Collision.CollisionShape.Circle);
+            menuItems.AddButtonSprite("Levels", "Levels", square, Collision.CollisionShape.Rectangle);
+            menuItems.AddButtonSprite("Option 4", "Option 4", diamond, Collision.CollisionShape.Circle);
+            menuItems.AddButtonSprite("Option 5", "Option 5", pentagon, Collision.CollisionShape.Circle);
             this.ButtonSpans.Add(menuItems);
 
-            foreach (Button b in menuItems.Buttons)
+            foreach (Button b in menuItems.Cells)
             {
                 b.TitlePosition = Button.TextPosition.Below;
             }
@@ -67,9 +67,9 @@ namespace AemonsNookMono.Menus.World
             Button clicked = this.CheckButtonCollisions(x, y);
             if (clicked != null)
             {
-                Debugger.Current.AddTempString($"You clicked on the {clicked.Name} button!");
+                Debugger.Current.AddTempString($"You clicked on the {clicked.ButtonCode} button!");
                 StateManager.State state = StateManager.Current.CurrentState;
-                switch (clicked.Name)
+                switch (clicked.ButtonCode)
                 {
                     case "Pause":
                         StateManager.Current.CurrentState = StateManager.State.Pause;

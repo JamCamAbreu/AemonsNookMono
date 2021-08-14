@@ -1,4 +1,5 @@
 ﻿using AemonsNookMono.Admin;
+using AemonsNookMono.Player;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -32,16 +33,24 @@ namespace AemonsNookMono.Menus.World
         public override void InitButtons()
         {
             this.ButtonSpans.Clear();
-            ButtonSpan buttons = new ButtonSpan(this.CenterX, (int)(this.CenterY - this.Height * 0.25), this.Width, this.Height / 3, this.PadWidth, this.PadHeight, ButtonSpan.SpanType.Horizontal);
-            buttons.AddButton("Profile 1", Color.RoyalBlue);
-            buttons.AddButton("Profile 2", Color.RoyalBlue);
-            buttons.AddButton("Profile 3", Color.RoyalBlue);
-            buttons.AddButton("Profile 4", Color.RoyalBlue);
-            buttons.AddButton("Profile 5", Color.RoyalBlue);
+            Span buttons = new Span(this.CenterX, (int)(this.CenterY - this.Height * 0.25), this.Width, this.Height / 3, this.PadWidth, this.PadHeight, Span.SpanType.Horizontal);
+
+            Profile loaded = ProfileManager.Current.Loaded;
+
+            List<Profile> allprofiles = SaveManager.Current.RetrieveAllSavedProfiles();
+            int i = 1;
+            foreach (Profile profile in allprofiles)
+            {
+                buttons.AddButtonColor($"Slot {i}", $"{profile.Name}", Color.RoyalBlue);
+                i++;
+            }
+            buttons.AddButtonColor("Create New", "Create New", Color.DarkOliveGreen);
+
+
             this.ButtonSpans.Add(buttons);
 
             Button BackButton = new Button(
-                "Back",
+                "Back", "Back",
                 this.CenterX,
                 (int)(this.CenterY + this.Height * 0.25),
                 this.Width - (this.PadWidth * 2),
@@ -76,8 +85,8 @@ namespace AemonsNookMono.Menus.World
             Button clicked = this.CheckButtonCollisions(x, y);
             if (clicked != null)
             {
-                Debugger.Current.AddTempString($"You clicked on the {clicked.Name} button!");
-                switch (clicked.Name)
+                Debugger.Current.AddTempString($"You clicked on the {clicked.ButtonCode} button!");
+                switch (clicked.ButtonCode)
                 {
                     case "Back":
                         StateManager.Current.CurrentState = this.OriginalState;

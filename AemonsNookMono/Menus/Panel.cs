@@ -7,13 +7,15 @@ using System.Text;
 
 namespace AemonsNookMono.Menus
 {
-    public class Panel
+    public class Panel : Cell
     {
         #region Constructor
-        public Panel(int width, int height, Color? backColor = null, Color? frontColor = null, float transparency = 1)
+        public Panel(int width, int height, int centerx, int centery, Color? backColor = null, Color? frontColor = null, float transparency = 1)
         {
             this.Width = width;
             this.Height = height;
+            this.ScreenX = centerx;
+            this.ScreenY = centery;
             this.BackgroundColor = backColor == null ? Color.Black : (Color)backColor;
             this.ForegroundColor = frontColor == null ? Color.Gray : (Color)frontColor;
             this.Transparency = transparency;
@@ -34,18 +36,16 @@ namespace AemonsNookMono.Menus
         #endregion
 
         #region Public Properties
-        public int Width { get; set; }
-        public int Height { get; set; }
         public Color BackgroundColor { get; set; }
         public Color ForegroundColor { get; set; }
         public float Transparency { get; set; }
         #endregion
 
         #region Interface
-        public void Draw(int x, int y)
+        public override void Draw()
         {
-            int centerBackX = x - this.Width / 2;
-            int centerBackY = y - this.Height / 2;
+            int centerBackX = this.ScreenX - this.Width/2;
+            int centerBackY = this.ScreenY - this.Height/2;
             int centerFrontX = centerBackX + Graphics.BORDER_THICKNESS;
             int centerFrontY = centerBackY + Graphics.BORDER_THICKNESS;
 
@@ -53,6 +53,18 @@ namespace AemonsNookMono.Menus
             Graphics.Current.SpriteB.Draw(this.background, new Vector2(centerBackX, centerBackY), Color.White);
             Graphics.Current.SpriteB.Draw(this.foreground, new Vector2(centerFrontX, centerFrontY), Color.White);
             Graphics.Current.SpriteB.End();
+        }
+
+        public override void Refresh(int width, int height, int screenx, int screeny)
+        {
+            this.Width = width;
+            this.Height = height;
+            this.ScreenX = screenx;
+            this.ScreenY = screeny;
+        }
+
+        public override void Update()
+        {
         }
         #endregion
 

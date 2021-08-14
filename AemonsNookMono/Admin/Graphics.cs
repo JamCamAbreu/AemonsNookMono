@@ -95,52 +95,32 @@ namespace AemonsNookMono.Admin
         public int ScreenMidY { get { return Graphics.Current.Device.Viewport.Height / 2; } }
         public int ScreenWidth { get { return Graphics.Current.Device.Viewport.Width; } }
         public int ScreenHeight { get { return Graphics.Current.Device.Viewport.Height; } }
-        public float FontCharWidth(string font)
-        {
-            if (string.IsNullOrEmpty(font) || !this.Fonts.ContainsKey(font)) { throw new Exception("Cannot find specified font"); }
-            switch (font)
-            {
-                case "debug":
-                    return 7;
-
-                case "arial":
-                    return 11;
-
-                case "couriernew":
-                    return 11.3f;
-
-                default:
-                    throw new Exception("Cannot find specified font");
-            }
-        }
-        public float FontCharHeight(string font)
-        {
-            if (string.IsNullOrEmpty(font) || !this.Fonts.ContainsKey(font)) { throw new Exception("Cannot find specified font"); }
-            switch (font)
-            {
-                case "debug":
-                    return 7;
-
-                case "arial":
-                    return 10;
-
-                case "couriernew":
-                    return 20f;
-
-                default:
-                    throw new Exception("Cannot find specified font");
-            }
-        }
         public int CenterStringX(int originX, string message, string font)
         {
             if (string.IsNullOrEmpty(message)) { return originX; }
             if (string.IsNullOrEmpty(font) || !this.Fonts.ContainsKey(font)) { throw new Exception("Cannot find specified font"); }
-            return originX - ((int)((this.FontCharWidth(font) * (double)message.Length) / 2f));
+            SpriteFont spritefont = this.Fonts[font];
+            return originX - (int)(spritefont.MeasureString(message).X / 2f);
         }
-        public int CenterStringY(int originY, string font)
+        public int CenterStringY(int originY, string message, string font)
         {
             if (string.IsNullOrEmpty(font) || !this.Fonts.ContainsKey(font)) { throw new Exception("Cannot find specified font"); }
-            return originY - ((int)(this.FontCharHeight(font) / 2f));
+            SpriteFont spritefont = this.Fonts[font];
+            return originY - (int)(spritefont.MeasureString(message).Y / 2f);
+        }
+        public int RightAlignStringX(int originX, string message, string font)
+        {
+            if (string.IsNullOrEmpty(message)) { return originX; }
+            if (string.IsNullOrEmpty(font) || !this.Fonts.ContainsKey(font)) { throw new Exception("Cannot find specified font"); }
+            SpriteFont spritefont = this.Fonts[font];
+            return originX - (int)(spritefont.MeasureString(message).Y);
+        }
+        public int StringWidth(string message, string font)
+        {
+            if (string.IsNullOrEmpty(message)) { return 0; }
+            if (string.IsNullOrEmpty(font) || !this.Fonts.ContainsKey(font)) { throw new Exception("Cannot find specified font"); }
+            SpriteFont spritefont = this.Fonts[font];
+            return (int)spritefont.MeasureString(message).X;
         }
         #endregion
 

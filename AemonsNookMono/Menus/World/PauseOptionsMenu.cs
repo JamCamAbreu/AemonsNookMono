@@ -26,28 +26,28 @@ namespace AemonsNookMono.Menus.World
             this.StaticButtons.Clear();
             this.ButtonSpans.Clear();
 
-            ButtonSpan buttonSpan = new ButtonSpan(this.CenterX, this.CenterY, this.Width, this.Height, this.PadWidth, this.PadHeight, ButtonSpan.SpanType.Vertical);
-            buttonSpan.AddButton("Show Circle Collisions", Color.DarkGreen);
-            buttonSpan.AddButton("", Color.Black);
-            buttonSpan.AddButton("", Color.Black);
-            buttonSpan.AddButton("", Color.Black);
-            buttonSpan.AddButton("Back", Color.Black);
+            Span buttonSpan = new Span(this.CenterX, this.CenterY, this.Width, this.Height, this.PadWidth, this.PadHeight, Span.SpanType.Vertical);
+            buttonSpan.AddButtonColor("Show Circle Collisions", "Show Circle Collisions", Color.DarkGreen);
+            buttonSpan.AddButtonColor("", "", Color.Black);
+            buttonSpan.AddButtonColor("", "", Color.Black);
+            buttonSpan.AddButtonColor("", "", Color.Black);
+            buttonSpan.AddButtonColor("Back", "Back", Color.Black);
             this.ButtonSpans.Add(buttonSpan);
 
             ButtonSprite bulletUnselectedSprites = new ButtonSprite("menu-bullet-unselected", "menu-bullet-unselected-hover", "menu-bullet-unselected-click", 50, 50);
             ButtonSprite bulletSelectedSprites = new ButtonSprite("menu-bullet-selected", "menu-bullet-selected-hover", "menu-bullet-selected-hover", 50, 50);
             int spriteDim = 50;
             int collisionDim = 50;
-            int radioYPos = buttonSpan.Buttons[1].ScreenY;
+            int radioYPos = buttonSpan.Cells[1].ScreenY;
             if (Graphics.Current.FullScreen == true)
             {
-                this.AddStaticButton("Windowed", spriteDim, spriteDim, this.CenterX - (this.Width / 4), radioYPos, bulletUnselectedSprites, null, Collision.CollisionShape.Circle);
-                this.AddStaticButton("Fullscreen", spriteDim, spriteDim, this.CenterX + (this.Width / 4), radioYPos, bulletSelectedSprites, null, Collision.CollisionShape.Circle);
+                this.AddStaticButton("Windowed", "Windowed", spriteDim, spriteDim, this.CenterX - (this.Width / 4), radioYPos, bulletUnselectedSprites, null, Collision.CollisionShape.Circle);
+                this.AddStaticButton("Fullscreen", "Fullscreen", spriteDim, spriteDim, this.CenterX + (this.Width / 4), radioYPos, bulletSelectedSprites, null, Collision.CollisionShape.Circle);
             }
             else
             {
-                this.AddStaticButton("Windowed", spriteDim, spriteDim, this.CenterX - (this.Width / 4), radioYPos, bulletSelectedSprites, null, Collision.CollisionShape.Circle);
-                this.AddStaticButton("Fullscreen", spriteDim, spriteDim, this.CenterX + (this.Width / 4), radioYPos, bulletUnselectedSprites, null, Collision.CollisionShape.Circle);
+                this.AddStaticButton("Windowed", "Windowed", spriteDim, spriteDim, this.CenterX - (this.Width / 4), radioYPos, bulletSelectedSprites, null, Collision.CollisionShape.Circle);
+                this.AddStaticButton("Fullscreen", "Fullscreen", spriteDim, spriteDim, this.CenterX + (this.Width / 4), radioYPos, bulletUnselectedSprites, null, Collision.CollisionShape.Circle);
             }
             this.StaticButtons[0].TitlePosition = Button.TextPosition.Above;
             this.StaticButtons[1].TitlePosition = Button.TextPosition.Above;
@@ -79,8 +79,8 @@ namespace AemonsNookMono.Menus.World
             Button clicked = this.CheckButtonCollisions(x, y);
             if (clicked != null)
             {
-                Debugger.Current.AddTempString($"You clicked on the {clicked.Name} button!");
-                switch (clicked.Name)
+                Debugger.Current.AddTempString($"You clicked on the {clicked.ButtonCode} button!");
+                switch (clicked.ButtonCode)
                 {
                     case "Windowed":
                         this.GetButton("Fullscreen").Sprites = new ButtonSprite("menu-bullet-unselected", "menu-bullet-unselected-hover", "menu-bullet-unselected-click", 50, 50);

@@ -254,6 +254,18 @@ namespace AemonsNookMono.Admin
                     MenuManager.Current.CloseTop();
                     return;
                 }
+                if (MenuManager.Current.Top != null && MenuManager.Current.Top is ProfileMenu)
+                {
+                    StateManager.Current.CurrentState = (MenuManager.Current.Top as ProfileMenu).OriginalState;
+                    MenuManager.Current.CloseTop();
+                    return;
+                }
+                if (MenuManager.Current.Top != null && MenuManager.Current.Top is LevelSelectMenu)
+                {
+                    StateManager.Current.CurrentState = (MenuManager.Current.Top as LevelSelectMenu).OriginalState;
+                    MenuManager.Current.CloseTop();
+                    return;
+                }
             }
             if (MenuManager.Current.Top != null)
             {

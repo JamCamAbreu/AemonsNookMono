@@ -14,7 +14,7 @@ namespace AemonsNookMono.Menus
             if ((padHeight * 2) >= height || (padWidth * 2) >= width) { throw new Exception("Desired padding is too large and malforms Menu."); }
 
             this.MenuName = menuname;
-            this.ButtonSpans = new List<ButtonSpan>();
+            this.ButtonSpans = new List<Span>();
             this.StaticButtons = new List<Button>();
             this.Width = width;
             this.Height = height;
@@ -31,7 +31,7 @@ namespace AemonsNookMono.Menus
 
             if (color != null)
             {
-                this.backPanel = new Panel(width, height, Color.Black, color, 1);
+                this.backPanel = new Panel(width, height, this.CenterX, this.CenterY, Color.Black, color, 1);
             }
             if (!string.IsNullOrEmpty(sprite))
             {
@@ -42,7 +42,7 @@ namespace AemonsNookMono.Menus
 
         #region Public Properties
         public string MenuName { get; set; }
-        public List<ButtonSpan> ButtonSpans { get; set; }
+        public List<Span> ButtonSpans { get; set; }
         public List<Button> StaticButtons { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
@@ -61,9 +61,9 @@ namespace AemonsNookMono.Menus
         {
         }
 
-        public void AddStaticButton(string name, int width, int height, int screenX, int screenY, ButtonSprite sprites = null, Color? color = null, Collision.CollisionShape shape = Collision.CollisionShape.Rectangle)
+        public void AddStaticButton(string name, string title, int width, int height, int screenX, int screenY, ButtonSprite sprites = null, Color? color = null, Collision.CollisionShape shape = Collision.CollisionShape.Rectangle)
         {
-            this.StaticButtons.Add(new Button(name, screenX, screenY, width, height, sprites, color, shape));
+            this.StaticButtons.Add(new Button(name, title, screenX, screenY, width, height, sprites, color, shape));
         }
 
         public Button CheckButtonCollisions(int x, int y)
@@ -76,7 +76,7 @@ namespace AemonsNookMono.Menus
                 }
             }
 
-            foreach (ButtonSpan span in this.ButtonSpans)
+            foreach (Span span in this.ButtonSpans)
             {
                 Button b;
                 b = span.CheckButtonCollisions(x, y);
@@ -89,13 +89,13 @@ namespace AemonsNookMono.Menus
         {
             foreach (Button b in this.StaticButtons)
             {
-                if (b.Name == name) 
+                if (b.ButtonCode == name) 
                 { 
                     return b; 
                 }
             }
 
-            foreach (ButtonSpan span in this.ButtonSpans)
+            foreach (Span span in this.ButtonSpans)
             {
                 if (span.ContainsButton(name))
                 {
@@ -115,14 +115,14 @@ namespace AemonsNookMono.Menus
                 Graphics.Current.SpriteB.DrawString(Graphics.Current.Fonts["couriernew"], this.MenuName, new Vector2(titlex, titley), Color.White);
                 Graphics.Current.SpriteB.End();
 
-                this.backPanel.Draw(this.CenterX, this.CenterY);
+                this.backPanel.Draw();
 
                 foreach (Button b in this.StaticButtons)
                 {
                     b.Draw();
                 }
 
-                foreach (ButtonSpan span in this.ButtonSpans)
+                foreach (Span span in this.ButtonSpans)
                 {
                     span.Draw();
                 }
@@ -132,7 +132,7 @@ namespace AemonsNookMono.Menus
         {
             if (this.ForegroundColor != null)
             {
-                this.backPanel = new Panel(this.Width, this.Height, Color.Black, this.ForegroundColor, 1);
+                this.backPanel = new Panel(this.Width, this.Height, this.CenterX, this.CenterY, Color.Black, this.ForegroundColor, 1);
             }
             if (!string.IsNullOrEmpty(this.Sprite))
             {
@@ -148,14 +148,14 @@ namespace AemonsNookMono.Menus
             Button clicked = this.CheckButtonCollisions(x, y);
             if (clicked != null)
             {
-                switch (clicked.Name)
+                switch (clicked.ButtonCode)
                 {
                     case "Back":
                         MenuManager.Current.CloseTop();
                         return true;
 
                     default:
-                        Debugger.Current.AddTempString($"Button {clicked.Name} has no defined functionality yet.");
+                        Debugger.Current.AddTempString($"Button {clicked.ButtonCode} has no defined functionality yet.");
                         return true;
                 }
             }

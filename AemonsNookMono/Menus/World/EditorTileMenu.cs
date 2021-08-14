@@ -32,12 +32,12 @@ namespace AemonsNookMono.Menus.World
         {
             this.ButtonSpans.Clear();
 
-            ButtonSpan levelButtons = new ButtonSpan(this.CenterX, this.CenterY, this.Width, this.Height, this.PadWidth, this.PadHeight, ButtonSpan.SpanType.Vertical);
-            levelButtons.AddButton("Grass", Color.DarkOliveGreen);
-            levelButtons.AddButton("Dirt", Color.SaddleBrown);
-            levelButtons.AddButton("Tree", Color.Green);
-            levelButtons.AddButton("Rock", Color.LightSlateGray);
-            levelButtons.AddButton("Water", Color.Blue);
+            Span levelButtons = new Span(this.CenterX, this.CenterY, this.Width, this.Height, this.PadWidth, this.PadHeight, Span.SpanType.Vertical);
+            levelButtons.AddButtonColor("Grass", "Grass", Color.DarkOliveGreen);
+            levelButtons.AddButtonColor("Dirt", "Dirt", Color.SaddleBrown);
+            levelButtons.AddButtonColor("Tree", "Tree", Color.Green);
+            levelButtons.AddButtonColor("Rock",  "Rock", Color.LightSlateGray);
+            levelButtons.AddButtonColor("Water",  "Water", Color.Blue);
             this.ButtonSpans.Add(levelButtons);
         }
         public override bool HandleLeftClick(int x, int y)
@@ -45,8 +45,8 @@ namespace AemonsNookMono.Menus.World
             Button clicked = this.CheckButtonCollisions(x, y);
             if (clicked != null)
             {
-                Debugger.Current.AddTempString($"You clicked on the {clicked.Name} button!");
-                switch (clicked.Name)
+                Debugger.Current.AddTempString($"You clicked on the {clicked.ButtonCode} button!");
+                switch (clicked.ButtonCode)
                 {
                     case "Grass":
                         return true;

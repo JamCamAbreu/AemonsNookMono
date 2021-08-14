@@ -13,10 +13,12 @@ namespace AemonsNookMono.Player
         public int TimesClicked { get; set; }
         #endregion
 
-        public Profile(ProfileTheme theme)
+        #region Constructors
+        public Profile() { }
+        public Profile(ProfileTheme theme, string name)
         {
             this.Theme = theme;
-            this.CharacterName = this.Theme.ToString();
+            this.Name = name;
 
             #region Zero Stats
             TotalTimePlayed = 0;
@@ -24,6 +26,8 @@ namespace AemonsNookMono.Player
             TotalStoneCollected = 0;
             #endregion
         }
+        #endregion
+
         public enum ProfileTheme
         {
             // -----------------------------------------------------------
@@ -37,6 +41,6 @@ namespace AemonsNookMono.Player
             Jade    //  brown       green       green       aqua
         }
         public ProfileTheme Theme { get; set; }
-        public string CharacterName { get; set; }
+        public string Name { get; set; }
     }
 }

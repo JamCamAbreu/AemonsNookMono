@@ -37,10 +37,11 @@ namespace AemonsNookMono.Admin
             {
                 if (loaded == null)
                 {
-                    Profile Default = SaveManager.Current.LoadProfile(Profile.ProfileTheme.Bruno.ToString());
+                    Profile Default = SaveManager.Current.LoadProfile("Default");
                     if (Default == null)
                     {
-                        Default = new Profile(Profile.ProfileTheme.Bruno);
+                        Default = new Profile(Profile.ProfileTheme.Bruno, "Default");
+                        SaveManager.Current.SaveProfile(Default);
                     }
                     loaded = Default;
                 }

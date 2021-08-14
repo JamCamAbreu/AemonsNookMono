@@ -131,13 +131,26 @@ namespace AemonsNookMono.Admin
         public List<Profile> RetrieveAllSavedProfiles()
         {
             List<Profile> all = new List<Profile>();
+            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), $"AemonsNook{Path.DirectorySeparatorChar}Profile");
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            DirectoryInfo di = new DirectoryInfo(path);
+            FileInfo[] files = di.GetFiles("*.nook");
+            foreach (FileInfo file in files)
+            {
+                string filename = file.Name.Substring(0, file.Name.LastIndexOf('.'));
+                Profile cur = this.LoadProfile(filename);
+                all.Add(cur);
+            }
             return all;
         }
         public void SaveProfile(Profile profile)
         {
-            if (ProfileManager.Current.Loaded != null)
+            if (profile != null)
             {
-                NookFile savefile = new NookFile("Profile", profile.CharacterName);
+                NookFile savefile = new NookFile("Profile", profile.Name);
                 foreach (var prop in typeof(Profile).GetProperties())
                 {
                     savefile.SetValue(prop.Name, prop.GetValue(profile).ToString());
@@ -152,7 +165,7 @@ namespace AemonsNookMono.Admin
             NookFile file = new NookFile("Profile", profileName);
             if (file.CheckFileExists())
             {
-                profile = new Profile(Profile.ProfileTheme.Aemon);
+                profile = new Profile();
                 file.LoadProperties();
                 foreach (var prop in typeof(Profile).GetProperties())
                 {

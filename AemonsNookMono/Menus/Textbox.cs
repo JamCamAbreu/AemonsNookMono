@@ -120,7 +120,6 @@ namespace AemonsNookMono.Menus
             Graphics.Current.SpriteB.Begin();
             Graphics.Current.SpriteB.DrawString(Graphics.Current.Fonts[this.Font], this.formattedText, new Vector2(stringx, stringy + vertAdjust), Color.White);
             Graphics.Current.SpriteB.End();
-
         }
         #endregion
 

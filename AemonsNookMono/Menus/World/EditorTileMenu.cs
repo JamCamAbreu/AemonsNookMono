@@ -30,7 +30,7 @@ namespace AemonsNookMono.Menus.World
         #region Interface
         public override void InitButtons()
         {
-            this.ButtonSpans.Clear();
+            this.Spans.Clear();
 
             Span levelButtons = new Span(this.CenterX, this.CenterY, this.Width, this.Height, this.PadWidth, this.PadHeight, Span.SpanType.Vertical);
             levelButtons.AddButtonColor("Grass", "Grass", Color.DarkOliveGreen);
@@ -38,7 +38,7 @@ namespace AemonsNookMono.Menus.World
             levelButtons.AddButtonColor("Tree", "Tree", Color.Green);
             levelButtons.AddButtonColor("Rock",  "Rock", Color.LightSlateGray);
             levelButtons.AddButtonColor("Water",  "Water", Color.Blue);
-            this.ButtonSpans.Add(levelButtons);
+            this.Spans.Add(levelButtons);
         }
         public override bool HandleLeftClick(int x, int y)
         {

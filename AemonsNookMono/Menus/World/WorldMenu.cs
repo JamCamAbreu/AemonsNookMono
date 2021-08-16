@@ -27,7 +27,7 @@ namespace AemonsNookMono.Menus.World
         public override void InitButtons()
         {
             this.StaticButtons.Clear();
-            this.ButtonSpans.Clear();
+            this.Spans.Clear();
 
             ButtonSprite gear = new ButtonSprite("menu-world-gear", "menu-world-gear-hover", "menu-world-gear-hover", 32, 32);
             ButtonSprite circle = new ButtonSprite("menu-world-circle", "menu-world-circle-hover", "menu-world-circle-hover", 32, 32);
@@ -39,9 +39,9 @@ namespace AemonsNookMono.Menus.World
             menuItems.AddButtonSprite("Pause", "Pause", gear, Collision.CollisionShape.Circle);
             menuItems.AddButtonSprite("Profile", "Profile", circle, Collision.CollisionShape.Circle);
             menuItems.AddButtonSprite("Levels", "Levels", square, Collision.CollisionShape.Rectangle);
-            menuItems.AddButtonSprite("Option 4", "Option 4", diamond, Collision.CollisionShape.Circle);
-            menuItems.AddButtonSprite("Option 5", "Option 5", pentagon, Collision.CollisionShape.Circle);
-            this.ButtonSpans.Add(menuItems);
+            menuItems.AddButtonSprite("Test", "Test", diamond, Collision.CollisionShape.Circle);
+            //menuItems.AddButtonSprite("Option 5", "Option 5", pentagon, Collision.CollisionShape.Circle);
+            this.Spans.Add(menuItems);
 
             foreach (Button b in menuItems.Cells)
             {
@@ -84,6 +84,11 @@ namespace AemonsNookMono.Menus.World
                     case "Levels":
                         StateManager.Current.CurrentState = StateManager.State.Pause;
                         MenuManager.Current.AddMenu(new LevelSelectMenu(state));
+                        return true;
+
+                    case "Test":
+                        StateManager.Current.CurrentState = StateManager.State.Pause;
+                        MenuManager.Current.AddMenu(new TestMenu(state));
                         return true;
 
                     default:

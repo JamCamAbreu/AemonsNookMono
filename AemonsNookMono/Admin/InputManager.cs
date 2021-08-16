@@ -192,6 +192,22 @@ namespace AemonsNookMono.Admin
                             if (levelMenu.HandleLeftClick(x, y) == true) { return; }
                         }
                     }
+                    if (MenuManager.Current.Top != null && MenuManager.Current.Top is TestMenu)
+                    {
+                        TestMenu menu = MenuManager.Current.Top as TestMenu;
+                        if (menu != null)
+                        {
+                            if (menu.HandleLeftClick(x, y) == true) { return; }
+                        }
+                    }
+                    if (MenuManager.Current.Top != null && MenuManager.Current.Top is ProfileCreateMenu)
+                    {
+                        ProfileCreateMenu menu = MenuManager.Current.Top as ProfileCreateMenu;
+                        if (menu != null)
+                        {
+                            if (menu.HandleLeftClick(x, y) == true) { return; }
+                        }
+                    }
                     break;
 
 
@@ -266,6 +282,12 @@ namespace AemonsNookMono.Admin
                     MenuManager.Current.CloseTop();
                     return;
                 }
+                if (MenuManager.Current.Top != null && MenuManager.Current.Top is TestMenu)
+                {
+                    StateManager.Current.CurrentState = (MenuManager.Current.Top as TestMenu).OriginalState;
+                    MenuManager.Current.CloseTop();
+                    return;
+                }
             }
             if (MenuManager.Current.Top != null)
             {
@@ -276,16 +298,16 @@ namespace AemonsNookMono.Admin
 
         private void HandleZero()
         {
-            //for (int i = 0; i < 1000; i++)
-            //{
-            //    Peep p = new Peep();
-            //    World.Current.Peeps.Add(p);
-            //}
-            if (ProfileManager.Current.Loaded != null)
+            for (int i = 0; i < 1; i++)
             {
-                SaveManager.Current.SaveProfile(ProfileManager.Current.Loaded);
+                Peep p = new Peep();
+                World.Current.Peeps.Add(p);
             }
-            
+            //if (ProfileManager.Current.Loaded != null)
+            //{
+            //    SaveManager.Current.SaveProfile(ProfileManager.Current.Loaded);
+            //}
+
         }
         #endregion
 

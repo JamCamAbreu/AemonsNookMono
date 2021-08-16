@@ -141,6 +141,11 @@ namespace AemonsNookMono
             Graphics.Current.SpritesByName.Add("menu-world-pentagon-hover", Content.Load<Texture2D>("Menus/WorldMenu/buttonPentagonHover"));
             Graphics.Current.SpritesByName.Add("menu-world-square", Content.Load<Texture2D>("Menus/WorldMenu/buttonSquare"));
             Graphics.Current.SpritesByName.Add("menu-world-square-hover", Content.Load<Texture2D>("Menus/WorldMenu/buttonSquareHover"));
+
+            Graphics.Current.SpritesByName.Add("menu-arrow-right", Content.Load<Texture2D>("Menus/WorldMenu/Right"));
+            Graphics.Current.SpritesByName.Add("menu-arrow-right-hover", Content.Load<Texture2D>("Menus/WorldMenu/RightHover"));
+            Graphics.Current.SpritesByName.Add("menu-arrow-left", Content.Load<Texture2D>("Menus/WorldMenu/Left"));
+            Graphics.Current.SpritesByName.Add("menu-arrow-left-hover", Content.Load<Texture2D>("Menus/WorldMenu/LeftHover"));
             #endregion
 
             #region Peeps

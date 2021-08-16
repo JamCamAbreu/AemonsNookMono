@@ -32,7 +32,7 @@ namespace AemonsNookMono.Menus.World
         #region Interface
         public override void InitButtons()
         {
-            this.ButtonSpans.Clear();
+            this.Spans.Clear();
             Span buttons = new Span(this.CenterX, (int)(this.CenterY - this.Height * 0.25), this.Width, this.Height / 3, this.PadWidth, this.PadHeight, Span.SpanType.Horizontal);
 
             Profile loaded = ProfileManager.Current.Loaded;
@@ -47,7 +47,7 @@ namespace AemonsNookMono.Menus.World
             buttons.AddButtonColor("Create New", "Create New", Color.DarkOliveGreen);
 
 
-            this.ButtonSpans.Add(buttons);
+            this.Spans.Add(buttons);
 
             Button BackButton = new Button(
                 "Back", "Back",
@@ -91,6 +91,11 @@ namespace AemonsNookMono.Menus.World
                     case "Back":
                         StateManager.Current.CurrentState = this.OriginalState;
                         MenuManager.Current.CloseTop();
+                        return true;
+
+                    case "Create New":
+                        ProfileCreateMenu createmenu = new ProfileCreateMenu();
+                        MenuManager.Current.AddMenu(createmenu);
                         return true;
 
                     default:

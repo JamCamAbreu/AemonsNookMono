@@ -14,7 +14,7 @@ namespace AemonsNookMono.Menus
             if ((padHeight * 2) >= height || (padWidth * 2) >= width) { throw new Exception("Desired padding is too large and malforms Menu."); }
 
             this.MenuName = menuname;
-            this.ButtonSpans = new List<Span>();
+            this.Spans = new List<Span>();
             this.StaticButtons = new List<Button>();
             this.Width = width;
             this.Height = height;
@@ -42,7 +42,7 @@ namespace AemonsNookMono.Menus
 
         #region Public Properties
         public string MenuName { get; set; }
-        public List<Span> ButtonSpans { get; set; }
+        public List<Span> Spans { get; set; }
         public List<Button> StaticButtons { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
@@ -76,7 +76,7 @@ namespace AemonsNookMono.Menus
                 }
             }
 
-            foreach (Span span in this.ButtonSpans)
+            foreach (Span span in this.Spans)
             {
                 Button b;
                 b = span.CheckButtonCollisions(x, y);
@@ -95,7 +95,7 @@ namespace AemonsNookMono.Menus
                 }
             }
 
-            foreach (Span span in this.ButtonSpans)
+            foreach (Span span in this.Spans)
             {
                 if (span.ContainsButton(name))
                 {
@@ -122,7 +122,7 @@ namespace AemonsNookMono.Menus
                     b.Draw();
                 }
 
-                foreach (Span span in this.ButtonSpans)
+                foreach (Span span in this.Spans)
                 {
                     span.Draw();
                 }
@@ -141,7 +141,10 @@ namespace AemonsNookMono.Menus
         }
         public virtual void Update()
         {
-
+            foreach (Span span in this.Spans)
+            {
+                span.Update();
+            }
         }
         public virtual bool HandleLeftClick(int x, int y)
         {

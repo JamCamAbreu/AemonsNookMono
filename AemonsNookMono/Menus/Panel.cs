@@ -20,18 +20,27 @@ namespace AemonsNookMono.Menus
             this.ForegroundColor = frontColor == null ? Color.Gray : (Color)frontColor;
             this.Transparency = transparency;
 
-            Color[] data;
-            this.background = new Texture2D(Graphics.Current.Device, width, height);
-            data = new Color[width * height];
-            for (int i = 0; i < data.Length; ++i) data[i] = this.BackgroundColor;
-            this.background.SetData(data);
+            if (width > 1 && height > 1)
+            {
+                Color[] data;
+                this.background = new Texture2D(Graphics.Current.Device, width, height);
+                data = new Color[width * height];
+                for (int i = 0; i < data.Length; ++i) data[i] = this.BackgroundColor;
+                this.background.SetData(data);
 
-            int fwidth = width - Graphics.BORDER_THICKNESS*2;
-            int fheight = height - Graphics.BORDER_THICKNESS*2;
-            this.foreground = new Texture2D(Graphics.Current.Device, fwidth, fheight);
-            data = new Color[fwidth * fheight];
-            for (int i = 0; i < data.Length; ++i) data[i] = this.ForegroundColor;
-            this.foreground.SetData(data);
+                int fwidth = width - Graphics.BORDER_THICKNESS * 2;
+                int fheight = height - Graphics.BORDER_THICKNESS * 2;
+                this.foreground = new Texture2D(Graphics.Current.Device, fwidth, fheight);
+                data = new Color[fwidth * fheight];
+                for (int i = 0; i < data.Length; ++i) data[i] = this.ForegroundColor;
+                this.foreground.SetData(data);
+            }
+            else
+            {
+                this.foreground = null;
+                this.background = null;
+            }
+
         }
         #endregion
 
@@ -44,6 +53,8 @@ namespace AemonsNookMono.Menus
         #region Interface
         public override void Draw()
         {
+            if (this.background == null || this.foreground == null) { return; }
+
             int centerBackX = this.ScreenX - this.Width/2;
             int centerBackY = this.ScreenY - this.Height/2;
             int centerFrontX = centerBackX + Graphics.BORDER_THICKNESS;
@@ -61,6 +72,27 @@ namespace AemonsNookMono.Menus
             this.Height = height;
             this.ScreenX = screenx;
             this.ScreenY = screeny;
+
+            if (width > 1 && height > 1)
+            {
+                Color[] data;
+                this.background = new Texture2D(Graphics.Current.Device, width, height);
+                data = new Color[width * height];
+                for (int i = 0; i < data.Length; ++i) data[i] = this.BackgroundColor;
+                this.background.SetData(data);
+
+                int fwidth = width - Graphics.BORDER_THICKNESS * 2;
+                int fheight = height - Graphics.BORDER_THICKNESS * 2;
+                this.foreground = new Texture2D(Graphics.Current.Device, fwidth, fheight);
+                data = new Color[fwidth * fheight];
+                for (int i = 0; i < data.Length; ++i) data[i] = this.ForegroundColor;
+                this.foreground.SetData(data);
+            }
+            else
+            {
+                this.foreground = null;
+                this.background = null;
+            }
         }
 
         public override void Update()

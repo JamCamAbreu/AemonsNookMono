@@ -33,7 +33,6 @@ namespace AemonsNookMono.Menus
             {
                 this.Sprites = sprites;
                 this.ButtonColor = null;
-                this.PrimaryColor = color;
                 if (collisionShape == Collision.CollisionShape.Circle)
                 {
                     if (sprites.SpriteWidth > sprites.SpriteHeight) { MyCollision = new Collision(collisionShape, x, y, sprites.SpriteHeight, sprites.SpriteHeight); }
@@ -44,7 +43,7 @@ namespace AemonsNookMono.Menus
                     MyCollision = new Collision(collisionShape, x, y, sprites.SpriteWidth, sprites.SpriteHeight);
                 }
             }
-            else if (color != null)
+            else if (this.PrimaryColor != null)
             {
                 this.Sprites = null;
                 if (width > 0 && height > 0)

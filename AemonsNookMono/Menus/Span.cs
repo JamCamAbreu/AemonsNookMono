@@ -7,7 +7,7 @@ using System.Text;
 
 namespace AemonsNookMono.Menus
 {
-    public class Span
+    public class Span : Cell
     {
         #region Enums
         public enum SpanType
@@ -18,6 +18,28 @@ namespace AemonsNookMono.Menus
         #endregion
 
         #region Constructor
+        public Span (SpanType type)
+        {
+            this.Type = type;
+            this.CenterX = 0;
+            this.CenterY = 0;
+            this.Width = 1;
+            this.Height = 1;
+            this.PadWidth = 0;
+            this.PadHeight = 0;
+            this.Cells = new List<Cell>();
+        }
+        public Span(int padWidth, int padHeight, SpanType type)
+        {
+            this.Type = type;
+            this.CenterX = 0;
+            this.CenterY = 0;
+            this.Width = padWidth * 2;
+            this.Height = padHeight * 2;
+            this.PadWidth = padWidth;
+            this.PadHeight = padHeight;
+            this.Cells = new List<Cell>();
+        }
         public Span(int x, int y, int width, int height, int padWidth, int padHeight, SpanType type)
         {
             this.Type = type;
@@ -35,13 +57,12 @@ namespace AemonsNookMono.Menus
         public SpanType Type { get; set; }
         public int CenterX { get; set; }
         public int CenterY { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
         public int PadWidth { get; set; }
         public int PadHeight { get; set; }
         public List<Cell> Cells { get; set; }
         public int TopY { get { return this.CenterY - (this.Height / 2); } }
         public int LeftX { get { return this.CenterX - (this.Width / 2); } }
+        public List<Span> ChildSpans = new List<Span>();
         #endregion
 
         #region Interface
@@ -93,18 +114,81 @@ namespace AemonsNookMono.Menus
             Textbox created = new Textbox(text, 0, 0, 8, 8, font, background, horzAlign, vertAlign, active);
             this.AddDynamicCell(created);
         }
-        public void Draw()
+        public void AddSprite(string sprite, int spritewidth, int spriteheight)
         {
-            foreach (Cell b in this.Cells)
+            SpriteSimple simple = new SpriteSimple(sprite, spritewidth, spriteheight, 0, 0, 1, 1);
+            this.AddDynamicCell(simple);
+        }
+        public void AddAnimatedSprite(List<string> sprites, int framesTillUpdate, int spritewidth, int spriteheight)
+        {
+            SpriteAnimated animated = new SpriteAnimated(sprites, spritewidth, spriteheight, framesTillUpdate, 0, 0, 1, 1);
+            this.AddDynamicCell(animated);
+        }
+        public void AddSpan(Span span)
+        {
+            this.AddDynamicCell(span);
+        }
+        public override void Draw()
+        {
+            foreach (Cell cell in this.Cells)
             {
-                b.Draw();
+                cell.Draw();
             }
+            foreach (Span span in this.ChildSpans)
+            {
+                span.Draw();
+            }
+        }
+        public override void Update()
+        {
+            foreach (Cell cell in this.Cells)
+            {
+                cell.Update();
+            }
+            foreach (Span span in this.ChildSpans)
+            {
+                span.Update();
+            }
+        }
+        public override void Refresh(int width, int height, int screenx, int screeny)
+        {
+            this.Width = width;
+            this.Height = height;
+            this.CenterX = screenx;
+            this.CenterY = screeny;
+
+            int numCells = this.Cells.Count;
+            int cellHeight = this.Height - (this.PadHeight * 2); // default
+            int cellWidth = this.Width - this.PadWidth * 2; // default
+            if (this.Type == SpanType.Vertical)
+            {
+                cellHeight = (this.Height - this.PadHeight * 2) / ((numCells * 2) - 1);
+            }
+            else if (this.Type == SpanType.Horizontal)
+            {
+                cellWidth = (this.Width - this.PadWidth * 2) / ((numCells * 2) - 1);
+            }
+            int cellNum = 0;
+            foreach (Cell cell in this.Cells)
+            {
+                CellDimension dim = this.CalculateDimensions(cellWidth, cellHeight, cellNum);
+                cell.Refresh(dim.Width, dim.Height, dim.CenterX, dim.CenterY);
+                cellNum += 2;
+            }
+        }
+        public void Refresh()
+        {
+            this.Refresh(this.Width, this.Height, this.CenterX, this.CenterY);
         }
         public Button GetButton(string name)
         {
             foreach (Button b in this.Cells.Where(cell => cell is Button))
             {
                 if (b.ButtonCode == name) { return b; }
+            }
+            foreach (Span span in this.Cells.Where(cell => cell is Span))
+            {
+                if (span.ContainsButton(name)) { return span.GetButton(name); }
             }
             return null;
         }
@@ -113,6 +197,10 @@ namespace AemonsNookMono.Menus
             foreach (Button b in this.Cells.Where(cell => cell is Button))
             {
                 if (b.ButtonCode == name) { return true; }
+            }
+            foreach (Span span in this.Cells.Where(cell => cell is Span))
+            {
+                if (span.ContainsButton(name)) { return true; }
             }
             return false;
         }
@@ -124,6 +212,12 @@ namespace AemonsNookMono.Menus
                 {
                     return b;
                 }
+            }
+            Button button;
+            foreach (Span span in this.Cells.Where(cell => cell is Span))
+            {
+                button = span.CheckButtonCollisions(x, y);
+                if (button != null) { return button; }
             }
             return null;
         }

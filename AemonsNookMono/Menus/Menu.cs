@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace AemonsNookMono.Menus
@@ -15,7 +16,7 @@ namespace AemonsNookMono.Menus
 
             this.MenuName = menuname;
             this.Spans = new List<Span>();
-            this.StaticButtons = new List<Button>();
+            this.StaticCells = new List<Cell>();
             this.Width = width;
             this.Height = height;
             this.CenterX = x;
@@ -43,7 +44,7 @@ namespace AemonsNookMono.Menus
         #region Public Properties
         public string MenuName { get; set; }
         public List<Span> Spans { get; set; }
-        public List<Button> StaticButtons { get; set; }
+        public List<Cell> StaticCells { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
         public int CenterX { get; set; }
@@ -63,17 +64,31 @@ namespace AemonsNookMono.Menus
 
         public void AddStaticButton(string name, string title, int width, int height, int screenX, int screenY, ButtonSprite sprites = null, Color? color = null, Collision.CollisionShape shape = Collision.CollisionShape.Rectangle)
         {
-            this.StaticButtons.Add(new Button(name, title, screenX, screenY, width, height, sprites, color, shape));
+            this.StaticCells.Add(new Button(name, title, screenX, screenY, width, height, sprites, color, shape));
+        }
+        public void AddStaticSpan(int centerx, int centery, int width, int height, int padwidth, int padheight, Span.SpanType type)
+        {
+            this.StaticCells.Add(new Span(centerx, centery, width, height, padwidth, padheight, type));
+        }
+        public void AddStaticSpan(Span span)
+        {
+            this.StaticCells.Add(span);
         }
 
         public Button CheckButtonCollisions(int x, int y)
         {
-            foreach (Button b in this.StaticButtons)
+            foreach (Button b in this.StaticCells.Where(cell => cell is Button))
             {
                 if (b.MyCollision != null && b.MyCollision.IsCollision(x, y))
                 {
                     return b;
                 }
+            }
+            foreach (Span span in this.StaticCells.Where(cell => cell is Span))
+            {
+                Button b;
+                b = span.CheckButtonCollisions(x, y);
+                if (b != null) { return b; }
             }
 
             foreach (Span span in this.Spans)
@@ -87,11 +102,18 @@ namespace AemonsNookMono.Menus
         }
         public Button GetButton(string name)
         {
-            foreach (Button b in this.StaticButtons)
+            foreach (Button b in this.StaticCells.Where(cell => cell is Button))
             {
                 if (b.ButtonCode == name) 
                 { 
                     return b; 
+                }
+            }
+            foreach (Span span in this.StaticCells.Where(cell => cell is Span))
+            {
+                if (span.ContainsButton(name))
+                {
+                    return span.GetButton(name);
                 }
             }
 
@@ -117,9 +139,9 @@ namespace AemonsNookMono.Menus
 
                 this.backPanel.Draw();
 
-                foreach (Button b in this.StaticButtons)
+                foreach (Cell c in this.StaticCells)
                 {
-                    b.Draw();
+                    c.Draw();
                 }
 
                 foreach (Span span in this.Spans)
@@ -141,6 +163,10 @@ namespace AemonsNookMono.Menus
         }
         public virtual void Update()
         {
+            foreach (Cell cell in this.StaticCells)
+            {
+                cell.Update();
+            }
             foreach (Span span in this.Spans)
             {
                 span.Update();

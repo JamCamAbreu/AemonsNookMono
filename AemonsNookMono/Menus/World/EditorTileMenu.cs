@@ -33,11 +33,11 @@ namespace AemonsNookMono.Menus.World
             this.Spans.Clear();
 
             Span levelButtons = new Span(this.CenterX, this.CenterY, this.Width, this.Height, this.PadWidth, this.PadHeight, Span.SpanType.Vertical);
-            levelButtons.AddButtonColor("Grass", "Grass", Color.DarkOliveGreen);
-            levelButtons.AddButtonColor("Dirt", "Dirt", Color.SaddleBrown);
-            levelButtons.AddButtonColor("Tree", "Tree", Color.Green);
-            levelButtons.AddButtonColor("Rock",  "Rock", Color.LightSlateGray);
-            levelButtons.AddButtonColor("Water",  "Water", Color.Blue);
+            levelButtons.AddColorButton("Grass", "Grass", Color.DarkOliveGreen);
+            levelButtons.AddColorButton("Dirt", "Dirt", Color.SaddleBrown);
+            levelButtons.AddColorButton("Tree", "Tree", Color.Green);
+            levelButtons.AddColorButton("Rock",  "Rock", Color.LightSlateGray);
+            levelButtons.AddColorButton("Water",  "Water", Color.Blue);
             this.Spans.Add(levelButtons);
         }
         public override bool HandleLeftClick(int x, int y)

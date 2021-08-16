@@ -41,10 +41,10 @@ namespace AemonsNookMono.Menus.World
             int i = 1;
             foreach (Profile profile in allprofiles)
             {
-                buttons.AddButtonColor($"Slot {i}", $"{profile.Name}", Color.RoyalBlue);
+                buttons.AddColorButton($"Slot {i}", $"{profile.Name}", Color.RoyalBlue);
                 i++;
             }
-            buttons.AddButtonColor("Create New", "Create New", Color.DarkOliveGreen);
+            buttons.AddColorButton("Create New", "Create New", Color.DarkOliveGreen);
 
 
             this.Spans.Add(buttons);
@@ -59,7 +59,7 @@ namespace AemonsNookMono.Menus.World
                 Color.Black,
                 Collision.CollisionShape.Rectangle,
                 true);
-            this.StaticButtons.Add(BackButton);
+            this.StaticCells.Add(BackButton);
         }
         public override void Refresh()
         {

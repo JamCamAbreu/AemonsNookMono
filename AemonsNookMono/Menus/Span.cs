@@ -99,12 +99,12 @@ namespace AemonsNookMono.Menus
             }
             #endregion
         }
-        public void AddButtonColor(string code, string title, Color? primaryColor, bool active = true)
+        public void AddColorButton(string code, string title, Color? primaryColor, bool active = true)
         {
             Button created = new Button(code, title, 0, 0, 8, 8, null, primaryColor, Collision.CollisionShape.Rectangle, active && !string.IsNullOrEmpty(code));
             this.AddDynamicCell(created);
         }
-        public void AddButtonSprite(string code, string title, ButtonSprite sprites, Collision.CollisionShape shape, bool active = true)
+        public void AddSpriteButton(string code, string title, ButtonSprite sprites, Collision.CollisionShape shape, bool active = true)
         {
             Button created = new Button(code, title, 0, 0, this.PadWidth * 2, this.PadHeight * 2, sprites, null, shape, active && !string.IsNullOrEmpty(code));
             this.AddDynamicCell(created);

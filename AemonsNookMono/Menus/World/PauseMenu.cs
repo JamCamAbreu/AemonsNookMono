@@ -35,11 +35,11 @@ namespace AemonsNookMono.Menus.World
         {
             this.Spans.Clear();
             Span cells = new Span(this.CenterX, this.CenterY, this.Width, this.Height, this.PadWidth, this.PadHeight, Span.SpanType.Vertical);
-            cells.AddButtonColor("Options", "Options", Color.DarkGreen);
+            cells.AddColorButton("Options", "Options", Color.DarkGreen);
             cells.AddText("Here is some test text.");
             cells.AddText("Aemon's nook is a really neat game! This game has things in it that you have never seen before! Step right up folks!");
-            cells.AddButtonColor("Save / Exit Level", "Save / Exit Level", Color.Black);
-            cells.AddButtonColor("Back", "Back", Color.Black);
+            cells.AddColorButton("Save / Exit Level", "Save / Exit Level", Color.Black);
+            cells.AddColorButton("Back", "Back", Color.Black);
             this.Spans.Add(cells);
         }
         public override void Refresh()

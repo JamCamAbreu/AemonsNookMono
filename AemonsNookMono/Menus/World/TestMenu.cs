@@ -44,32 +44,28 @@ namespace AemonsNookMono.Menus.World
         public override void InitButtons()
         {
             this.Spans.Clear();
+            this.StaticCells.Clear();
+
             Span rows = new Span(this.CenterX, this.CenterY, this.Width, this.Height, this.PadWidth, this.PadHeight, Span.SpanType.Vertical);
-            rows.AddText("Here are some rows");
+            rows.AddColorButton("blank", "", null, false);
+            rows.AddText("Here is a test page to test out and show off the interface used to design menus. Menus can use both static (fixed) position objects as well as dynamic (calculated) positions. Dynamic objects are placed inside 'span' objects, that can either span vertically (rows) or horizontally (columns). They are also nestable, spans inside of spans, etc..). This page features all of those examples.");
+            rows.AddColorButton("blank2", "", null, false);
 
             Span rowTwo = new Span(Span.SpanType.Horizontal);
-            rowTwo.AddText("Static Button:");
-            rowTwo.AddButtonColor("Button", "Button", Color.Red);
+            rowTwo.AddText("Simple Button:");
+            rowTwo.AddColorButton("Button", "Button", Color.Red);
             rowTwo.AddText("Sprite:");
             rowTwo.AddSprite("building-booth-fish", 64, 32);
             rowTwo.AddText("Sprite Button:");
             ButtonSprite check = new ButtonSprite("menu-world-check", "menu-world-check-hover", "menu-world-check-hover", 32, 32);
-            rowTwo.AddButtonSprite("Check Button", "", check, Collision.CollisionShape.Rectangle);
+            rowTwo.AddSpriteButton("Check Button", "", check, Collision.CollisionShape.Rectangle);
             rowTwo.AddText("Animated:");
             List<string> animation = new List<string>() { "menu-world-circle", "menu-world-diamond", "menu-world-pentagon", "menu-world-square" };
             rowTwo.AddAnimatedSprite(animation, 32, 32, 30);
             rows.AddSpan(rowTwo);
 
-
             Span rowThree = new Span(Span.SpanType.Horizontal);
-            Span configurable = new Span(Span.SpanType.Vertical);
-            configurable.AddButtonColor("configplus", "+", Color.DarkOliveGreen);
-            configurable.AddButtonColor("configminus", "-", Color.DarkOliveGreen);
-            rowThree.AddSpan(configurable);
-            for (int i = 0; i < this.configurableButtonSize; i++)
-            {
-                rowThree.AddButtonColor(((char)(65 + i)).ToString(), ((char)(65 + i)).ToString(), Color.Green);
-            }
+            rowThree.AddColorButton("row3placeholder", "", null, false);
             rows.AddSpan(rowThree);
 
             rows.AddText("Here's an example of paging:");
@@ -77,9 +73,9 @@ namespace AemonsNookMono.Menus.World
             if (bottomRowPage > 0)
             {
                 ButtonSprite left = new ButtonSprite("menu-arrow-left", "menu-arrow-left-hover", "menu-arrow-left-hover", 32, 26);
-                rowFive.AddButtonSprite("Left", "", left, Collision.CollisionShape.Rectangle);
+                rowFive.AddSpriteButton("Left", "", left, Collision.CollisionShape.Rectangle);
             }
-            else { rowFive.AddButtonColor("", "", null, false); }
+            else { rowFive.AddColorButton("", "", null, false); }
             for (int i = this.bottomRowPage * this.bottomRowNumButtons; i < (this.bottomRowPage + 1) * this.bottomRowNumButtons; i++)
             {
                 if (i < this.bottomRowButtons.Count)
@@ -87,23 +83,38 @@ namespace AemonsNookMono.Menus.World
                     rowFive.AddDynamicCell(this.bottomRowButtons[i]);
                     this.bottomRowButtons[i].Active = true;
                 }
-                else { rowFive.AddButtonColor("", "", null, false); }
+                else { rowFive.AddColorButton("", "", null, false); }
             }
             if ((this.bottomRowPage + 1) * this.bottomRowNumButtons < this.bottomRowButtons.Count)
             {
                 ButtonSprite right = new ButtonSprite("menu-arrow-right", "menu-arrow-right-hover", "menu-arrow-right-hover", 32, 26);
-                rowFive.AddButtonSprite("Right", "", right, Collision.CollisionShape.Rectangle);
+                rowFive.AddSpriteButton("Right", "", right, Collision.CollisionShape.Rectangle);
             }
-            else { rowFive.AddButtonColor("", "", null, false); }
+            else { rowFive.AddColorButton("", "", null, false); }
             rows.AddSpan(rowFive);
 
-            rows.AddButtonColor("Back", "Back", Color.Black);
+            rows.AddColorButton("Back", "Back", Color.Black);
 
             this.Spans.Add(rows);
             foreach (Span span in this.Spans)
             {
                 span.Refresh();
             }
+
+            // Static Cells:
+            int configWidth = 40;
+            Span configurable = new Span(rowThree.LeftX + (configWidth/2), rowThree.CenterY, configWidth, rowThree.Height, 0, 0, Span.SpanType.Vertical);
+            configurable.AddColorButton("configplus", "+", Color.DarkOliveGreen);
+            configurable.AddColorButton("configminus", "-", Color.DarkOliveGreen);
+            this.AddStaticSpan(configurable);
+
+            int manyButtonsWidth = rowThree.Width - configWidth;
+            Span manyButtons = new Span(rowThree.LeftX + configWidth + manyButtonsWidth / 2, rowThree.CenterY, manyButtonsWidth, rowThree.Height, 40, 0, Span.SpanType.Horizontal);
+            for (int i = 0; i < this.configurableButtonSize; i++)
+            {
+                manyButtons.AddColorButton(((char)(65 + i)).ToString(), ((char)(65 + i)).ToString(), Color.Green);
+            }
+            this.AddStaticSpan(manyButtons);
         }
         public override void Refresh()
         {

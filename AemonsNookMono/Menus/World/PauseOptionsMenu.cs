@@ -23,15 +23,15 @@ namespace AemonsNookMono.Menus.World
         }
         public override void InitButtons()
         {
-            this.StaticButtons.Clear();
+            this.StaticCells.Clear();
             this.Spans.Clear();
 
             Span buttonSpan = new Span(this.CenterX, this.CenterY, this.Width, this.Height, this.PadWidth, this.PadHeight, Span.SpanType.Vertical);
-            buttonSpan.AddButtonColor("Show Circle Collisions", "Show Circle Collisions", Color.DarkGreen);
-            buttonSpan.AddButtonColor("", "", Color.Black);
-            buttonSpan.AddButtonColor("", "", Color.Black);
-            buttonSpan.AddButtonColor("", "", Color.Black);
-            buttonSpan.AddButtonColor("Back", "Back", Color.Black);
+            buttonSpan.AddColorButton("Show Circle Collisions", "Show Circle Collisions", Color.DarkGreen);
+            buttonSpan.AddColorButton("", "", Color.Black);
+            buttonSpan.AddColorButton("", "", Color.Black);
+            buttonSpan.AddColorButton("", "", Color.Black);
+            buttonSpan.AddColorButton("Back", "Back", Color.Black);
             this.Spans.Add(buttonSpan);
 
             ButtonSprite bulletUnselectedSprites = new ButtonSprite("menu-bullet-unselected", "menu-bullet-unselected-hover", "menu-bullet-unselected-click", 50, 50);
@@ -49,10 +49,10 @@ namespace AemonsNookMono.Menus.World
                 this.AddStaticButton("Windowed", "Windowed", spriteDim, spriteDim, this.CenterX - (this.Width / 4), radioYPos, bulletSelectedSprites, null, Collision.CollisionShape.Circle);
                 this.AddStaticButton("Fullscreen", "Fullscreen", spriteDim, spriteDim, this.CenterX + (this.Width / 4), radioYPos, bulletUnselectedSprites, null, Collision.CollisionShape.Circle);
             }
-            this.StaticButtons[0].TitlePosition = Button.TextPosition.Above;
-            this.StaticButtons[1].TitlePosition = Button.TextPosition.Above;
-            this.StaticButtons[0].InitCollision(Collision.CollisionShape.Circle, this.CenterX - (this.Width / 4), radioYPos, collisionDim, collisionDim);
-            this.StaticButtons[1].InitCollision(Collision.CollisionShape.Circle, this.CenterX + (this.Width / 4), radioYPos, collisionDim, collisionDim);
+            (this.StaticCells[0] as Button).TitlePosition = Button.TextPosition.Above;
+            (this.StaticCells[1] as Button).TitlePosition = Button.TextPosition.Above;
+            (this.StaticCells[0] as Button).InitCollision(Collision.CollisionShape.Circle, this.CenterX - (this.Width / 4), radioYPos, collisionDim, collisionDim);
+            (this.StaticCells[1] as Button).InitCollision(Collision.CollisionShape.Circle, this.CenterX + (this.Width / 4), radioYPos, collisionDim, collisionDim);
         }
         public override void Refresh()
         {

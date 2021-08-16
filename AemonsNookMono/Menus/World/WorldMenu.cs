@@ -26,7 +26,7 @@ namespace AemonsNookMono.Menus.World
 
         public override void InitButtons()
         {
-            this.StaticButtons.Clear();
+            this.StaticCells.Clear();
             this.Spans.Clear();
 
             ButtonSprite gear = new ButtonSprite("menu-world-gear", "menu-world-gear-hover", "menu-world-gear-hover", 32, 32);
@@ -36,10 +36,10 @@ namespace AemonsNookMono.Menus.World
             ButtonSprite pentagon = new ButtonSprite("menu-world-pentagon", "menu-world-pentagon-hover", "menu-world-pentagon-hover", 32, 32);
 
             Span menuItems = new Span(this.CenterX, this.CenterY - 12, this.Width, this.Height, this.PadWidth, this.PadHeight, Span.SpanType.Horizontal);
-            menuItems.AddButtonSprite("Pause", "Pause", gear, Collision.CollisionShape.Circle);
-            menuItems.AddButtonSprite("Profile", "Profile", circle, Collision.CollisionShape.Circle);
-            menuItems.AddButtonSprite("Levels", "Levels", square, Collision.CollisionShape.Rectangle);
-            menuItems.AddButtonSprite("Test", "Test", diamond, Collision.CollisionShape.Circle);
+            menuItems.AddSpriteButton("Pause", "Pause", gear, Collision.CollisionShape.Circle);
+            menuItems.AddSpriteButton("Profile", "Profile", circle, Collision.CollisionShape.Circle);
+            menuItems.AddSpriteButton("Levels", "Levels", square, Collision.CollisionShape.Rectangle);
+            menuItems.AddSpriteButton("Test", "Test", diamond, Collision.CollisionShape.Circle);
             //menuItems.AddButtonSprite("Option 5", "Option 5", pentagon, Collision.CollisionShape.Circle);
             this.Spans.Add(menuItems);
 

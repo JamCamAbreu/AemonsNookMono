@@ -29,7 +29,7 @@ namespace AemonsNookMono.Menus.World
         {
             this.Spans.Clear();
             Span rows = new Span(this.CenterX, this.CenterY, this.Width, this.Height, this.PadWidth, this.PadHeight, Span.SpanType.Vertical);
-            rows.AddButtonColor("Back", "Back", Color.Black);
+            rows.AddColorButton("Back", "Back", Color.Black);
 
             this.Spans.Add(rows);
         }

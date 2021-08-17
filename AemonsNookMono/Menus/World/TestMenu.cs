@@ -91,6 +91,7 @@ namespace AemonsNookMono.Menus.World
                 rowFive.AddSpriteButton("Right", "", right, Collision.CollisionShape.Rectangle);
             }
             else { rowFive.AddColorButton("", "", null, false); }
+            rowFive.InnerPadScale = 0.0f;
             rows.AddSpan(rowFive);
 
             rows.AddColorButton("Back", "Back", Color.Black);

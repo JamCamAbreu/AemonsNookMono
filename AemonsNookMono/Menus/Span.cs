@@ -28,6 +28,7 @@ namespace AemonsNookMono.Menus
             this.PadWidth = 0;
             this.PadHeight = 0;
             this.Cells = new List<Cell>();
+            this.InnerPadScale = 0.5f;
         }
         public Span(int padWidth, int padHeight, SpanType type)
         {
@@ -39,6 +40,7 @@ namespace AemonsNookMono.Menus
             this.PadWidth = padWidth;
             this.PadHeight = padHeight;
             this.Cells = new List<Cell>();
+            this.InnerPadScale = 0.5f;
         }
         public Span(int x, int y, int width, int height, int padWidth, int padHeight, SpanType type)
         {
@@ -50,6 +52,7 @@ namespace AemonsNookMono.Menus
             this.PadWidth = padWidth;
             this.PadHeight = padHeight;
             this.Cells = new List<Cell>();
+            this.InnerPadScale = 0.5f;
         }
         #endregion
 
@@ -63,6 +66,7 @@ namespace AemonsNookMono.Menus
         public int TopY { get { return this.CenterY - (this.Height / 2); } }
         public int LeftX { get { return this.CenterX - (this.Width / 2); } }
         public List<Span> ChildSpans = new List<Span>();
+        public float InnerPadScale { get; set; }
         #endregion
 
         #region Interface
@@ -70,30 +74,37 @@ namespace AemonsNookMono.Menus
         {
             int numCells = this.Cells.Count + 1;
             int cellHeight = this.Height - (this.PadHeight * 2); // default
-            int cellWidth = this.Width - this.PadWidth * 2; // default
+            int cellWidth = this.Width - (this.PadWidth * 2); // default
+            int cellPadWidth = 0;
+            int cellPadHeight = 0;
+
             if (this.Type == SpanType.Vertical)
             {
-                cellHeight = (this.Height - this.PadHeight * 2) / ((numCells * 2) - 1);
+                int innerHeight = this.Height - (this.PadHeight * 2);
+                cellPadHeight = (int)((innerHeight / ((numCells * 2) - 1)) * InnerPadScale);
+                cellHeight = (innerHeight - (cellPadHeight * (numCells - 1))) / numCells;
             }
             else if (this.Type == SpanType.Horizontal)
             {
-                cellWidth = (this.Width - this.PadWidth * 2) / ((numCells * 2) - 1);
+                int innerWidth = this.Width - (this.PadWidth * 2);
+                cellPadWidth = (int)((innerWidth / ((numCells * 2) - 1)) * InnerPadScale);
+                cellWidth = (innerWidth - (cellPadWidth * (numCells - 1))) / numCells;
             }
 
             #region Update Prior Cells
             int cellNum = 0;
             foreach (Cell priorCell in this.Cells)
             {
-                CellDimension dim = this.CalculateDimensions(cellWidth, cellHeight, cellNum);
+                CellDimension dim = this.CalculateDimensions(cellWidth, cellPadWidth, cellHeight, cellPadHeight, cellNum);
                 priorCell.Refresh(dim.Width, dim.Height, dim.CenterX, dim.CenterY);
-                cellNum += 2;
+                cellNum++;
             }
             #endregion
 
             #region New Cell
             if (cell != null)
             {
-                CellDimension dim = this.CalculateDimensions(cellWidth, cellHeight, cellNum);
+                CellDimension dim = this.CalculateDimensions(cellWidth, cellPadWidth, cellHeight, cellPadHeight, cellNum);
                 cell.Refresh(dim.Width, dim.Height, dim.CenterX, dim.CenterY);                
                 this.Cells.Add(cell);
             }
@@ -160,20 +171,28 @@ namespace AemonsNookMono.Menus
             int numCells = this.Cells.Count;
             int cellHeight = this.Height - (this.PadHeight * 2); // default
             int cellWidth = this.Width - this.PadWidth * 2; // default
+            int cellPadWidth = 0;
+            int cellPadHeight = 0;
+
             if (this.Type == SpanType.Vertical)
             {
-                cellHeight = (this.Height - this.PadHeight * 2) / ((numCells * 2) - 1);
+                int innerHeight = this.Height - (this.PadHeight * 2);
+                cellPadHeight = (int)((innerHeight / ((numCells * 2) - 1)) * InnerPadScale);
+                cellHeight = (innerHeight - (cellPadHeight * (numCells - 1))) / numCells;
             }
             else if (this.Type == SpanType.Horizontal)
             {
-                cellWidth = (this.Width - this.PadWidth * 2) / ((numCells * 2) - 1);
+                int innerWidth = this.Width - (this.PadWidth * 2);
+                cellPadWidth = (int)((innerWidth / ((numCells * 2) - 1)) * InnerPadScale);
+                cellWidth = (innerWidth - (cellPadWidth * (numCells - 1))) / numCells;
             }
+
             int cellNum = 0;
             foreach (Cell cell in this.Cells)
             {
-                CellDimension dim = this.CalculateDimensions(cellWidth, cellHeight, cellNum);
+                CellDimension dim = this.CalculateDimensions(cellWidth, cellPadWidth, cellHeight, cellPadHeight, cellNum);
                 cell.Refresh(dim.Width, dim.Height, dim.CenterX, dim.CenterY);
-                cellNum += 2;
+                cellNum++;
             }
         }
         public void Refresh()
@@ -224,17 +243,17 @@ namespace AemonsNookMono.Menus
         #endregion
 
         #region Internal
-        protected CellDimension CalculateDimensions(int cellWidth, int cellHeight, int index)
+        protected CellDimension CalculateDimensions(int cellWidth, int cellPadWidth, int cellHeight, int cellPadHeight, int index)
         {
             int calcX = this.CenterX;
             int calcY = this.CenterY;
             if (this.Type == SpanType.Vertical)
             {
-                calcY = this.TopY + this.PadHeight + (cellHeight / 2) + (index * cellHeight);
+                calcY = this.TopY + this.PadHeight + (cellHeight / 2) + (index * cellHeight) + (cellPadHeight * index);
             }
             else if (this.Type == SpanType.Horizontal)
             {
-                calcX = this.LeftX + this.PadWidth + (cellWidth / 2) + (index * cellWidth);
+                calcX = this.LeftX + this.PadWidth + (cellWidth / 2) + (index * cellWidth) + (cellPadWidth * index);
             }
             return new CellDimension(cellWidth, cellHeight, calcX, calcY);
         }

@@ -36,6 +36,7 @@ namespace AemonsNookMono
 
             #region Temp
             Graphics.Current.SpritesByName.Add("building-temp1x1", Content.Load<Texture2D>("World/Buildings/TempBuilding1x1"));
+            Graphics.Current.SpritesByName.Add("profile-portrait-temp", Content.Load<Texture2D>("Menus/Profile/profile"));
             #endregion
 
             #region Debug

@@ -110,6 +110,10 @@ namespace AemonsNookMono.Menus
             }
             #endregion
         }
+        public void AddBlank()
+        {
+            this.AddColorButton("", "", null, false);
+        }
         public void AddColorButton(string code, string title, Color? primaryColor, bool active = true)
         {
             Button created = new Button(code, title, 0, 0, 8, 8, null, primaryColor, Collision.CollisionShape.Rectangle, active && !string.IsNullOrEmpty(code));

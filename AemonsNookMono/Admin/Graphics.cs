@@ -110,6 +110,8 @@ namespace AemonsNookMono.Admin
         }
         public int RightAlignStringX(int originX, string message, string font)
         {
+            throw new Exception("Fix me! What's this Y at the end?");
+
             if (string.IsNullOrEmpty(message)) { return originX; }
             if (string.IsNullOrEmpty(font) || !this.Fonts.ContainsKey(font)) { throw new Exception("Cannot find specified font"); }
             SpriteFont spritefont = this.Fonts[font];

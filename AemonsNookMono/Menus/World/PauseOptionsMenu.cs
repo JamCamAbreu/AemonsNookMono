@@ -16,7 +16,7 @@ namespace AemonsNookMono.Menus.World
                   Graphics.Current.ScreenMidY,
                   ((int)((float)Graphics.Current.ScreenHeight * 0.6f) / 16),
                   (int)((float)Graphics.Current.ScreenWidth * 0.4f) / 16,
-                  Color.SaddleBrown,
+                  null,
                   string.Empty)
         {
             this.InitButtons();
@@ -27,10 +27,10 @@ namespace AemonsNookMono.Menus.World
             this.Spans.Clear();
 
             Span buttonSpan = new Span(this.CenterX, this.CenterY, this.Width, this.Height, this.PadWidth, this.PadHeight, Span.SpanType.Vertical);
-            buttonSpan.AddColorButton("Show Circle Collisions", "Show Circle Collisions", Color.DarkGreen);
-            buttonSpan.AddColorButton("", "", Color.Black);
-            buttonSpan.AddColorButton("", "", Color.Black);
-            buttonSpan.AddColorButton("", "", Color.Black);
+            buttonSpan.AddColorButton("Show Circle Collisions", "Show Circle Collisions", ProfileManager.Current.ColorPrimary);
+            buttonSpan.AddColorButton("", "", null, false);
+            buttonSpan.AddColorButton("", "", null, false);
+            buttonSpan.AddColorButton("", "", null, false);
             buttonSpan.AddColorButton("Back", "Back", Color.Black);
             this.Spans.Add(buttonSpan);
 
@@ -82,6 +82,10 @@ namespace AemonsNookMono.Menus.World
                 Debugger.Current.AddTempString($"You clicked on the {clicked.ButtonCode} button!");
                 switch (clicked.ButtonCode)
                 {
+                    case "Back":
+                        MenuManager.Current.CloseTop();
+                        return true;
+
                     case "Windowed":
                         this.GetButton("Fullscreen").Sprites = new ButtonSprite("menu-bullet-unselected", "menu-bullet-unselected-hover", "menu-bullet-unselected-click", 50, 50);
                         clicked.Sprites = new ButtonSprite("menu-bullet-selected", "menu-bullet-selected-hover", "menu-bullet-selected-hover", 50, 50);
@@ -100,10 +104,10 @@ namespace AemonsNookMono.Menus.World
                         return true;
 
                     default:
-                        return base.HandleLeftClick(x, y);
+                        return false;
                 }
             }
-            return base.HandleLeftClick(x, y);
+            return false;
         }
     }
 }

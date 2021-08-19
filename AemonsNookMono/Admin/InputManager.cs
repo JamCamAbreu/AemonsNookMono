@@ -160,58 +160,15 @@ namespace AemonsNookMono.Admin
                     break;
 
                 case StateManager.State.Pause:
-                    if (MenuManager.Current.Top != null && MenuManager.Current.Top is PauseMenu)
+                    if (MenuManager.Current.Top != null)
                     {
-                        PauseMenu pmenu = MenuManager.Current.Top as PauseMenu; 
-                        if (pmenu != null)
-                        {
-                            if (pmenu.HandleLeftClick(x, y) == true) { return; }
-                        }
-                    }
-                    if (MenuManager.Current.Top != null && MenuManager.Current.Top is ProfileMenu)
-                    {
-                        ProfileMenu profileMenu = MenuManager.Current.Top as ProfileMenu;
-                        if (profileMenu != null)
-                        {
-                            if (profileMenu.HandleLeftClick(x, y) == true) { return; }
-                        }
-                    }
-                    if (MenuManager.Current.Top != null && MenuManager.Current.Top is PauseOptionsMenu)
-                    {
-                        PauseOptionsMenu optionsMenu = MenuManager.Current.Top as PauseOptionsMenu;
-                        if (optionsMenu != null)
-                        {
-                            if (optionsMenu.HandleLeftClick(x, y) == true) { return; }
-                        }
-                    }
-                    if (MenuManager.Current.Top != null && MenuManager.Current.Top is LevelSelectMenu)
-                    {
-                        LevelSelectMenu levelMenu = MenuManager.Current.Top as LevelSelectMenu;
-                        if (levelMenu != null)
-                        {
-                            if (levelMenu.HandleLeftClick(x, y) == true) { return; }
-                        }
-                    }
-                    if (MenuManager.Current.Top != null && MenuManager.Current.Top is TestMenu)
-                    {
-                        TestMenu menu = MenuManager.Current.Top as TestMenu;
-                        if (menu != null)
-                        {
-                            if (menu.HandleLeftClick(x, y) == true) { return; }
-                        }
-                    }
-                    if (MenuManager.Current.Top != null && MenuManager.Current.Top is ProfileCreateMenu)
-                    {
-                        ProfileCreateMenu menu = MenuManager.Current.Top as ProfileCreateMenu;
-                        if (menu != null)
-                        {
-                            if (menu.HandleLeftClick(x, y) == true) { return; }
-                        }
+                        if (MenuManager.Current.Top.HandleLeftClick(x, y) == true) { return; }
                     }
                     break;
 
 
                 case StateManager.State.LevelEditor:
+                    // Update this to search for menu instead of just "top" and remove the worldmenu call in editotilemenu handleleftclick
                     if (MenuManager.Current.Top != null && MenuManager.Current.Top is WorldMenu)
                     {
                         WorldMenu menu = MenuManager.Current.Top as WorldMenu;

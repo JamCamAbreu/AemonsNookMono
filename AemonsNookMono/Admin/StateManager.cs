@@ -65,12 +65,15 @@ namespace AemonsNookMono.Admin
         {
             Debugger.Current.Init();
             Cursor.Current.Init();
+            ProfileManager.Current.Init();
 
             this.level = new SmallMeadow();
             //this.level = new Level2();
 
             Buildings.Current.Init();
             World.Current.Init(this.level);
+
+            
         }
         public void Update(GameTime gameTime)
         {

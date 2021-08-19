@@ -150,6 +150,10 @@ namespace AemonsNookMono.Admin
         {
             if (profile != null)
             {
+                TimeSpan t = DateTime.Now - profile.LastPlayed;
+                profile.TotalTimePlayedSeconds += (int)t.TotalSeconds;
+                profile.LastPlayed = DateTime.Now;
+
                 NookFile savefile = new NookFile("Profile", profile.Name);
                 foreach (var prop in typeof(Profile).GetProperties())
                 {
@@ -187,6 +191,18 @@ namespace AemonsNookMono.Admin
                     {
                         Profile.ProfileTheme theme = (Profile.ProfileTheme)Enum.Parse(typeof(Profile.ProfileTheme), valueString);
                         prop.SetValue(profile, theme);
+                    }
+                    else if (prop.PropertyType == typeof(DateTime))
+                    {
+                        if (prop.Name == "LastPlayed")
+                        {
+                            prop.SetValue(profile, DateTime.Now);
+                        }
+                        else
+                        {
+                            prop.SetValue(profile, DateTime.Parse(valueString));
+                        }
+                        
                     }
                     else
                     {

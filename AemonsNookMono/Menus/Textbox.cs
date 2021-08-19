@@ -100,8 +100,7 @@ namespace AemonsNookMono.Menus
 
             if (this.HorizontalAlignment == HorizontalAlign.Left)
             {
-                stringx = this.ScreenX;
-                stringy = this.ScreenY;
+                stringx = this.ScreenX - this.Width / 2;
             }
             else if (this.HorizontalAlignment == HorizontalAlign.Right)
             {

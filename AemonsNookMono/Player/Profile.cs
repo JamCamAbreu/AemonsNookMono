@@ -7,10 +7,11 @@ namespace AemonsNookMono.Player
     public class Profile
     {
         #region Stats
-        public double TotalTimePlayed { get; set; }
+        public int TotalTimePlayedSeconds { get; set; }
         public int TotalWoodCollected { get; set; }
         public int TotalStoneCollected { get; set; }
         public int TimesClicked { get; set; }
+        public DateTime LastPlayed { get; set; }
         #endregion
 
         #region Constructors
@@ -20,8 +21,11 @@ namespace AemonsNookMono.Player
             this.Theme = theme;
             this.Name = name;
 
+            TotalTimePlayedSeconds = 0;
+            this.LastPlayed = DateTime.Now;
+
             #region Zero Stats
-            TotalTimePlayed = 0;
+            
             TotalWoodCollected = 0;
             TotalStoneCollected = 0;
             #endregion

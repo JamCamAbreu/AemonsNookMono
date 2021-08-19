@@ -17,7 +17,7 @@ namespace AemonsNookMono.Menus.World
                   Graphics.Current.ScreenMidY,
                   ((int)((float)Graphics.Current.ScreenWidth * 0.7f) / 16),
                   (int)((float)Graphics.Current.ScreenHeight * 0.7f) / 16,
-                  Color.SaddleBrown,
+                  null,
                   string.Empty)
         {
             this.configurableButtonSize = 4;
@@ -137,6 +137,7 @@ namespace AemonsNookMono.Menus.World
                 switch (clicked.ButtonCode)
                 {
                     case "Back":
+                        SaveManager.Current.SaveProfile(ProfileManager.Current.Loaded);
                         StateManager.Current.CurrentState = this.OriginalState;
                         MenuManager.Current.CloseTop();
                         return true;
@@ -170,10 +171,10 @@ namespace AemonsNookMono.Menus.World
                         return true;
 
                     default:
-                        return base.HandleLeftClick(x, y);
+                        return false;
                 }
             }
-            return base.HandleLeftClick(x, y);
+            return false;
         }
         #endregion
 

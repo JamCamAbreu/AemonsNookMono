@@ -18,7 +18,7 @@ namespace AemonsNookMono.Menus.World
                   (int)((float)Graphics.Current.ScreenHeight * 0.05f), // y
                   32, // pad height 
                   32, // pad width
-                  Color.DimGray, // foreground color
+                  null, // foreground color
                   null) // sprite
         {
             this.InitButtons();
@@ -92,10 +92,10 @@ namespace AemonsNookMono.Menus.World
                         return true;
 
                     default:
-                        return true;
+                        return false;
                 }
             }
-            return base.HandleLeftClick(x, y);
+            return false;
         }
     }
 }

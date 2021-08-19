@@ -17,6 +17,7 @@
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/Menus/BulletUnselected.png</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/Menus/BulletUnselectedClick.png</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/Menus/BulletUnselectedHover.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/Menus/Profile/profile.png</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/Menus/WorldMenu/buttonCheck.png</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/Menus/WorldMenu/buttonCheckHover.png</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/Menus/WorldMenu/buttonCircle.png</File>
@@ -107,6 +108,7 @@
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Water/Water-Vertical.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

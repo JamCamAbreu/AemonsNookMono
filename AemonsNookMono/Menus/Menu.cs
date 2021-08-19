@@ -7,10 +7,10 @@ using System.Text;
 
 namespace AemonsNookMono.Menus
 {
-    public class Menu
+    public abstract class Menu
     {
         #region Constructor
-        public Menu(string menuname, int width, int height, int x, int y, int padWidth, int padHeight, Color? color, string sprite)
+        public Menu(string menuname, int width, int height, int x, int y, int padWidth, int padHeight, Color? colorOverride, string sprite)
         {
             if ((padHeight * 2) >= height || (padWidth * 2) >= width) { throw new Exception("Desired padding is too large and malforms Menu."); }
 
@@ -24,15 +24,19 @@ namespace AemonsNookMono.Menus
             this.PadHeight = padHeight;
             this.PadWidth = padWidth;
 
-            this.ForegroundColor = color;
+            this.ForegroundColor = colorOverride;
             this.Sprite = sprite;
 
             this.TopY = this.CenterY - this.Height / 2;
             this.LeftX = this.CenterX - this.Width / 2;
 
-            if (color != null)
+            if (colorOverride != null)
             {
-                this.backPanel = new Panel(width, height, this.CenterX, this.CenterY, Color.Black, color, 1);
+                this.backPanel = new Panel(width, height, this.CenterX, this.CenterY, Color.Black, colorOverride, 2);
+            }
+            else
+            {
+                this.backPanel = new Panel(width, height, this.CenterX, this.CenterY, Color.Black, Color.SaddleBrown, 2);
             }
             if (!string.IsNullOrEmpty(sprite))
             {
@@ -172,34 +176,34 @@ namespace AemonsNookMono.Menus
                 span.Update();
             }
         }
-        public virtual bool HandleLeftClick(int x, int y)
-        {
-            Button clicked = this.CheckButtonCollisions(x, y);
-            if (clicked != null)
-            {
-                switch (clicked.ButtonCode)
-                {
-                    case "Back":
-                        MenuManager.Current.CloseTop();
-                        return true;
+        public abstract bool HandleLeftClick(int x, int y);
+        //{
+        //    Button clicked = this.CheckButtonCollisions(x, y);
+        //    if (clicked != null)
+        //    {
+        //        switch (clicked.ButtonCode)
+        //        {
+        //            case "Back":
+        //                MenuManager.Current.CloseTop();
+        //                return true;
 
-                    default:
-                        Debugger.Current.AddTempString($"Button {clicked.ButtonCode} has no defined functionality yet.");
-                        return true;
-                }
-            }
+        //            default:
+        //                Debugger.Current.AddTempString($"Button {clicked.ButtonCode} has no defined functionality yet.");
+        //                return true;
+        //        }
+        //    }
 
-            return false;
-        }
+        //    return false;
+        //}
         public virtual bool HandleEscape()
         {
             MenuManager.Current.CloseTop();
             return true;
         }
-        #endregion
+    #endregion
 
-        #region Internal
-        protected Panel backPanel { get; set; }
+    #region Internal
+    protected Panel backPanel { get; set; }
         #endregion
     }
 }

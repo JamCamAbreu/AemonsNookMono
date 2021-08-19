@@ -17,7 +17,7 @@ namespace AemonsNookMono.Menus.World
                   Graphics.Current.ScreenMidY,
                   ((int)((float)Graphics.Current.ScreenWidth * 0.4f)/16),
                   (int)((float)Graphics.Current.ScreenHeight * 0.6f)/16,
-                  Color.SaddleBrown,
+                  null,
                   string.Empty)
         {
             this.OriginalState = originalState;
@@ -35,7 +35,7 @@ namespace AemonsNookMono.Menus.World
         {
             this.Spans.Clear();
             Span cells = new Span(this.CenterX, this.CenterY, this.Width, this.Height, this.PadWidth, this.PadHeight, Span.SpanType.Vertical);
-            cells.AddColorButton("Options", "Options", Color.DarkGreen);
+            cells.AddColorButton("Options", "Options", ProfileManager.Current.ColorPrimary);
             cells.AddText("Here is some test text.");
             cells.AddText("Aemon's nook is a really neat game! This game has things in it that you have never seen before! Step right up folks!");
             cells.AddColorButton("Save / Exit Level", "Save / Exit Level", Color.Black);
@@ -74,19 +74,21 @@ namespace AemonsNookMono.Menus.World
                         return true;
 
                     case "Save / Exit Level":
+                        SaveManager.Current.SaveProfile(ProfileManager.Current.Loaded);
                         StateManager.Current.CurrentState = StateManager.State.Exit;
                         return true;
 
                     case "Back":
+                        SaveManager.Current.SaveProfile(ProfileManager.Current.Loaded);
                         StateManager.Current.CurrentState = this.OriginalState;
                         MenuManager.Current.CloseTop();
                         return true;
 
                     default:
-                        return base.HandleLeftClick(x, y);
+                        return false;
                 }
             }
-            return base.HandleLeftClick(x, y);
+            return false;
         }
         #endregion
     }

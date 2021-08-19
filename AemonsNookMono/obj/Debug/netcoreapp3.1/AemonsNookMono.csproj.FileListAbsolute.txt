@@ -122,3 +122,4 @@ C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.
 C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\Menus\WorldMenu\Right.xnb
 C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\Menus\WorldMenu\LeftHover.xnb
 C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\Menus\WorldMenu\RightHover.xnb
+C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\Menus\Profile\profile.xnb

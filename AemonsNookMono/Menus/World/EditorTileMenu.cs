@@ -16,7 +16,7 @@ namespace AemonsNookMono.Menus.World
                 (int)((float)Graphics.Current.ScreenHeight * 0.6f), // y
                 16, // padwidth
                 16, // padheight
-                Color.DimGray,
+                null,
                 string.Empty)
         {
             this.InitButtons();
@@ -34,7 +34,7 @@ namespace AemonsNookMono.Menus.World
 
             Span levelButtons = new Span(this.CenterX, this.CenterY, this.Width, this.Height, this.PadWidth, this.PadHeight, Span.SpanType.Vertical);
             levelButtons.AddColorButton("Grass", "Grass", Color.DarkOliveGreen);
-            levelButtons.AddColorButton("Dirt", "Dirt", Color.SaddleBrown);
+            levelButtons.AddColorButton("Dirt", "Dirt", ProfileManager.Current.ColorPrimary);
             levelButtons.AddColorButton("Tree", "Tree", Color.Green);
             levelButtons.AddColorButton("Rock",  "Rock", Color.LightSlateGray);
             levelButtons.AddColorButton("Water",  "Water", Color.Blue);
@@ -64,7 +64,7 @@ namespace AemonsNookMono.Menus.World
                         return true;
 
                     default:
-                        return base.HandleLeftClick(x, y);
+                        return false;
                 }
             }
 
@@ -73,7 +73,7 @@ namespace AemonsNookMono.Menus.World
                 return this.worldMenu.HandleLeftClick(x, y);
             }
 
-            return base.HandleLeftClick(x, y);
+            return false;
         }
         #endregion
 

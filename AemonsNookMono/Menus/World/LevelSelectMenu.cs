@@ -19,7 +19,7 @@ namespace AemonsNookMono.Menus.World
           Graphics.Current.ScreenMidY,
           32,
           32,
-          Color.SaddleBrown,
+          null,
           string.Empty)
         {
             this.InitButtons();
@@ -45,8 +45,8 @@ namespace AemonsNookMono.Menus.World
             this.Spans.Add(rows);
 
             Span levelButtons = new Span(this.CenterX, rows.Cells[0].ScreenY, this.Width, rows.Cells[0].Height, this.PadWidth, 0, Span.SpanType.Horizontal);
-            levelButtons.AddColorButton("Small Meadow", "Small Meadow", Color.DarkGreen);
-            levelButtons.AddColorButton("Cedric's Pass", "Cedric's Pass", Color.DarkGreen);
+            levelButtons.AddColorButton("Small Meadow", "Small Meadow", ProfileManager.Current.ColorPrimary);
+            levelButtons.AddColorButton("Cedric's Pass", "Cedric's Pass", ProfileManager.Current.ColorPrimary);
             this.Spans.Add(levelButtons);
 
             Span editorButtons = new Span(
@@ -55,21 +55,21 @@ namespace AemonsNookMono.Menus.World
                 this.PadWidth, this.PadHeight, Span.SpanType.Horizontal);
             editorButtons.AddColorButton("Width", "Width", null, false);
             editorButtons.AddColorButton("Height",  "Height", null, false);
-            editorButtons.AddColorButton("Create",  "Create", Color.DarkOliveGreen);
+            editorButtons.AddColorButton("Create",  "Create", ProfileManager.Current.ColorPrimary);
             this.Spans.Add(editorButtons);
 
             int colNum = 0;
             Span WidthButtons = new Span(editorButtons.Cells[colNum].ScreenX, editorButtons.Cells[colNum].ScreenY, editorButtons.Cells[colNum].Width, editorButtons.Cells[colNum].Height, 4, 4, Span.SpanType.Vertical);
             WidthButtons.AddColorButton("WidthTitle", string.Empty, null, false);
-            WidthButtons.AddColorButton("widthplus", "+", Color.DarkOliveGreen);
-            WidthButtons.AddColorButton("widthminus", "-", Color.DarkOliveGreen);
+            WidthButtons.AddColorButton("widthplus", "+", ProfileManager.Current.ColorPrimary);
+            WidthButtons.AddColorButton("widthminus", "-", ProfileManager.Current.ColorPrimary);
             this.Spans.Add(WidthButtons);
 
             colNum = 1;
             Span HeightButtons = new Span(editorButtons.Cells[colNum].ScreenX, editorButtons.Cells[colNum].ScreenY, editorButtons.Cells[colNum].Width, editorButtons.Cells[colNum].Height, 4, 4, Span.SpanType.Vertical);
             HeightButtons.AddColorButton("HeightTitle", string.Empty, null, false);
-            HeightButtons.AddColorButton("heightplus", "+", Color.DarkOliveGreen);
-            HeightButtons.AddColorButton("heightminus", "-", Color.DarkOliveGreen);
+            HeightButtons.AddColorButton("heightplus", "+", ProfileManager.Current.ColorPrimary);
+            HeightButtons.AddColorButton("heightminus", "-", ProfileManager.Current.ColorPrimary);
             this.Spans.Add(HeightButtons);
         }
         public override void Refresh()
@@ -123,6 +123,7 @@ namespace AemonsNookMono.Menus.World
                 switch (clicked.ButtonCode)
                 {
                     case "Create":
+                        SaveManager.Current.SaveProfile(ProfileManager.Current.Loaded);
                         StateManager.Current.CurrentState = StateManager.State.LevelEditor;
                         Level created = this.GenerateBlankLevel(this.customLevelWidth, this.customLevelHeight);
                         GameWorld.World.Current.Init(created);
@@ -130,16 +131,19 @@ namespace AemonsNookMono.Menus.World
                         return true;
 
                     case "Small Meadow":
+                        SaveManager.Current.SaveProfile(ProfileManager.Current.Loaded);
                         StateManager.Current.CurrentState = StateManager.State.World;
                         GameWorld.World.Current.Init(new Levels.SmallMeadow());
                         return true;
 
                     case "Cedric's Pass":
+                        SaveManager.Current.SaveProfile(ProfileManager.Current.Loaded);
                         StateManager.Current.CurrentState = StateManager.State.World;
                         GameWorld.World.Current.Init(new Levels.CedricsPass());
                         return true;
 
                     case "Back":
+                        SaveManager.Current.SaveProfile(ProfileManager.Current.Loaded);
                         StateManager.Current.CurrentState = this.OriginalState;
                         MenuManager.Current.CloseTop();
                         return true;
@@ -161,10 +165,10 @@ namespace AemonsNookMono.Menus.World
                         return true;
 
                     default:
-                        return base.HandleLeftClick(x, y);
+                        return false;
                 }
             }
-            return base.HandleLeftClick(x, y);
+            return false;
         }
         #endregion
 

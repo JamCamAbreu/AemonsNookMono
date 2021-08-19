@@ -29,6 +29,8 @@ namespace AemonsNookMono.Menus
             this.ScreenX = x;
             this.ScreenY = y;
             this.PrimaryColor = color;
+            this.TitleColor = Color.White;
+            if (this.PrimaryColor == Color.White) { this.TitleColor = Color.Black; }
             if (sprites != null)
             {
                 this.Sprites = sprites;
@@ -79,6 +81,7 @@ namespace AemonsNookMono.Menus
         public string Title { get; set; }
         public bool DisplayTitle { get; set; }
         public TextPosition TitlePosition { get; set; }
+        public Color TitleColor { get; set; }
         #endregion
 
         #region Interface
@@ -185,7 +188,7 @@ namespace AemonsNookMono.Menus
                 else if (this.TitlePosition == TextPosition.Below) { textAdjust = buttonHeight; }
 
                 Graphics.Current.SpriteB.Begin();
-                Graphics.Current.SpriteB.DrawString(Graphics.Current.Fonts["couriernew"], this.Title, new Vector2(stringx, stringy + textAdjust), Color.White);
+                Graphics.Current.SpriteB.DrawString(Graphics.Current.Fonts["couriernew"], this.Title, new Vector2(stringx, stringy + textAdjust), this.TitleColor);
                 Graphics.Current.SpriteB.End();
             }
 

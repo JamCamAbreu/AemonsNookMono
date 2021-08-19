@@ -1,4 +1,5 @@
 ﻿using AemonsNookMono.Admin;
+using AemonsNookMono.Menus.General;
 using AemonsNookMono.Player;
 using Microsoft.Xna.Framework;
 using System;
@@ -98,6 +99,7 @@ namespace AemonsNookMono.Menus.World
                             ProfileManager.Current.Loaded = prof;
                             MenuManager.Current.CloseTop();
                             MenuManager.Current.Top.Refresh();
+                            MenuManager.Current.AddMenu(new MessagePopupMenu("Profile Created", "Your new profile was created successfully.", "Okay"));
                             return true;
                         }
 
@@ -108,6 +110,7 @@ namespace AemonsNookMono.Menus.World
                             ProfileManager.Current.Loaded = prof;
                             MenuManager.Current.CloseTop();
                             MenuManager.Current.Top.Refresh();
+                            MenuManager.Current.AddMenu(new MessagePopupMenu("Profile Created", "Your new profile was created successfully.", "Okay"));
                             return true;
                         }
 
@@ -118,6 +121,7 @@ namespace AemonsNookMono.Menus.World
                             ProfileManager.Current.Loaded = prof;
                             MenuManager.Current.CloseTop();
                             MenuManager.Current.Top.Refresh();
+                            MenuManager.Current.AddMenu(new MessagePopupMenu("Profile Created", "Your new profile was created successfully.", "Okay"));
                             return true;
                         }
 
@@ -128,6 +132,7 @@ namespace AemonsNookMono.Menus.World
                             ProfileManager.Current.Loaded = prof;
                             MenuManager.Current.CloseTop();
                             MenuManager.Current.Top.Refresh();
+                            MenuManager.Current.AddMenu(new MessagePopupMenu("Profile Created", "Your new profile was created successfully.", "Okay"));
                             return true;
                         }
 
@@ -138,6 +143,7 @@ namespace AemonsNookMono.Menus.World
                             ProfileManager.Current.Loaded = prof;
                             MenuManager.Current.CloseTop();
                             MenuManager.Current.Top.Refresh();
+                            MenuManager.Current.AddMenu(new MessagePopupMenu("Profile Created", "Your new profile was created successfully.", "Okay"));
                             return true;
                         }
 
@@ -148,6 +154,7 @@ namespace AemonsNookMono.Menus.World
                             ProfileManager.Current.Loaded = prof;
                             MenuManager.Current.CloseTop();
                             MenuManager.Current.Top.Refresh();
+                            MenuManager.Current.AddMenu(new MessagePopupMenu("Profile Created", "Your new profile was created successfully.", "Okay"));
                             return true;
                         }
 

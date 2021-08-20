@@ -114,30 +114,35 @@ namespace AemonsNookMono.Menus
         {
             this.AddColorButton("", "", null, false);
         }
-        public void AddColorButton(string code, string title, Color? primaryColor, bool active = true)
+        public Button AddColorButton(string code, string title, Color? primaryColor, bool active = true)
         {
-            Button created = new Button(code, title, 0, 0, 8, 8, null, primaryColor, Collision.CollisionShape.Rectangle, active && !string.IsNullOrEmpty(code));
+            Button created = new Button(code, title, 0, 0, 20, 20, null, primaryColor, Collision.CollisionShape.Rectangle, active && !string.IsNullOrEmpty(code));
             this.AddDynamicCell(created);
+            return created;
         }
-        public void AddSpriteButton(string code, string title, ButtonSprite sprites, Collision.CollisionShape shape, bool active = true)
+        public Button AddSpriteButton(string code, string title, ButtonSprite sprites, Collision.CollisionShape shape, bool active = true)
         {
             Button created = new Button(code, title, 0, 0, this.PadWidth * 2, this.PadHeight * 2, sprites, null, shape, active && !string.IsNullOrEmpty(code));
             this.AddDynamicCell(created);
+            return created;
         }
-        public void AddText(string text, string font = "couriernew", Color? background = null, Textbox.HorizontalAlign horzAlign = Textbox.HorizontalAlign.Center, Textbox.VerticalAlign vertAlign = Textbox.VerticalAlign.Center, bool active = true)
+        public Textbox AddText(string text, string font = "couriernew", Color? background = null, Textbox.HorizontalAlign horzAlign = Textbox.HorizontalAlign.Center, Textbox.VerticalAlign vertAlign = Textbox.VerticalAlign.Center, bool active = true)
         {
             Textbox created = new Textbox(text, 0, 0, 8, 8, font, background, horzAlign, vertAlign, active);
             this.AddDynamicCell(created);
+            return created;
         }
-        public void AddSprite(string sprite, int spritewidth, int spriteheight)
+        public SpriteSimple AddSprite(string sprite, int spritewidth, int spriteheight)
         {
             SpriteSimple simple = new SpriteSimple(sprite, spritewidth, spriteheight, 0, 0, 1, 1);
             this.AddDynamicCell(simple);
+            return simple;
         }
-        public void AddAnimatedSprite(List<string> sprites, int framesTillUpdate, int spritewidth, int spriteheight)
+        public SpriteAnimated AddAnimatedSprite(List<string> sprites, int framesTillUpdate, int spritewidth, int spriteheight)
         {
             SpriteAnimated animated = new SpriteAnimated(sprites, spritewidth, spriteheight, framesTillUpdate, 0, 0, 1, 1);
             this.AddDynamicCell(animated);
+            return animated;
         }
         public void AddSpan(Span span)
         {

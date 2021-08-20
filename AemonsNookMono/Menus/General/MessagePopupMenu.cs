@@ -11,7 +11,7 @@ namespace AemonsNookMono.Menus.General
     public class MessagePopupMenu : Menu
     {
         #region Constructor
-        public MessagePopupMenu(string title, string message, string confirmbuttonstring) :
+        public MessagePopupMenu(string title, string message, string confirmbuttonstring, Menu Above = null) :
             base(
                 title,
                 (int)((float)Graphics.Current.ScreenWidth * 0.3f),
@@ -26,6 +26,7 @@ namespace AemonsNookMono.Menus.General
             this.message = message;
             this.confirmButtonString = confirmbuttonstring;
             this.InitButtons();
+            this.MenuAbove = Above;
         }
         public MessagePopupMenu(int width, int height, int centerx, int centery, string title, string message, string confirmbuttonstring, Color? color = null, string sprite = "") :
             base(
@@ -45,7 +46,20 @@ namespace AemonsNookMono.Menus.General
         }
         #endregion
 
+        #region Public Properties
+        public Menu MenuAbove { get; set; }
+        #endregion
+
         #region Interface
+        public override void Draw(bool isTop)
+        {
+            if (this.MenuAbove != null && !string.IsNullOrEmpty(this.MenuAbove.MenuName))
+            {
+                MenuManager.Current.RetrieveMenu(MenuAbove.MenuName).Draw(true);
+            }
+            
+            base.Draw(isTop);
+        }
         public override void InitButtons()
         {
             this.Spans.Clear();
@@ -61,12 +75,6 @@ namespace AemonsNookMono.Menus.General
         {
             base.Refresh();
             this.InitButtons();
-        }
-        public override void Draw(bool isTop)
-        {
-            ProfileMenu menu = MenuManager.Current.RetrieveMenu("Profile") as ProfileMenu;
-            if (menu != null) { menu.Draw(true); }
-            base.Draw(isTop);
         }
         public override bool HandleLeftClick(int x, int y)
         {

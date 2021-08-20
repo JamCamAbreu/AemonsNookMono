@@ -30,6 +30,7 @@ namespace AemonsNookMono.Menus
             this.ScreenY = y;
             this.PrimaryColor = color;
             this.TitleColor = Color.White;
+            this.Selected = false;
             if (this.PrimaryColor == Color.White) { this.TitleColor = Color.Black; }
             if (sprites != null)
             {
@@ -82,6 +83,7 @@ namespace AemonsNookMono.Menus
         public bool DisplayTitle { get; set; }
         public TextPosition TitlePosition { get; set; }
         public Color TitleColor { get; set; }
+        public bool Selected { get; set; }
         #endregion
 
         #region Interface
@@ -133,7 +135,13 @@ namespace AemonsNookMono.Menus
             {
                 int spriteX = this.ScreenX - (this.Sprites.SpriteWidth / 2);
                 int spriteY = this.ScreenY - (this.Sprites.SpriteHeight / 2);
-                if (this.MyCollision != null && this.MyCollision.IsCollision(mouse.X, mouse.Y))
+                if (this.Selected)
+                {
+                    Graphics.Current.SpriteB.Begin();
+                    Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName[this.Sprites.SpriteClick], new Vector2(spriteX, spriteY), Color.White);
+                    Graphics.Current.SpriteB.End();
+                }
+                else if (this.MyCollision != null && this.MyCollision.IsCollision(mouse.X, mouse.Y))
                 {
                     if (mouse.LeftButton == ButtonState.Pressed)
                     {
@@ -157,7 +165,11 @@ namespace AemonsNookMono.Menus
             }
             else
             {
-                if (this.MyCollision != null && this.MyCollision.IsCollision(mouse.X, mouse.Y))
+                if (this.Selected)
+                {
+                    this.ButtonColor.Pressed.Draw();
+                }
+                else if (this.MyCollision != null && this.MyCollision.IsCollision(mouse.X, mouse.Y))
                 {
                     if (mouse.LeftButton == ButtonState.Pressed)
                     {
@@ -168,7 +180,7 @@ namespace AemonsNookMono.Menus
                         this.ButtonColor.Hover.Draw();
                     }
                 }
-                else  if (this.ButtonColor != null)
+                else if (this.ButtonColor != null)
                 { 
                     this.ButtonColor.Normal.Draw(); 
                 }

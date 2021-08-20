@@ -131,6 +131,7 @@ namespace AemonsNookMono.Menus.World
                         return true;
 
                     case "Load":
+                        SaveManager.Current.SaveProfile(ProfileManager.Current.Loaded);
                         ProfileLoadMenu loadmenu = new ProfileLoadMenu();
                         MenuManager.Current.AddMenu(loadmenu);
                         return true;

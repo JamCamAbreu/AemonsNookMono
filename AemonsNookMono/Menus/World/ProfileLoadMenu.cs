@@ -3,6 +3,7 @@ using AemonsNookMono.Player;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace AemonsNookMono.Menus.World
@@ -48,7 +49,7 @@ namespace AemonsNookMono.Menus.World
             this.ProfileButtonCodes = new Dictionary<string, Profile>();
             List<Profile> allprofiles = SaveManager.Current.RetrieveAllSavedProfiles();
             int i = 1;
-            foreach (Profile profile in allprofiles)
+            foreach (Profile profile in allprofiles.OrderByDescending(profile => profile.TotalTimePlayedSeconds))
             {
                 leftColumn.AddColorButton($"Slot {i}", $"{profile.Name}", ProfileManager.Current.GetPrimaryColor(profile.Theme));
                 rightColumn.AddText(ProfileManager.Current.GetTotalPlaytimeString(profile), "couriernew", null, Textbox.HorizontalAlign.Left);

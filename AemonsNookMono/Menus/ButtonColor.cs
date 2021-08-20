@@ -10,13 +10,12 @@ namespace AemonsNookMono.Menus
         public ButtonColor(int width, int height, int centerx, int centery, int transparency, Color primary)
         {
             Color hover = Color.Lerp(primary, Color.White, 0.25f);
-            Color pressed = Color.Lerp(primary, Color.Black, 0.25f);
+            Color pressed = Color.Lerp(primary, Color.White, 0.45f);
             if (primary == Color.White)
             {
                 hover = Color.Lerp(primary, Color.Black, 0.25f);
                 pressed = Color.Lerp(primary, Color.Black, 0.45f);
             }
-
 
             this.Normal = new Panel(width, height, centerx, centery, Color.Black, primary, transparency);
             this.Hover = new Panel(width, height, centerx, centery, Color.Black, hover, transparency);

@@ -38,7 +38,11 @@ namespace AemonsNookMono.Menus.World
             profileOptions = new ButtonSelection();
 
             Span leftColumn = new Span(Span.SpanType.Vertical);
+            leftColumn.AddText("Please click here and enter a profile name:");
+            leftColumn.AddTextInput("NameInput", "Aemon", Color.Black);
+
             leftColumn.AddBlank();
+            leftColumn.AddText("Please select your character theme:");
             profileOptions.Add(leftColumn.AddColorButton("Aemon", "Aemon", ProfileManager.Current.GetPrimaryColor(Player.Profile.ProfileTheme.Aemon)));
             profileOptions.Add(leftColumn.AddColorButton("Aletha", "Aletha", ProfileManager.Current.GetPrimaryColor(Player.Profile.ProfileTheme.Aletha)));
             profileOptions.Add(leftColumn.AddColorButton("Jose", "Jose", ProfileManager.Current.GetPrimaryColor(Player.Profile.ProfileTheme.Jose)));
@@ -47,6 +51,9 @@ namespace AemonsNookMono.Menus.World
             columns.AddSpan(leftColumn);
 
             Span rightColumn = new Span(Span.SpanType.Vertical);
+            rightColumn.AddBlank();
+            rightColumn.AddBlank();
+            rightColumn.AddBlank();
             rightColumn.AddBlank();
             profileOptions.Add(rightColumn.AddColorButton("Helga", "Helga", ProfileManager.Current.GetPrimaryColor(Player.Profile.ProfileTheme.Helga)));
             profileOptions.Add(rightColumn.AddColorButton("Bruno", "Bruno", ProfileManager.Current.GetPrimaryColor(Player.Profile.ProfileTheme.Bruno)));
@@ -58,8 +65,6 @@ namespace AemonsNookMono.Menus.World
             bottomButtons.AddColorButton("Create", "Create", ProfileManager.Current.ColorPrimary);
             bottomButtons.AddColorButton("Back", "Back", Color.Black);
             this.Spans.Add(bottomButtons);
-
-            
 
             this.Spans.Add(columns);
             foreach (Span span in this.Spans)
@@ -80,6 +85,7 @@ namespace AemonsNookMono.Menus.World
         }
         public override bool HandleLeftClick(int x, int y)
         {
+            this.GetButton("NameInput").Selected = false;
             Button clicked = this.CheckButtonCollisions(x, y);
             if (clicked != null)
             {
@@ -87,6 +93,10 @@ namespace AemonsNookMono.Menus.World
                 this.profileOptions.Select(clicked.ButtonCode);
                 switch (clicked.ButtonCode)
                 {
+                    case "NameInput":
+                        clicked.Selected = true;
+                        return true;
+
                     case "Back":
                         MenuManager.Current.CloseTop();
                         return true;
@@ -94,14 +104,28 @@ namespace AemonsNookMono.Menus.World
                     case "Create":
                         if (this.profileOptions.SelectedButton != null && !string.IsNullOrEmpty(this.profileOptions.SelectedButton.ButtonCode))
                         {
-                            Profile profile = this.createProfileFromSelection(this.profileOptions.SelectedButton.ButtonCode);
-                            if (profile != null)
+                            if (!string.IsNullOrEmpty(this.GetButton("NameInput").Title))
                             {
-                                SaveManager.Current.SaveProfile(profile);
-                                ProfileManager.Current.Loaded = profile;
-                                MenuManager.Current.CloseTop();
-                                MenuManager.Current.Top.Refresh();
-                                MenuManager.Current.AddMenu(new MessagePopupMenu("Profile Created", "Your new profile was created successfully.", "Okay", MenuManager.Current.Top));
+                                if (SaveManager.Current.CheckProfileExists(this.GetButton("NameInput").Title) == false)
+                                {
+                                    Profile profile = this.createProfileFromSelection(this.profileOptions.SelectedButton.ButtonCode, this.GetButton("NameInput").Title);
+                                    if (profile != null)
+                                    {
+                                        SaveManager.Current.SaveProfile(profile);
+                                        ProfileManager.Current.Loaded = profile;
+                                        MenuManager.Current.CloseTop();
+                                        MenuManager.Current.Top.Refresh();
+                                        MenuManager.Current.AddMenu(new MessagePopupMenu("Profile Created", "Your new profile was created successfully.", "Okay", MenuManager.Current.Top));
+                                    }
+                                }
+                                else
+                                {
+                                    MenuManager.Current.AddMenu(new MessagePopupMenu("", "A profile with this name already exists, please choose a different name.", "Okay", this));
+                                }
+                            }
+                            else
+                            {
+                                MenuManager.Current.AddMenu(new MessagePopupMenu("", "Please enter a name for your profile", "Okay", this));
                             }
                         }
                         else
@@ -120,7 +144,7 @@ namespace AemonsNookMono.Menus.World
 
         #region Internal
         ButtonSelection profileOptions { get; set; }
-        protected Profile createProfileFromSelection(string buttonCode)
+        protected Profile createProfileFromSelection(string buttonCode, string profilename)
         {
             
             Profile prof = null;
@@ -128,37 +152,37 @@ namespace AemonsNookMono.Menus.World
             {
                 case "Aemon":
                     {
-                        prof = new Profile(Profile.ProfileTheme.Aemon, "Aemon");
+                        prof = new Profile(Profile.ProfileTheme.Aemon, profilename);
                         break;
                     }
 
                 case "Aletha":
                     {
-                        prof = new Profile(Profile.ProfileTheme.Aletha, "Aletha");
+                        prof = new Profile(Profile.ProfileTheme.Aletha, profilename);
                         break;
                     }
 
                 case "Jose":
                     {
-                        prof = new Profile(Profile.ProfileTheme.Jose, "Jose");
+                        prof = new Profile(Profile.ProfileTheme.Jose, profilename);
                         break;
                     }
 
                 case "Helga":
                     {
-                        prof = new Profile(Profile.ProfileTheme.Helga, "Helga");
+                        prof = new Profile(Profile.ProfileTheme.Helga, profilename);
                         break;
                     }
 
                 case "Bruno":
                     {
-                        prof = new Profile(Profile.ProfileTheme.Bruno, "Bruno");
+                        prof = new Profile(Profile.ProfileTheme.Bruno, profilename);
                         break;
                     }
 
                 case "Jade":
                     {
-                        prof = new Profile(Profile.ProfileTheme.Jade, "Jade");
+                        prof = new Profile(Profile.ProfileTheme.Jade, profilename);
                         break;
                     }
             }

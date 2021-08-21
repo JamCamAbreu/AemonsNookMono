@@ -17,17 +17,11 @@ namespace AemonsNookMono.Admin
     public class InputManager
     {
         #region Enums
-        public enum InputType
+        public enum MouseButton
         {
-            LeftMouse
+            Left,
+            Right
         }
-        #endregion
-
-        #region Internal
-        private bool LeftMouseWait { get; set; }
-        private bool EnterWait { get; set; }
-        private bool EscapeWait { get; set; }
-        private bool ZeroWait { get; set; }
         #endregion
 
         #region Singleton Implementation
@@ -35,10 +29,10 @@ namespace AemonsNookMono.Admin
         private static object _lock = new object();
         private InputManager()
         {
-            this.LeftMouseWait = false;
-            this.EnterWait = false;
-            this.EscapeWait = false;
-            this.ZeroWait = false;
+            this.PrevKeyboardState = Keyboard.GetState();
+            this.CurKeyboardState = Keyboard.GetState();
+            this.PrevMouseState = Mouse.GetState();
+            this.CurMouseState = Mouse.GetState();
         }
         public static InputManager Current
         {
@@ -59,40 +53,95 @@ namespace AemonsNookMono.Admin
         }
         #endregion
 
+        #region Public Properties
+        public MouseState CurMouseState { get; set; }
+        public MouseState PrevMouseState { get; set; }
+        public KeyboardState CurKeyboardState { get; set; }
+        public KeyboardState PrevKeyboardState { get; set; }
+        #endregion
+
         #region Interface
+        public bool CheckKeyboardReleased(Keys key)
+        {
+            if (this.CurKeyboardState.IsKeyUp(key) && this.PrevKeyboardState.IsKeyDown(key)) { return true; }
+            return false;
+        }
+        public bool CheckKeyboardPressed(Keys key)
+        {
+            if (this.CurKeyboardState.IsKeyDown(key) && this.PrevKeyboardState.IsKeyUp(key)) { return true; }
+            return false;
+        }
+        public bool CheckKeyboardDown(Keys key)
+        {
+            if (this.CurKeyboardState.IsKeyDown(key)) { return true; }
+            return false;
+        }
+        public bool CheckMousePressed(MouseButton button)
+        {
+            switch (button)
+            {
+                case MouseButton.Left:
+                    if (this.CurMouseState.LeftButton == ButtonState.Pressed && this.PrevMouseState.LeftButton == ButtonState.Released) { return true; }
+                    break;
+
+                case MouseButton.Right:
+                    if (this.CurMouseState.RightButton == ButtonState.Pressed && this.PrevMouseState.RightButton == ButtonState.Released) { return true; }
+                    break;
+            }
+            return false;
+        }
+        public bool CheckMouseReleased(MouseButton button)
+        {
+            switch (button)
+            {
+                case MouseButton.Left:
+                    if (this.CurMouseState.LeftButton == ButtonState.Released && this.PrevMouseState.LeftButton == ButtonState.Pressed) { return true; }
+                    break;
+
+                case MouseButton.Right:
+                    if (this.CurMouseState.RightButton == ButtonState.Released && this.PrevMouseState.RightButton == ButtonState.Pressed) { return true; }
+                    break;
+            }
+            return false;
+        }
+        public bool CheckMouseDown(MouseButton button)
+        {
+            switch (button)
+            {
+                case MouseButton.Left:
+                    if (this.CurMouseState.LeftButton == ButtonState.Pressed) { return true; }
+                    break;
+
+                case MouseButton.Right:
+                    if (this.CurMouseState.RightButton == ButtonState.Pressed) { return true; }
+                    break;
+            }
+            return false;
+        }
         public void Update()
         {
-            // Todo: use function pointers or reflection to refactor this?
-            #region TODO NEEDS REFACTOR
-            var mousestate = Mouse.GetState();
-            if (!this.LeftMouseWait && mousestate.LeftButton == ButtonState.Pressed)
-            {
-                this.LeftMouseWait = true;
-                this.HandleLeftClick(mousestate.X, mousestate.Y);
-            }
-            if (this.LeftMouseWait && mousestate.LeftButton == ButtonState.Released) { this.LeftMouseWait = false; }
+            PrevKeyboardState = CurKeyboardState;
+            PrevMouseState = CurMouseState;
 
-            if (!this.EnterWait && Keyboard.GetState().IsKeyDown(Keys.Enter))
+            CurKeyboardState = Keyboard.GetState();
+            CurMouseState = Mouse.GetState();
+
+            if (this.CheckMouseReleased(MouseButton.Left))
             {
-                this.EnterWait = true;
+                this.HandleLeftClick(CurMouseState.X, CurMouseState.Y);
+            }
+            if (this.CheckKeyboardPressed(Keys.Enter))
+            {
                 this.HandleEnter();
             }
-            if (this.EnterWait && Keyboard.GetState().IsKeyUp(Keys.Enter)) { this.EnterWait = false; }
-
-            if (!this.EscapeWait && Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (this.CheckKeyboardPressed(Keys.Escape))
             {
-                this.EscapeWait = true;
                 this.HandleEscape();
             }
-            if (this.EscapeWait && Keyboard.GetState().IsKeyUp(Keys.Escape)) { this.EscapeWait = false; }
-
-            if (!this.ZeroWait && Keyboard.GetState().IsKeyDown(Keys.D0))
+            if (this.CheckKeyboardPressed(Keys.D0))
             {
-                this.ZeroWait = true;
                 this.HandleZero();
             }
-            if (this.ZeroWait && Keyboard.GetState().IsKeyUp(Keys.D0)) { this.ZeroWait = false; }
-            #endregion
         }
         #endregion
 
@@ -252,7 +301,6 @@ namespace AemonsNookMono.Admin
                 return;
             }
         }
-
         private void HandleZero()
         {
             for (int i = 0; i < 1; i++)

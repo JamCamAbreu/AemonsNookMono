@@ -17,8 +17,8 @@ namespace AemonsNookMono.Menus
             this.ScreenX = centerx;
             this.ScreenY = centery;
             this.BackgroundColor = backColor == null ? Color.Black : (Color)backColor;
-            this.AccentColor = ProfileManager.Current.ColorPrimary;
             this.ForegroundColor = frontColor == null ? Color.Gray : (Color)frontColor;
+            this.AccentColor = Color.Lerp(this.ForegroundColor, Color.Black, 0.5f);
             this.Transparency = transparency;
 
             if (width > 1 && height > 1)

@@ -10,7 +10,7 @@ namespace AemonsNookMono.Admin
     public sealed class Graphics
     {
         #region Constants
-        public const int BORDER_THICKNESS = 2;
+        public const int BORDER_THICKNESS = 6;
         #endregion
 
         #region Singleton Implementation

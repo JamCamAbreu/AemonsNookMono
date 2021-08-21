@@ -144,6 +144,12 @@ namespace AemonsNookMono.Menus
             this.AddDynamicCell(animated);
             return animated;
         }
+        public TextInput AddTextInput(string code, string initialtext, Color? primaryColor, bool active = true)
+        {
+            TextInput created = new TextInput(code, initialtext, 20, 0, 0, 20, 20, null, primaryColor, active && !string.IsNullOrEmpty(code));
+            this.AddDynamicCell(created);
+            return created;
+        }
         public void AddSpan(Span span)
         {
             this.AddDynamicCell(span);

@@ -162,10 +162,14 @@ namespace AemonsNookMono.Admin
                 savefile.Save();
             }
         }
+        public bool CheckProfileExists(string profileName)
+        {
+            NookFile file = new NookFile("Profile", profileName);
+            return file.CheckFileExists();
+        }
         public Profile LoadProfile(string profileName)
         {
             Profile profile = null;
-
             NookFile file = new NookFile("Profile", profileName);
             if (file.CheckFileExists())
             {

@@ -123,8 +123,8 @@ namespace AemonsNookMono.Menus
                 if (input.CheckKeyboardPressed(Keys.Space)) { this.Title += ' '; }
             }
 
-            if (input.CheckKeyboardPressed(Keys.Back)) 
-            { 
+            if (input.CheckKeyboardDownInterval(Keys.Back, InputManager.BUTTON_DOWN_INITIAL, InputManager.BUTTON_DOWN_SPEED))
+            {
                 if (!string.IsNullOrEmpty(this.Title))
                 {
                     this.Title = this.Title.Remove(this.Title.Length - 1, 1);

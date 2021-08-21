@@ -1,6 +1,7 @@
 ﻿using AemonsNookMono.Admin;
 using AemonsNookMono.Levels;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,6 @@ namespace AemonsNookMono.Menus.World
         #region Public Properties
         public StateManager.State OriginalState { get; set; }
         #endregion
-
 
         #region Interface
         public override void InitButtons()
@@ -113,7 +113,6 @@ namespace AemonsNookMono.Menus.World
                 Graphics.Current.SpriteB.End();
             }
         }
-
         public override bool HandleLeftClick(int x, int y)
         {
             Button clicked = this.CheckButtonCollisions(x, y);
@@ -148,27 +147,42 @@ namespace AemonsNookMono.Menus.World
                         MenuManager.Current.CloseTop();
                         return true;
 
-                    case "widthplus":
-                        if (this.customLevelWidth < 30) { this.customLevelWidth += 1; }
-                        return true;
-
-                    case "widthminus":
-                        if (this.customLevelWidth > 10) { this.customLevelWidth -= 1; }
-                        return true;
-
-                    case "heightplus":
-                        if (this.customLevelHeight < 25) { this.customLevelHeight += 1; }
-                        return true;
-
-                    case "heightminus":
-                        if (this.customLevelHeight > 10) { this.customLevelHeight -= 1; }
-                        return true;
-
                     default:
                         return false;
                 }
             }
             return false;
+        }
+        public override void Update()
+        {
+            if (InputManager.Current.CheckMouseDownInterval(InputManager.MouseButton.Left, InputManager.BUTTON_DOWN_INITIAL, InputManager.BUTTON_DOWN_SPEED))
+            {
+                MouseState state = InputManager.Current.CurMouseState;
+                Button clicked = this.CheckButtonCollisions(state.X, state.Y);
+                if (clicked != null)
+                {
+                    switch (clicked.ButtonCode)
+                    {
+                        case "widthplus":
+                            if (this.customLevelWidth < 30) { this.customLevelWidth += 1; }
+                            break;
+
+                        case "widthminus":
+                            if (this.customLevelWidth > 10) { this.customLevelWidth -= 1; }
+                            break;
+
+                        case "heightplus":
+                            if (this.customLevelHeight < 25) { this.customLevelHeight += 1; }
+                            break;
+
+                        case "heightminus":
+                            if (this.customLevelHeight > 10) { this.customLevelHeight -= 1; }
+                            break;
+                    }
+                }
+            }
+
+            base.Update();
         }
         #endregion
 

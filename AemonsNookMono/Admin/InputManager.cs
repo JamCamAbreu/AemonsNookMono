@@ -16,6 +16,11 @@ namespace AemonsNookMono.Admin
 {
     public class InputManager
     {
+        #region Constants
+        public const int BUTTON_DOWN_INITIAL = 22;
+        public const int BUTTON_DOWN_SPEED = 5;
+        #endregion
+
         #region Enums
         public enum MouseButton
         {
@@ -33,6 +38,8 @@ namespace AemonsNookMono.Admin
             this.CurKeyboardState = Keyboard.GetState();
             this.PrevMouseState = Mouse.GetState();
             this.CurMouseState = Mouse.GetState();
+            this.KeyboardAlarms = new Dictionary<Keys, int>();
+            this.MouseAlarms = new Dictionary<MouseButton, int>();
         }
         public static InputManager Current
         {
@@ -74,6 +81,40 @@ namespace AemonsNookMono.Admin
         public bool CheckKeyboardDown(Keys key)
         {
             if (this.CurKeyboardState.IsKeyDown(key)) { return true; }
+            return false;
+        }
+        public bool CheckKeyboardDownInterval(Keys key, int initialFrameSpeed, int frameSpeed)
+        {
+            if (CheckKeyboardDown(key))
+            {
+                if (this.CheckKeyboardPressed(key) == true)
+                {
+                    if (this.KeyboardAlarms.ContainsKey(key))
+                    {
+                        this.KeyboardAlarms[key] = initialFrameSpeed;
+                    }
+                    else
+                    {
+                        this.KeyboardAlarms.Add(key, initialFrameSpeed);
+                    }
+                    return true;
+                }
+                else
+                {
+                    if (this.KeyboardAlarms.ContainsKey(key))
+                    {
+                        if (this.KeyboardAlarms[key] <= 0)
+                        {
+                            KeyboardAlarms[key] = frameSpeed;
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        this.KeyboardAlarms.Add(key, initialFrameSpeed);
+                    }
+                }
+            }
             return false;
         }
         public bool CheckMousePressed(MouseButton button)
@@ -118,6 +159,40 @@ namespace AemonsNookMono.Admin
             }
             return false;
         }
+        public bool CheckMouseDownInterval(MouseButton button, int initialFrameSpeed, int frameSpeed)
+        {
+            if (CheckMouseDown(button))
+            {
+                if (this.CheckMousePressed(button) == true)
+                {
+                    if (this.MouseAlarms.ContainsKey(button))
+                    {
+                        this.MouseAlarms[button] = initialFrameSpeed;
+                    }
+                    else
+                    {
+                        this.MouseAlarms.Add(button, initialFrameSpeed);
+                    }
+                    return true;
+                }
+                else
+                {
+                    if (this.MouseAlarms.ContainsKey(button))
+                    {
+                        if (this.MouseAlarms[button] <= 0)
+                        {
+                            MouseAlarms[button] = frameSpeed;
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        this.MouseAlarms.Add(button, initialFrameSpeed);
+                    }
+                }
+            }
+            return false;
+        }
         public void Update()
         {
             PrevKeyboardState = CurKeyboardState;
@@ -142,10 +217,50 @@ namespace AemonsNookMono.Admin
             {
                 this.HandleZero();
             }
+
+            #region Keyboard and Mouse Button Press Speed
+            List<Keys> update = new List<Keys>();
+            List<Keys> released = new List<Keys>();
+            foreach (var alarm in this.KeyboardAlarms)
+            {
+                if (this.CurKeyboardState.IsKeyUp(alarm.Key))
+                {
+                    released.Add(alarm.Key);
+                }
+                else
+                {
+                    update.Add(alarm.Key);
+                }
+            }
+            foreach (Keys key in update) { this.KeyboardAlarms[key]--; }
+            foreach (Keys key in released) { this.KeyboardAlarms.Remove(key); }
+            if (this.MouseAlarms.ContainsKey(MouseButton.Left))
+            {
+                if (this.CurMouseState.LeftButton == ButtonState.Released)
+                {
+                    this.MouseAlarms.Remove(MouseButton.Left);
+                }
+                else
+                {
+                    this.MouseAlarms[MouseButton.Left]--;
+                }
+            }
+            if (this.MouseAlarms.ContainsKey(MouseButton.Right))
+            {
+                if (this.CurMouseState.RightButton == ButtonState.Released)
+                {
+                    this.MouseAlarms.Remove(MouseButton.Right);
+                }
+                else
+                {
+                    this.MouseAlarms[MouseButton.Right]--;
+                }
+            }
+            #endregion
         }
         #endregion
 
-        #region Helper Methods
+        #region Internal
         private void HandleLeftClick(int x, int y)
         {
             StateManager.State curState = StateManager.Current.CurrentState;
@@ -314,8 +429,10 @@ namespace AemonsNookMono.Admin
             //}
 
         }
-        #endregion
 
+        private Dictionary<Keys, int> KeyboardAlarms { get; set; }
+        private Dictionary<MouseButton, int> MouseAlarms { get; set; }
+        #endregion
 
     }
 }

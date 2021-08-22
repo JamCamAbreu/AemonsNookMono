@@ -53,6 +53,7 @@ namespace AemonsNookMono.GameWorld
         public List<Tile> TreeTiles { get; set; }
         public List<Tile> StoneTiles { get; set; }
         public List<Tile> WaterTiles { get; set; }
+        public List<List<Tile>> TileLists { get; set; }
         public SortedResourceList Resources { get; set; }
         public List<Peep> Peeps { get; set; }
         #endregion
@@ -60,11 +61,22 @@ namespace AemonsNookMono.GameWorld
         #region Constructors
         public void Init(Level level)
         {
+            this.TileLists = new List<List<Tile>>();
             this.RoadTiles = new List<Tile>();
+            this.TileLists.Add(this.RoadTiles);
+
             this.SpawnTiles = new List<Tile>();
+            this.TileLists.Add(this.SpawnTiles);
+
             this.TreeTiles = new List<Tile>();
+            this.TileLists.Add(this.TreeTiles);
+
             this.StoneTiles = new List<Tile>();
+            this.TileLists.Add(this.StoneTiles);
+
             this.WaterTiles = new List<Tile>();
+            this.TileLists.Add(this.WaterTiles);
+
             this.Resources = new SortedResourceList();
             this.Peeps = new List<Peep>();
             this.LoadLevel(level);
@@ -78,7 +90,26 @@ namespace AemonsNookMono.GameWorld
             MenuManager.Current.ClearAllMenus();
             MenuManager.Current.AddMenu(new WorldMenu());
         }
-        public void Refresh()
+        #endregion
+
+        #region Interface
+        public void RefreshTiles(bool fixedResources)
+        {
+            this.SetTileShapes();
+            this.ReloadTiles();
+            if (fixedResources)
+            {
+                this.SpawnTrees(1, 1, false);
+                this.SpawnStones(1, 1, false);
+            }
+            else
+            {
+                this.SpawnTrees(0, 4);
+                this.SpawnStones(0, 3);
+            }
+
+        }
+        public void RefreshDisplay()
         {
             this.StartDrawX = (Graphics.Current.Device.Viewport.Width / 2) - (this.sizeX / 2);
             this.StartDrawY = (Graphics.Current.Device.Viewport.Height / 2) - (this.sizeY / 2);
@@ -94,9 +125,6 @@ namespace AemonsNookMono.GameWorld
                 }
             }
         }
-        #endregion
-
-        #region Interface
         public bool InsideBounds(int pixelX, int pixelY)
         {
             if (pixelX < this.StartDrawX || pixelY < this.StartDrawY || pixelX >= this.StartDrawX + this.sizeX || pixelY >= this.StartDrawY + this.sizeY) { return false; }
@@ -242,17 +270,17 @@ namespace AemonsNookMono.GameWorld
                 for (int col = 0; col < this.Width; col++)
                 {
                     c = levelcode[i];
-                    SetTileTypeFromChar(row, col, c);
+                    LoadChar(row, col, c);
                     i++;
                 }
             }
 
-            this.SpawnTrees();
-            this.SpawnStones();
+            this.SpawnTrees(0, 4);
+            this.SpawnStones(0, 3);
 
             this.SetTileShapes();
         }
-        private void SetTileTypeFromChar(int row, int col, char c)
+        private void LoadChar(int row, int col, char c)
         {
             Tile curTile = this.TileAt(col, row);
             switch (c)
@@ -278,11 +306,16 @@ namespace AemonsNookMono.GameWorld
                     this.RoadTiles.Add(curTile);
                     break;
 
+                case '0':
                 case '1':
                 case '2':
                 case '3':
                 case '4':
                 case '5':
+                case '6':
+                case '7':
+                case '8':
+                case '9':
                     curTile.Type = Tile.TileType.Dirt;
                     curTile.IsPath = true;
                     curTile.IsMapEdge = true;
@@ -295,7 +328,61 @@ namespace AemonsNookMono.GameWorld
                     break;
             }
         }
-        private void SpawnTrees()
+        private void ReloadTiles()
+        {
+            this.Resources.Clear();
+            foreach (List<Tile> list in this.TileLists)
+            {
+                list.Clear();
+            }
+            Tile curTile;
+            int mapEdgeId = 0;
+            for (int row = 0; row < this.Height; row++)
+            {
+                for (int col = 0; col < this.Width; col++)
+                {
+                    curTile = TileAt(col, row);
+                    if (curTile != null)
+                    {
+                        curTile.Regenerate();
+                        switch (curTile.Type)
+                        {
+                            case Tile.TileType.Grass:
+                                break;
+
+                            case Tile.TileType.Stone:
+                                this.StoneTiles.Add(curTile);
+                                break;
+
+                            case Tile.TileType.Tree:
+                                this.TreeTiles.Add(curTile);
+                                break;
+
+                            case Tile.TileType.Building:
+                                break;
+
+                            case Tile.TileType.Water:
+                                this.WaterTiles.Add(curTile);
+                                break;
+
+                            case Tile.TileType.Dirt:
+                                curTile.Type = Tile.TileType.Dirt;
+                                curTile.IsPath = true;
+                                this.RoadTiles.Add(curTile);
+                                if (mapEdgeId < 10 && curTile.TileAbove == null || curTile.TileRight == null || curTile.TileBelow == null || curTile.TileLeft == null)
+                                {
+                                    curTile.IsMapEdge = true;
+                                    curTile.MapEdgeId = mapEdgeId;
+                                    mapEdgeId++;
+                                    this.SpawnTiles.Add(curTile);
+                                }
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+        private void SpawnTrees(int min, int max, bool useRandomOffset = true)
         {
             int mid = 16;
             int pad = World.TILE_DIMENSION_PIXELS / 8;
@@ -304,11 +391,20 @@ namespace AemonsNookMono.GameWorld
             int offsetY;
             foreach (Tile tile in this.TreeTiles)
             {
-                int num = ran.Next(0, 4);
+                int num = ran.Next(min, max);
                 for (int i = 0; i < num; i++)
                 {
-                    offsetX = ran.Next(-mid + pad, mid - pad);
-                    offsetY = ran.Next(-mid * 2 + pad, -pad);
+                    if (useRandomOffset)
+                    {
+                        offsetX = ran.Next(-mid + pad, mid - pad);
+                        offsetY = ran.Next(-mid * 2 + pad, -pad);
+                    }
+                    else
+                    {
+                        offsetX = 0;
+                        offsetY = 0;
+                    }
+
                     Tree t = new Tree(this.StartDrawX + tile.RelativeX + offsetX, this.StartDrawY + tile.RelativeY + offsetY, tile);
                     t.TileRelativeX = offsetX;
                     t.TileRelativeY = offsetY;
@@ -317,7 +413,7 @@ namespace AemonsNookMono.GameWorld
                 }
             }
         }
-        private void SpawnStones()
+        private void SpawnStones(int min, int max, bool useRandomOffset = true)
         {
             int mid = 8;
             int pad = World.TILE_DIMENSION_PIXELS / 8;
@@ -326,11 +422,20 @@ namespace AemonsNookMono.GameWorld
             int offsetY;
             foreach (Tile tile in this.StoneTiles)
             {
-                int num = ran.Next(0, 3);
+                int num = ran.Next(min, max);
                 for (int i = 0; i < num; i++)
                 {
-                    offsetX = ran.Next(-mid + pad, mid * 2 - pad);
-                    offsetY = ran.Next(-mid + pad, mid * 2 - pad);
+                    if (useRandomOffset)
+                    {
+                        offsetX = ran.Next(-mid + pad, mid * 2 - pad);
+                        offsetY = ran.Next(-mid + pad, mid * 2 - pad);
+                    }
+                    else
+                    {
+                        offsetX = 0;
+                        offsetY = 0;
+                    }
+
                     Stone s = new Stone(this.StartDrawX + tile.RelativeX + offsetX, this.StartDrawY + tile.RelativeY + offsetY, tile);
                     s.TileRelativeX = offsetX;
                     s.TileRelativeY = offsetY;

@@ -57,7 +57,7 @@ namespace AemonsNookMono.Admin
                     
                     this.GraphicsDM.IsFullScreen = false;
                     this.GraphicsDM.ApplyChanges();
-                    World.Current.Refresh();
+                    World.Current.RefreshDisplay();
                     MenuManager.Current.Refresh();
                     Debugger.Current.Refresh();
                     //this.Window.IsBorderless = true;
@@ -72,7 +72,7 @@ namespace AemonsNookMono.Admin
                     this.GraphicsDM.PreferredBackBufferHeight = 900;
                     this.GraphicsDM.IsFullScreen = false;
                     this.GraphicsDM.ApplyChanges();
-                    World.Current.Refresh();
+                    World.Current.RefreshDisplay();
                     MenuManager.Current.Refresh();
                     Debugger.Current.Refresh();
                     this.Window.IsBorderless = false;

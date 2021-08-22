@@ -14,6 +14,10 @@ namespace AemonsNookMono.Resources
             Sorted = new SortedList<int, Resource>();
             ran = new Random();
         }
+        public void Clear()
+        {
+            this.Sorted.Clear();
+        }
         public void Add(Resource r)
         {
             if (r != null)

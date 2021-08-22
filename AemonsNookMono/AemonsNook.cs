@@ -149,6 +149,10 @@ namespace AemonsNookMono
             Graphics.Current.SpritesByName.Add("menu-arrow-left-hover", Content.Load<Texture2D>("Menus/WorldMenu/LeftHover"));
             #endregion
 
+            #region Other
+            Graphics.Current.SpritesByName.Add("tile-outline", Content.Load<Texture2D>("World/Terrain/TileOutline"));
+            #endregion
+
             #region Peeps
             Graphics.Current.SpritesByName.Add("peep-royal", Content.Load<Texture2D>("World/Peeps/Peep-royal"));
             #endregion

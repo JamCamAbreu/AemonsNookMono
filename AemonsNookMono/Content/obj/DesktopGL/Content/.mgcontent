@@ -89,6 +89,7 @@
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Stone/Stone4.png</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Stone/Stone5.png</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Stone/Stone6.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/TileOutline.png</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Trees/Tree1.png</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Trees/Tree2.png</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Trees/Tree3.png</File>
@@ -186,6 +187,7 @@
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File>World/Terrain/Grass-a.png</File>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

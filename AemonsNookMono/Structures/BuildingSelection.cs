@@ -18,7 +18,7 @@ namespace AemonsNookMono.Structures
         #region Constructor
         public BuildingSelection(BuildingInfo.Type type)
         {
-            this.Squares = new List<BuildingSelectionSquare>();
+            this.squares = new List<BuildingSelectionSquare>();
             this.Type = type;
             this.LastTileUnderMouse = World.Current.TileAt(0, 0);
 
@@ -26,7 +26,7 @@ namespace AemonsNookMono.Structures
             foreach (Tuple<int, int> coord in relativeCoordinates)
             {
                 BuildingSelectionSquare square = new BuildingSelectionSquare(coord.Item1, coord.Item2);
-                this.Squares.Add(square);
+                this.squares.Add(square);
             }
         }
         #endregion
@@ -42,7 +42,7 @@ namespace AemonsNookMono.Structures
         }
         public void Draw()
         {
-            foreach (BuildingSelectionSquare square in this.Squares)
+            foreach (BuildingSelectionSquare square in this.squares)
             {
                 square.Draw();
             }
@@ -50,14 +50,14 @@ namespace AemonsNookMono.Structures
         #endregion
 
         #region Internal
-        private List<BuildingSelectionSquare> Squares { get; set; }
+        private List<BuildingSelectionSquare> squares { get; set; }
         private void FollowMouse()
         {
             Tile t = World.Current.TileAtPixel(Cursor.Current.LastX, Cursor.Current.LastY);
             if (t != null && this.LastTileUnderMouse != t)
             {
                 this.LastTileUnderMouse = t;
-                foreach (BuildingSelectionSquare square in this.Squares)
+                foreach (BuildingSelectionSquare square in this.squares)
                 {
                     square.OriginTile = t;
                 }

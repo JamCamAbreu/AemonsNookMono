@@ -180,6 +180,25 @@ namespace AemonsNookMono.GameWorld
         {
             Debugger.Current.AddTempString($"You clicked on a {this.Type} tile at {this.Column},{this.Row}!");
         }
+        public void Regenerate()
+        {
+            this.IsMapEdge = false;
+            this.MapEdgeId = -1;
+            this.Decorations.Clear();
+            this.Resources.Clear();
+            if (this.Type == TileType.Grass)
+            {
+                if (this.ran.Next(0, 5) == 0)
+                {
+                    int flowertype = this.ran.Next(1, 4);
+                    int pad = 6;
+                    int ranx = this.ran.Next(pad, World.TILE_DIMENSION_PIXELS / 2 - pad);
+                    int rany = this.ran.Next(pad, World.TILE_DIMENSION_PIXELS / 2 - pad);
+                    float rot = 0.25f * (float)ran.Next(1, 4);
+                    this.Decorations.Add(new TileDecoration($"decoration-flowers-{flowertype}", new Vector2(RelativeX + ranx, RelativeY + rany), rot, new Vector2(8, 8)));
+                }
+            }
+        }
         #endregion
 
         #region Internal Properties

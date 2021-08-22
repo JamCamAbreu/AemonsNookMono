@@ -56,11 +56,14 @@ namespace AemonsNookMono.GameWorld
         public List<List<Tile>> TileLists { get; set; }
         public SortedResourceList Resources { get; set; }
         public List<Peep> Peeps { get; set; }
+        public Random ran { get; set; }
         #endregion
 
         #region Constructors
         public void Init(Level level)
         {
+            this.ran = new Random();
+
             this.TileLists = new List<List<Tile>>();
             this.RoadTiles = new List<Tile>();
             this.TileLists.Add(this.RoadTiles);
@@ -146,9 +149,8 @@ namespace AemonsNookMono.GameWorld
         }
         public Tile RetrieveRandomTile()
         {
-            Random ran = new Random();
-            int x = ran.Next(0, this.Width - 1);
-            int y = ran.Next(0, this.Height - 1);
+            int x = this.ran.Next(0, this.Width - 1);
+            int y = this.ran.Next(0, this.Height - 1);
             return TileAt(x, y);
         }
         public void Draw()
@@ -382,22 +384,25 @@ namespace AemonsNookMono.GameWorld
                 }
             }
         }
+        private void ReloadTile(Tile tile)
+        {
+
+        }
         private void SpawnTrees(int min, int max, bool useRandomOffset = true)
         {
             int mid = 16;
             int pad = World.TILE_DIMENSION_PIXELS / 8;
-            Random ran = new Random();
             int offsetX;
             int offsetY;
             foreach (Tile tile in this.TreeTiles)
             {
-                int num = ran.Next(min, max);
+                int num = this.ran.Next(min, max);
                 for (int i = 0; i < num; i++)
                 {
                     if (useRandomOffset)
                     {
-                        offsetX = ran.Next(-mid + pad, mid - pad);
-                        offsetY = ran.Next(-mid * 2 + pad, -pad);
+                        offsetX = this.ran.Next(-mid + pad, mid - pad);
+                        offsetY = this.ran.Next(-mid * 2 + pad, -pad);
                     }
                     else
                     {
@@ -417,18 +422,17 @@ namespace AemonsNookMono.GameWorld
         {
             int mid = 8;
             int pad = World.TILE_DIMENSION_PIXELS / 8;
-            Random ran = new Random();
             int offsetX;
             int offsetY;
             foreach (Tile tile in this.StoneTiles)
             {
-                int num = ran.Next(min, max);
+                int num = this.ran.Next(min, max);
                 for (int i = 0; i < num; i++)
                 {
                     if (useRandomOffset)
                     {
-                        offsetX = ran.Next(-mid + pad, mid * 2 - pad);
-                        offsetY = ran.Next(-mid + pad, mid * 2 - pad);
+                        offsetX = this.ran.Next(-mid + pad, mid * 2 - pad);
+                        offsetY = this.ran.Next(-mid + pad, mid * 2 - pad);
                     }
                     else
                     {

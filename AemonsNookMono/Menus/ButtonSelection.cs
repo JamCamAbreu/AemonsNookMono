@@ -33,7 +33,7 @@ namespace AemonsNookMono.Menus
             if (button == null || string.IsNullOrEmpty(button.ButtonCode)) { throw new Exception("This is going to cause trouble!"); }
             this.Options.Add(button);
         }
-        public void Select(string buttonCode)
+        public void CheckSelect(string buttonCode)
         {
             Button button = this.Options.Where(button => button.ButtonCode == buttonCode).FirstOrDefault();
             if (button != null)

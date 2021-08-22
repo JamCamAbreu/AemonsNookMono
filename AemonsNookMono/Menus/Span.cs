@@ -153,6 +153,7 @@ namespace AemonsNookMono.Menus
         public void AddSpan(Span span)
         {
             this.AddDynamicCell(span);
+            this.ChildSpans.Add(span);
         }
         public override void Draw()
         {
@@ -225,6 +226,19 @@ namespace AemonsNookMono.Menus
                 if (span.ContainsButton(name)) { return span.GetButton(name); }
             }
             return null;
+        }
+        public List<Button> AllButtons()
+        {
+            List<Button> buttons = new List<Button>();
+            foreach (Button button in this.Cells.Where(cell => cell is Button))
+            {
+                buttons.Add(button);
+            }
+            foreach (Span span in this.ChildSpans)
+            {
+                buttons.AddRange(span.AllButtons());
+            }
+            return buttons;
         }
         public bool ContainsButton(string name)
         {

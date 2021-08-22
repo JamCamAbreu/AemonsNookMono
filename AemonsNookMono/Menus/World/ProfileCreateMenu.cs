@@ -90,7 +90,7 @@ namespace AemonsNookMono.Menus.World
             if (clicked != null)
             {
                 Debugger.Current.AddTempString($"You clicked on the {clicked.ButtonCode} button!");
-                this.profileOptions.Select(clicked.ButtonCode);
+                this.profileOptions.CheckSelect(clicked.ButtonCode);
                 switch (clicked.ButtonCode)
                 {
                     case "NameInput":

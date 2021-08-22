@@ -25,8 +25,8 @@ namespace AemonsNookMono.Menus.World
         {
             this.InitButtons();
             this.OriginalState = originalState;
-            this.customLevelWidth = 20;
-            this.customLevelHeight = 20;
+            this.customLevelWidth = 12;
+            this.customLevelHeight = 12;
         }
 
         #region Public Properties

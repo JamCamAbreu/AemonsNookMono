@@ -154,6 +154,7 @@ namespace AemonsNookMono
             #endregion
 
             #region Peeps
+            Graphics.Current.SpritesByName.Add("hero", Content.Load<Texture2D>("World/Peeps/hero"));
             Graphics.Current.SpritesByName.Add("peep-royal", Content.Load<Texture2D>("World/Peeps/Peep-royal"));
             #endregion
 

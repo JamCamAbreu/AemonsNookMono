@@ -1,12 +1,13 @@
 ﻿using AemonsNookMono.Admin;
 using AemonsNookMono.Levels.Creator;
+using AemonsNookMono.Menus.World;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AemonsNookMono.Menus.World
+namespace AemonsNookMono.Menus.LevelEditor
 {
     public class EditorTileMenu : Menu
     {
@@ -138,6 +139,10 @@ namespace AemonsNookMono.Menus.World
 
                     case "Cross":
                         this.CurSelection = new TileSelection(curType, TileSelection.BrushShape.Cross);
+                        return true;
+
+                    case "Save":
+                        MenuManager.Current.AddMenu(new EditorSaveLevel());
                         return true;
 
                     default:

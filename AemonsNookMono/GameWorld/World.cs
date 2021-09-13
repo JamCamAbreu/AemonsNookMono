@@ -12,6 +12,7 @@ using System.Text;
 using AemonsNookMono.Menus;
 using AemonsNookMono.Menus.World;
 using AemonsNookMono.Peeps;
+using AemonsNookMono.Player;
 
 namespace AemonsNookMono.GameWorld
 {
@@ -57,6 +58,7 @@ namespace AemonsNookMono.GameWorld
         public SortedResourceList Resources { get; set; }
         public List<Peep> Peeps { get; set; }
         public Random ran { get; set; }
+        public Hero hero { get; set; }
         #endregion
 
         #region Constructors
@@ -92,6 +94,8 @@ namespace AemonsNookMono.GameWorld
 
             MenuManager.Current.ClearAllMenus();
             MenuManager.Current.AddMenu(new WorldMenu());
+
+            this.hero = new Hero();
         }
         #endregion
 
@@ -172,6 +176,8 @@ namespace AemonsNookMono.GameWorld
                 peep.Draw();
             }
 
+            this.hero.Draw();
+
             Graphics.Current.SpriteB.End();
         }
         public void Update(GameTime gameTime)
@@ -185,6 +191,8 @@ namespace AemonsNookMono.GameWorld
             {
                 peep.Update();
             }
+
+            this.hero.Update();
         }
         #endregion
 

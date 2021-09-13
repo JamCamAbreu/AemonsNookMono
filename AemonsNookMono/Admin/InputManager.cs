@@ -1,5 +1,6 @@
 ﻿using AemonsNookMono.GameWorld;
 using AemonsNookMono.Menus;
+using AemonsNookMono.Menus.LevelEditor;
 using AemonsNookMono.Menus.World;
 using AemonsNookMono.Peeps;
 using AemonsNookMono.Player;
@@ -420,11 +421,14 @@ namespace AemonsNookMono.Admin
         }
         private void HandleZero()
         {
-            for (int i = 0; i < 1; i++)
-            {
-                Peep p = new Peep();
-                World.Current.Peeps.Add(p);
-            }
+            
+
+
+            //for (int i = 0; i < 1; i++)
+            //{
+            //    Peep p = new Peep();
+            //    World.Current.Peeps.Add(p);
+            //}
             //if (ProfileManager.Current.Loaded != null)
             //{
             //    SaveManager.Current.SaveProfile(ProfileManager.Current.Loaded);

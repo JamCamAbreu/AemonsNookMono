@@ -22,7 +22,17 @@ namespace AemonsNookMono.Peeps
             this.TileOn = World.Current.SpawnTiles[Ran.Next(0, World.Current.SpawnTiles.Count - 1)];
             this.CenterX = World.Current.StartDrawX + this.TileOn.RelativeX;
             this.CenterY = World.Current.StartDrawY + this.TileOn.RelativeY;
-            Tile target = World.Current.RoadTiles[Ran.Next(0, World.Current.RoadTiles.Count - 1)];
+
+            this.EntranceTile = this.TileOn;
+            this.ExitTile = World.Current.RetrieveRandomExit(this.EntranceTile);
+            this.ReadyToExit = false;
+
+            // Random tile:
+            //Tile target = World.Current.RoadTiles[Ran.Next(0, World.Current.RoadTiles.Count - 1)];
+
+            // Go straight to the other exit tile, if it exists:
+            Tile target = this.ExitTile;
+
             Task task = new Task(this);
             task.CreateWalkTask(target);
             this.Tasks.Enqueue(task);
@@ -33,6 +43,9 @@ namespace AemonsNookMono.Peeps
         public int CenterX { get; set; }
         public int CenterY { get; set; }
         public Tile TileOn { get; set; }
+        public Tile EntranceTile { get; set; }
+        public Tile ExitTile { get; set; }
+        public bool ReadyToExit { get; set; }
         Queue<Task> Tasks { get; set; }
         Task CurrentTask { get; set; }
         Random Ran { get; set; }
@@ -49,10 +62,14 @@ namespace AemonsNookMono.Peeps
                 }
                 else
                 {
+                    // Walk endlessly:
                     Tile target = World.Current.RoadTiles[Ran.Next(0, World.Current.RoadTiles.Count - 1)];
                     Task task = new Task(this);
                     task.CreateWalkTask(target);
                     this.Tasks.Enqueue(task);
+
+                    // Leave:
+                    this.ReadyToExit = true;
                 }
             }
 

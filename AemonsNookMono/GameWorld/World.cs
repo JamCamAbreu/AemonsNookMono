@@ -187,12 +187,38 @@ namespace AemonsNookMono.GameWorld
                 t.Update();
             }
             this.Resources.Update();
+            List<Peep> exitPeeps = new List<Peep>();
             foreach (Peep peep in this.Peeps)
             {
                 peep.Update();
+                if (peep.ReadyToExit) { exitPeeps.Add(peep); }
+            }
+            foreach (Peep exitpeep in exitPeeps)
+            {
+                this.Peeps.Remove(exitpeep);
             }
 
             this.hero.Update();
+        }
+        public Tile RetrieveRandomExit(Tile excluding)
+        {
+            if (this.SpawnTiles == null || this.SpawnTiles.Count == 0)
+            {
+                throw new Exception("Attempted to retrieve an exit but couldn't find one.");
+            }
+            else if (excluding != null && this.SpawnTiles.Count == 1)
+            {
+                throw new Exception("There is only one entrance, so could not find an exit.");
+            }
+            else
+            {
+                List<Tile> toChooseFrom = new List<Tile>(this.SpawnTiles);
+                if (excluding != null)
+                {
+                    toChooseFrom.Remove(excluding);
+                }
+                return toChooseFrom[this.ran.Next(0, toChooseFrom.Count - 1)];
+            }
         }
         #endregion
 

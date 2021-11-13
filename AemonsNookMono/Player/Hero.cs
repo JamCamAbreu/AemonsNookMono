@@ -23,6 +23,8 @@ namespace AemonsNookMono.Player
             {
                 //throw new Exception("No where to spawn! Oh my!"); 
                 Debugger.Current.AddTempString("Could not spawn hero. No entrance!");
+                this.Spawned = false;
+                return;
             }
 
             this.Ran = new Random();
@@ -63,7 +65,9 @@ namespace AemonsNookMono.Player
 
             this.AnimationTimer = 0;
             this.AnimationTimerReset = 10;
+            this.Spawned = true;
         }
+        public bool Spawned { get; set; }
 
         public Tile TileOn { get; set; }
         public int ScreenX { get; set; }
@@ -85,12 +89,16 @@ namespace AemonsNookMono.Player
 
         public void Update()
         {
+            if (!Spawned) { return; }
+
             this.SetMovementVector();
             this.Move();
         }
 
         public void Draw()
         {
+            if (!Spawned) { return; }
+
             Rectangle spriteBox = RightAnimations[1];
             switch (this.Direction)
             {
@@ -108,7 +116,7 @@ namespace AemonsNookMono.Player
                     break;
             }
 
-            Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName["hero"], new Vector2(this.ScreenX, this.ScreenY), spriteBox, Color.White);
+            Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName["char"], new Vector2(this.ScreenX, this.ScreenY), spriteBox, Color.White);
         }
 
         protected void SetMovementVector()

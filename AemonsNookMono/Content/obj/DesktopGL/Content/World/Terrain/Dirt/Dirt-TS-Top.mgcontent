@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Dirt/Dirt-TS-Top.png</SourceFile>
-  <SourceTime>2020-02-15T14:17:12.7177251-05:00</SourceTime>
-  <DestFile>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/bin/DesktopGL/Content/World/Terrain/Dirt/Dirt-TS-Top.xnb</DestFile>
-  <DestTime>2021-07-19T19:53:54.4734036-04:00</DestTime>
+  <SourceFile>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Dirt/Dirt-TS-Top.png</SourceFile>
+  <SourceTime>2021-11-13T15:33:04.0876906-05:00</SourceTime>
+  <DestFile>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/bin/DesktopGL/Content/World/Terrain/Dirt/Dirt-TS-Top.xnb</DestFile>
+  <DestTime>2021-11-13T16:13:38.2789884-05:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2020-08-10T12:17:54-04:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

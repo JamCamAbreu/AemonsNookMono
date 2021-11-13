@@ -65,7 +65,7 @@ namespace AemonsNookMono.Menus
         public List<Cell> Cells { get; set; }
         public int TopY { get { return this.CenterY - (this.Height / 2); } }
         public int LeftX { get { return this.CenterX - (this.Width / 2); } }
-        public List<Span> ChildSpans = new List<Span>();
+        //public List<Span> ChildSpans = new List<Span>();
         public float InnerPadScale { get; set; }
         #endregion
 
@@ -153,7 +153,7 @@ namespace AemonsNookMono.Menus
         public void AddSpan(Span span)
         {
             this.AddDynamicCell(span);
-            this.ChildSpans.Add(span);
+            //this.ChildSpans.Add(span);
         }
         public override void Draw()
         {
@@ -161,10 +161,10 @@ namespace AemonsNookMono.Menus
             {
                 cell.Draw();
             }
-            foreach (Span span in this.ChildSpans)
-            {
-                span.Draw();
-            }
+            //foreach (Span span in this.ChildSpans)
+            //{
+            //    span.Draw();
+            //}
         }
         public override void Update()
         {
@@ -172,10 +172,10 @@ namespace AemonsNookMono.Menus
             {
                 cell.Update();
             }
-            foreach (Span span in this.ChildSpans)
-            {
-                span.Update();
-            }
+            //foreach (Span span in this.ChildSpans)
+            //{
+            //    span.Update();
+            //}
         }
         public override void Refresh(int width, int height, int screenx, int screeny)
         {
@@ -234,10 +234,10 @@ namespace AemonsNookMono.Menus
             {
                 buttons.Add(button);
             }
-            foreach (Span span in this.ChildSpans)
-            {
-                buttons.AddRange(span.AllButtons());
-            }
+            //foreach (Span span in this.ChildSpans)
+            //{
+            //    buttons.AddRange(span.AllButtons());
+            //}
             return buttons;
         }
         public bool ContainsButton(string name)

@@ -76,7 +76,10 @@ namespace AemonsNookMono.Admin
         }
         public bool CheckKeyboardPressed(Keys key)
         {
-            if (this.CurKeyboardState.IsKeyDown(key) && this.PrevKeyboardState.IsKeyUp(key)) { return true; }
+            if (this.CurKeyboardState.IsKeyDown(key) && this.PrevKeyboardState.IsKeyUp(key)) 
+            { 
+                return true; 
+            }
             return false;
         }
         public bool CheckKeyboardDown(Keys key)

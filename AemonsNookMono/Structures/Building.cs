@@ -9,7 +9,6 @@ namespace AemonsNookMono.Structures
 {
     public class Building
     {
-
         #region Constructor
         public Building(int x, int y, BuildingInfo.Type t)
         {
@@ -21,7 +20,15 @@ namespace AemonsNookMono.Structures
             this.Height = BuildingInfo.RetrieveHeight(t);
             this.Width = BuildingInfo.RetrieveWidth(t);
             this.Name = BuildingInfo.RetrieveName(t);
-            this.sprite = BuildingInfo.RetrieveSprite(t);
+            this.Sprite = BuildingInfo.RetrieveSprite(t);
+
+            for (int w = 0; w < this.Width; w++)
+            {
+                for (int h = 0; h < this.Height; h++)
+                {
+                    this.TilesUnderneath.Add(World.Current.TileAtPixel(x + w, y + h));
+                }
+            }
         }
         #endregion
 
@@ -34,21 +41,22 @@ namespace AemonsNookMono.Structures
         public string Name { get; set; }
         public int Capacity { get; set; }
         public List<Tile> TilesUnderneath { get; set; }
+        public string Sprite { get; set; }
         #endregion
 
         #region Interface
-        public void Update()
+        public virtual void Update()
         {
 
         }
-        public void Draw()
+        public virtual void Draw()
         {
-            Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName[this.sprite], new Vector2(World.Current.StartDrawX + this.OriginX, World.Current.StartDrawY + this.OriginY), Color.White);
+            Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName[this.Sprite], new Vector2(World.Current.StartDrawX + this.OriginX, World.Current.StartDrawY + this.OriginY), Color.White);
         }
         #endregion
 
         #region Internal
-        private string sprite { get; set; }
+        
         #endregion
     }
 }

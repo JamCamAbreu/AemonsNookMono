@@ -87,7 +87,9 @@ namespace AemonsNookMono.GameWorld
         public Tile TileBelow { get; set; }
         public Tile TileLeft { get; set; }
         public List<Resource> Resources { get; set; }
+        public List<Resource> ResourcesToRemove { get; set; }
         public List<TileDecoration> Decorations { get; set; }
+        
         #endregion
 
         #region Constructors
@@ -103,6 +105,7 @@ namespace AemonsNookMono.GameWorld
             this.ran = new Random();
             this.Decorations = new List<TileDecoration>();
             this.Resources = new List<Resource>();
+            this.ResourcesToRemove = new List<Resource>();
 
             if (type == TileType.Grass)
             {
@@ -122,7 +125,11 @@ namespace AemonsNookMono.GameWorld
         #region Interface
         public void Update()
         {
-            this.Resources.RemoveAll(r => r.Life <= 0);
+            foreach (Resource res in this.ResourcesToRemove)
+            {
+                this.Resources.Remove(res);
+            }
+            this.ResourcesToRemove.Clear();
         }
         public void Draw()
         {

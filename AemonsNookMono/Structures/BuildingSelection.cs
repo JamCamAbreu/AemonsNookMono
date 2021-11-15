@@ -25,7 +25,7 @@ namespace AemonsNookMono.Structures
             List<Tuple<int, int>> relativeCoordinates = BuildingInfo.RetrieveRelativeCoordinates(type);
             foreach (Tuple<int, int> coord in relativeCoordinates)
             {
-                BuildingSelectionSquare square = new BuildingSelectionSquare(coord.Item1, coord.Item2);
+                BuildingSelectionSquare square = new BuildingSelectionSquare(coord.Item1, coord.Item2, this.LastTileUnderMouse);
                 this.squares.Add(square);
             }
         }

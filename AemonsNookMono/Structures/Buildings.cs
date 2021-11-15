@@ -1,4 +1,5 @@
 ﻿using AemonsNookMono.Admin;
+using AemonsNookMono.GameWorld;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,7 @@ namespace AemonsNookMono.Structures
 
         #region Public Properties
         public List<Building> AllBuildings { get; set; }
+        public List<Stockpile> AllStockpiles { get; set; }
         public BuildingSelection Selection { get; set; }
         #endregion
 
@@ -40,11 +42,22 @@ namespace AemonsNookMono.Structures
         public void Init()
         {
             this.AllBuildings = new List<Building>();
+            this.AllStockpiles = new List<Stockpile>();
         }
         public void AddBuilding(int x, int y, BuildingInfo.Type t)
         {
-            Building b = new Building(x, y, t);
-            this.AllBuildings.Add(b);
+            if (t == BuildingInfo.Type.STOCKPILE)
+            {
+                Stockpile st = new Stockpile(x, y, t);
+                this.AllStockpiles.Add(st);
+                this.AllBuildings.Add(st);
+            }
+            else
+            {
+                Building b = new Building(x, y, t);
+                this.AllBuildings.Add(b);
+            }
+
         }
         public void Update()
         {
@@ -55,7 +68,7 @@ namespace AemonsNookMono.Structures
             }
             if (this.Selection == null && Keyboard.GetState().IsKeyDown(Keys.D2))
             {
-                this.Selection = new BuildingSelection(BuildingInfo.Type.BOOTH_FISH);
+                this.Selection = new BuildingSelection(BuildingInfo.Type.TOWER);
                 StateManager.Current.CurrentState = StateManager.State.BuildSelection;
             }
             if (this.Selection == null && Keyboard.GetState().IsKeyDown(Keys.D3))
@@ -84,6 +97,26 @@ namespace AemonsNookMono.Structures
                 b.Draw();
             }
             Graphics.Current.SpriteB.End();
+        }
+        public Stockpile GetClosestStockpile(Tile fromtile)
+        {
+            if (this.AllStockpiles == null || this.AllStockpiles.Count == 0)
+            {
+                return null;
+            }
+
+            int dist = int.MaxValue;
+            Path path;
+            Stockpile closest = null;
+            foreach (Stockpile pile in this.AllStockpiles)
+            {
+                path = new Path(fromtile, pile.TilesUnderneath[0], false);
+                if (path.Count < dist)
+                {
+                    closest = pile;
+                }
+            }
+            return closest;
         }
         #endregion
     }

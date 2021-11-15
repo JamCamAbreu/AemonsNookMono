@@ -10,10 +10,11 @@ namespace AemonsNookMono.Structures
     public class BuildingSelectionSquare
     {
         #region Constructor
-        public BuildingSelectionSquare(int relativeX, int relativeY)
+        public BuildingSelectionSquare(int relativeX, int relativeY, Tile origin)
         {
             this.RelativeX = relativeX;
             this.RelativeY = relativeY;
+            this.OriginTile = origin;
         }
         #endregion
 

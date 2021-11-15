@@ -1,13 +1,14 @@
 ﻿using AemonsNookMono.Admin;
+using AemonsNookMono.Entities.Tasks;
 using AemonsNookMono.GameWorld;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AemonsNookMono.Peeps
+namespace AemonsNookMono.Entities
 {
-    public class Peep
+    public class Peep : Entity
     {
         #region Constructor
         public Peep()
@@ -27,28 +28,21 @@ namespace AemonsNookMono.Peeps
             this.ExitTile = World.Current.RetrieveRandomExit(this.EntranceTile);
             this.ReadyToExit = false;
 
-            // Random tile:
+            // WANDER:
+            //this.WanderEndlessly = true;
             //Tile target = World.Current.RoadTiles[Ran.Next(0, World.Current.RoadTiles.Count - 1)];
 
             // Go straight to the other exit tile, if it exists:
+            this.WanderEndlessly = false;
             Tile target = this.ExitTile;
 
-            Task task = new Task(this);
-            task.CreateWalkTask(target);
-            this.Tasks.Enqueue(task);
+            Task walktask = new WalkTask(this, target);
+            this.Tasks.Enqueue(walktask);
         }
         #endregion
 
         #region Public Properties
-        public int CenterX { get; set; }
-        public int CenterY { get; set; }
-        public Tile TileOn { get; set; }
-        public Tile EntranceTile { get; set; }
-        public Tile ExitTile { get; set; }
-        public bool ReadyToExit { get; set; }
-        Queue<Task> Tasks { get; set; }
-        Task CurrentTask { get; set; }
-        Random Ran { get; set; }
+        public bool WanderEndlessly { get; set; }
         #endregion
 
         #region Interface
@@ -62,14 +56,16 @@ namespace AemonsNookMono.Peeps
                 }
                 else
                 {
-                    // Walk endlessly:
-                    Tile target = World.Current.RoadTiles[Ran.Next(0, World.Current.RoadTiles.Count - 1)];
-                    Task task = new Task(this);
-                    task.CreateWalkTask(target);
-                    this.Tasks.Enqueue(task);
-
-                    // Leave:
-                    this.ReadyToExit = true;
+                    if (this.WanderEndlessly)
+                    {
+                        Tile target = World.Current.RoadTiles[Ran.Next(0, World.Current.RoadTiles.Count - 1)];
+                        Task task = new WalkTask(this, target);
+                        this.Tasks.Enqueue(task);
+                    }
+                    else
+                    {
+                        this.ReadyToExit = true;
+                    }
                 }
             }
 

@@ -1,8 +1,8 @@
-﻿using AemonsNookMono.GameWorld;
+﻿using AemonsNookMono.Entities;
+using AemonsNookMono.GameWorld;
 using AemonsNookMono.Menus;
 using AemonsNookMono.Menus.LevelEditor;
 using AemonsNookMono.Menus.World;
-using AemonsNookMono.Peeps;
 using AemonsNookMono.Player;
 using AemonsNookMono.Resources;
 using AemonsNookMono.Structures;

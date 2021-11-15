@@ -255,3 +255,13 @@ C:\Users\coolc\Documents\GitHub\AemonsNookMono\AemonsNookMono\obj\Debug\netcorea
 C:\Users\coolc\Documents\GitHub\AemonsNookMono\AemonsNookMono\obj\Debug\netcoreapp3.1\AemonsNookMono.dll
 C:\Users\coolc\Documents\GitHub\AemonsNookMono\AemonsNookMono\obj\Debug\netcoreapp3.1\AemonsNookMono.pdb
 C:\Users\coolc\Documents\GitHub\AemonsNookMono\AemonsNookMono\obj\Debug\netcoreapp3.1\AemonsNookMono.genruntimeconfig.cache
+C:\Users\coolc\Documents\GitHub\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\Debug\TowerConcept.xnb
+C:\Users\coolc\Documents\GitHub\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\World\Buildings\Stockpiles\Stockpile.xnb
+C:\Users\coolc\Documents\GitHub\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\World\Buildings\Stockpiles\StoneStockA.xnb
+C:\Users\coolc\Documents\GitHub\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\World\Buildings\Stockpiles\StoneStockB.xnb
+C:\Users\coolc\Documents\GitHub\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\World\Buildings\Stockpiles\StoneStockC.xnb
+C:\Users\coolc\Documents\GitHub\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\World\Buildings\Stockpiles\StoneStockD.xnb
+C:\Users\coolc\Documents\GitHub\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\World\Buildings\Stockpiles\WoodStockA.xnb
+C:\Users\coolc\Documents\GitHub\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\World\Buildings\Stockpiles\WoodStockB.xnb
+C:\Users\coolc\Documents\GitHub\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\World\Buildings\Stockpiles\WoodStockC.xnb
+C:\Users\coolc\Documents\GitHub\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\World\Buildings\Stockpiles\WoodStockD.xnb

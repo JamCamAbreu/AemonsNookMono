@@ -45,6 +45,7 @@ namespace AemonsNookMono
             Graphics.Current.SpritesByName.Add("debug-tile-green", Content.Load<Texture2D>("Debug/TileGreen"));
             Graphics.Current.SpritesByName.Add("debug-tile-orange", Content.Load<Texture2D>("Debug/TileOrange"));
             Graphics.Current.SpritesByName.Add("debug-tile-red", Content.Load<Texture2D>("Debug/TileRed"));
+            Graphics.Current.SpritesByName.Add("debug-tower", Content.Load<Texture2D>("Debug/TowerConcept"));
             #endregion
 
             #region Dirt
@@ -121,6 +122,20 @@ namespace AemonsNookMono
             Graphics.Current.SpritesByName.Add("building-booth-jewels", Content.Load<Texture2D>("World/Buildings/Booth_Jewels"));
             Graphics.Current.SpritesByName.Add("building-booth-produce", Content.Load<Texture2D>("World/Buildings/booth_produce"));
             Graphics.Current.SpritesByName.Add("building-booth-seeds", Content.Load<Texture2D>("World/Buildings/Booth_Seeds"));
+            #endregion
+
+            #region Stockpiles
+            Graphics.Current.SpritesByName.Add("building-stockpile", Content.Load<Texture2D>("World/Buildings/Stockpiles/Stockpile"));
+
+            Graphics.Current.SpritesByName.Add("stockpile-wood-a", Content.Load<Texture2D>("World/Buildings/Stockpiles/WoodStockA"));
+            Graphics.Current.SpritesByName.Add("stockpile-wood-b", Content.Load<Texture2D>("World/Buildings/Stockpiles/WoodStockB"));
+            Graphics.Current.SpritesByName.Add("stockpile-wood-c", Content.Load<Texture2D>("World/Buildings/Stockpiles/WoodStockC"));
+            Graphics.Current.SpritesByName.Add("stockpile-wood-d", Content.Load<Texture2D>("World/Buildings/Stockpiles/WoodStockD"));
+
+            Graphics.Current.SpritesByName.Add("stockpile-stone-a", Content.Load<Texture2D>("World/Buildings/Stockpiles/StoneStockA"));
+            Graphics.Current.SpritesByName.Add("stockpile-stone-b", Content.Load<Texture2D>("World/Buildings/Stockpiles/StoneStockB"));
+            Graphics.Current.SpritesByName.Add("stockpile-stone-c", Content.Load<Texture2D>("World/Buildings/Stockpiles/StoneStockC"));
+            Graphics.Current.SpritesByName.Add("stockpile-stone-d", Content.Load<Texture2D>("World/Buildings/Stockpiles/StoneStockD"));
             #endregion
 
             #region Menus

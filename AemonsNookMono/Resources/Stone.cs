@@ -1,5 +1,6 @@
 ﻿using AemonsNookMono.Admin;
 using AemonsNookMono.GameWorld;
+using AemonsNookMono.Structures;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,17 @@ namespace AemonsNookMono.Resources
         public override void HandleLeftClick()
         {
             Debugger.Current.AddTempString($"You clicked on a Stone!");
-            base.HandleLeftClick();
+            this.Life--;
+            if (this.Life <= 0)
+            {
+                this.TileOn.ResourcesToRemove.Add(this);
+            }
+
+            Stockpile pile = Buildings.Current.GetClosestStockpile(this.TileOn);
+            if (pile != null)
+            {
+                pile.NumStone++;
+            }
         }
 
         public void SetCollisions()

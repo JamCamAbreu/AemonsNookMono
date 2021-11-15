@@ -9,6 +9,7 @@
     <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/Debug/TileGreen.png</File>
     <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/Debug/TileOrange.png</File>
     <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/Debug/TileRed.png</File>
+    <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/Debug/TowerConcept.png</File>
     <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/Fonts/Arial.spritefont</File>
     <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/Fonts/Consolas.spritefont</File>
     <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/Fonts/CourierNew.spritefont</File>
@@ -38,6 +39,15 @@
     <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/World/Buildings/Booth_Jewels.png</File>
     <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/World/Buildings/booth_produce.png</File>
     <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/World/Buildings/Booth_Seeds.png</File>
+    <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/World/Buildings/Stockpiles/Stockpile.png</File>
+    <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/World/Buildings/Stockpiles/StoneStockA.png</File>
+    <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/World/Buildings/Stockpiles/StoneStockB.png</File>
+    <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/World/Buildings/Stockpiles/StoneStockC.png</File>
+    <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/World/Buildings/Stockpiles/StoneStockD.png</File>
+    <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/World/Buildings/Stockpiles/WoodStockA.png</File>
+    <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/World/Buildings/Stockpiles/WoodStockB.png</File>
+    <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/World/Buildings/Stockpiles/WoodStockC.png</File>
+    <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/World/Buildings/Stockpiles/WoodStockD.png</File>
     <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/World/Buildings/TempBuilding1x1.png</File>
     <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/World/Buildings/TileGreen.png</File>
     <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/World/Buildings/TileOrange.png</File>
@@ -111,6 +121,16 @@
     <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Water/Water-Vertical.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

@@ -11,8 +11,8 @@ using System.Linq;
 using System.Text;
 using AemonsNookMono.Menus;
 using AemonsNookMono.Menus.World;
-using AemonsNookMono.Peeps;
 using AemonsNookMono.Player;
+using AemonsNookMono.Entities;
 
 namespace AemonsNookMono.GameWorld
 {

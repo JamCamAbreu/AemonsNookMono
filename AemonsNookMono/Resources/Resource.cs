@@ -49,6 +49,10 @@ namespace AemonsNookMono.Resources
         public virtual void HandleLeftClick()
         {
             this.Life--;
+            if (this.Life <= 0)
+            {
+                this.TileOn.ResourcesToRemove.Add(this);
+            }
         }
     }
 }

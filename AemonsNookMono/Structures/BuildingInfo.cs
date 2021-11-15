@@ -26,7 +26,9 @@ namespace AemonsNookMono.Structures
             INN,
             BATH,
             CLOTH,
-            ROAD
+            ROAD,
+
+            TOWER
         }
         #endregion
 
@@ -155,6 +157,10 @@ namespace AemonsNookMono.Structures
                     relativeCoordinates.Add(Tuple.Create(2, 2));
                     break;
 
+                case Type.TOWER:
+                    relativeCoordinates.Add(Tuple.Create(0, 1));
+                    break;
+
                 default:
                     throw new Exception("Building coordinates not defined!");
             }
@@ -183,6 +189,7 @@ namespace AemonsNookMono.Structures
                 case Type.BATH:
                 case Type.CLOTH:
                 case Type.ROAD:
+                case Type.TOWER:
                     return 1;
 
                 default:
@@ -213,6 +220,9 @@ namespace AemonsNookMono.Structures
                 case Type.ROAD:
                     return 1;
 
+                case Type.TOWER:
+                    return 2;
+
                 default:
                     return 1;
             }
@@ -221,48 +231,45 @@ namespace AemonsNookMono.Structures
         {
             switch (t)
             {
-                case Type.STOCKPILE:
-                case Type.WOODSHOP:
-                case Type.TAVERN:
-                case Type.ARCHERY:
-                case Type.BLACKSMITH:
-                case Type.BOOTH_PRODUCE:
-                case Type.BOOTH_FISH:
-                case Type.BOOTH_GEMS:
-                case Type.BOOTH_SEEDS:
-                case Type.BUTCHER:
-                case Type.STABLES:
-                case Type.TANNER:
-                case Type.SCRIBE:
-                case Type.CHAPEL:
-                case Type.INN:
-                case Type.BATH:
-                case Type.CLOTH:
-                case Type.ROAD:
-                    return "Test Building";
+                case Type.STOCKPILE: return "Stockpile"; 
+                case Type.WOODSHOP: return "Woodshop";
+                case Type.TAVERN: return "Tavern";
+                case Type.ARCHERY: return "Archery";
+                case Type.BLACKSMITH: return "Blacksmith";
+                case Type.BOOTH_PRODUCE: return "Produce Booth";
+                case Type.BOOTH_FISH: return "Fish Booth";
+                case Type.BOOTH_GEMS: return "Gem Booth";
+                case Type.BOOTH_SEEDS: return "Seed Booth";
+                case Type.BUTCHER: return "Butcher";
+                case Type.STABLES: return "Stables";
+                case Type.TANNER: return "Tanner";
+                case Type.SCRIBE: return "Scribe";
+                case Type.CHAPEL: return "Chapel";
+                case Type.INN: return "Inn";
+                case Type.BATH: return "Bath";
+                case Type.CLOTH: return "Clothery";
+                case Type.ROAD: return "Road";
 
                 default:
-                    return "Test Building";
+                    return "Undefined";
             }
         }
         public static string RetrieveSprite(Type t)
         {
             switch (t)
             {
-                case Type.STOCKPILE:
-                    return "building-temp1x1";
+                
+                case Type.BOOTH_PRODUCE: return "building-booth-produce";
+                case Type.BOOTH_FISH: return "building-booth-fish";
+                case Type.BOOTH_GEMS: return "building-booth-jewels";
+                case Type.BOOTH_SEEDS: return "building-booth-seeds";
+                case Type.TOWER: return "debug-tower";
+                case Type.STOCKPILE: return "building-stockpile";
+
                 case Type.WOODSHOP:
                 case Type.TAVERN:
                 case Type.ARCHERY:
                 case Type.BLACKSMITH:
-                case Type.BOOTH_PRODUCE:
-                    return "building-booth-produce";
-                case Type.BOOTH_FISH:
-                    return "building-booth-fish";
-                case Type.BOOTH_GEMS:
-                    return "building-booth-jewels";
-                case Type.BOOTH_SEEDS:
-                    return "building-booth-seeds";
                 case Type.BUTCHER:
                 case Type.STABLES:
                 case Type.TANNER:
@@ -302,6 +309,9 @@ namespace AemonsNookMono.Structures
                 case Type.ROAD:
                     return 0;
 
+                case Type.TOWER:
+                    return 1;
+
                 default:
                     return 0;
             }
@@ -311,29 +321,3 @@ namespace AemonsNookMono.Structures
 
     }
 }
-
-// COPY ME
-//switch (t)
-//{
-//    case Type.STOCKPILE:
-//    case Type.WOODSHOP:
-//    case Type.TAVERN:
-//    case Type.ARCHERY:
-//    case Type.BLACKSMITH:
-//    case Type.BOOTH_PRODUCE:
-//    case Type.BOOTH_FISH:
-//    case Type.BOOTH_GEMS:
-//    case Type.BOOTH_SEEDS:
-//    case Type.BUTCHER:
-//    case Type.STABLES:
-//    case Type.TANNER:
-//    case Type.SCRIBE:
-//    case Type.CHAPEL:
-//    case Type.INN:
-//    case Type.BATH:
-//    case Type.CLOTH:
-//    case Type.ROAD:
-
-//    default:
-//        return "Error";
-//}

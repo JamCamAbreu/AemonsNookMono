@@ -110,10 +110,11 @@ namespace AemonsNookMono.Structures
             Stockpile closest = null;
             foreach (Stockpile pile in this.AllStockpiles)
             {
-                path = new Path(fromtile, pile.TilesUnderneath[0], false);
+                path = new Path(fromtile, pile.TilesUnderneath[0], true);
                 if (path.Count < dist)
                 {
                     closest = pile;
+                    dist = path.Count;
                 }
             }
             return closest;

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "z9EwoySScG6wtzPx4vWSq45YSvj2ieTvWAdhtAIMWE9hyZpInE34RlfC/PKr3wEO7S0ll6e8BAsyQwq9ZL0Ymw==",
+  "dgSpecHash": "Y/3LZAbah6OhaRzzuQj7jOPBOIUicjYA6Ltek6f1Oq/d8KxbGCYyjLhzb3KSk/X3csTgqg3Lu78FJ09/zkJg3g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\coolc\\Documents\\GitHub\\AemonsNookMono\\AemonsNookMono\\AemonsNookMono.csproj",
+  "projectFilePath": "C:\\Users\\coolc\\source\\repos\\AemonsNookMono\\AemonsNookMono\\AemonsNookMono.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\coolc\\.nuget\\packages\\monogame.content.builder.task\\3.8.0.1641\\monogame.content.builder.task.3.8.0.1641.nupkg.sha512",
     "C:\\Users\\coolc\\.nuget\\packages\\monogame.framework.desktopgl\\3.8.0.1641\\monogame.framework.desktopgl.3.8.0.1641.nupkg.sha512"

@@ -10,6 +10,7 @@ namespace AemonsNookMono.Resources
 {
     public class Tree : Resource
     {
+        #region Constructor
         public Tree(int x, int y, Tile tile) : base(x, y, tile)
         {
             this.Type = ResourceType.Tree;
@@ -19,6 +20,9 @@ namespace AemonsNookMono.Resources
 
             this.SetCollisions();
         }
+        #endregion
+
+        #region Interface
         public override void Draw()
         {
             string spritestring = $"tree-{this.Version}";
@@ -47,5 +51,6 @@ namespace AemonsNookMono.Resources
             this.Collisions.Add(TrunkCollision);
             this.Collisions.Add(BranchesCollision);
         }
+        #endregion
     }
 }

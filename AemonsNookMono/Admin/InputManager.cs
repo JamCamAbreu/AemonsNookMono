@@ -268,6 +268,10 @@ namespace AemonsNookMono.Admin
         private void HandleLeftClick(int x, int y)
         {
             StateManager.State curState = StateManager.Current.CurrentState;
+            Vector2 worldPos = Camera.Current.ScreenToWorld(new Vector2(x, y));
+            int worldX = (int)worldPos.X;
+            int worldY = (int)worldPos.Y;
+
             switch (curState)
             {
                 case StateManager.State.MainMenu:
@@ -299,7 +303,7 @@ namespace AemonsNookMono.Admin
                         WorldMenu menu = MenuManager.Current.Top as WorldMenu;
                         if (menu != null)
                         {
-                            if (menu.HandleLeftClick(x, y) == true) { return; }
+                            if (menu.HandleLeftClick(worldX, worldY) == true) { return; }
                         }
                     }
 
@@ -308,7 +312,7 @@ namespace AemonsNookMono.Admin
                     // Resources:
                     foreach (Resource r in World.Current.Resources.Sorted.Values)
                     {
-                        if (r.IsCollision(x, y))
+                        if (r.IsCollision(worldX, worldY))
                         {
                             r.HandleLeftClick();
                             return;
@@ -316,9 +320,9 @@ namespace AemonsNookMono.Admin
                     }
 
                     // Tiles
-                    if (World.Current.InsideBounds(x, y))
+                    if (World.Current.InsideBounds(worldX, worldY))
                     {
-                        Tile curTile = World.Current.TileAtPixel(x, y);
+                        Tile curTile = World.Current.TileAtPixel(worldX, worldY);
                         if (curTile != null)
                         {
                             curTile.HandleLeftClick();
@@ -353,8 +357,6 @@ namespace AemonsNookMono.Admin
                             if (menu.HandleLeftClick(x, y) == true) { return; }
                         }
                     }
-
-
 
                     break;
             }

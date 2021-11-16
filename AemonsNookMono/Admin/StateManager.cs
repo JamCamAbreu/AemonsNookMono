@@ -2,6 +2,7 @@
 using AemonsNookMono.GameWorld.Effects;
 using AemonsNookMono.Levels;
 using AemonsNookMono.Menus;
+using AemonsNookMono.Player;
 using AemonsNookMono.Structures;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -94,16 +95,19 @@ namespace AemonsNookMono.Admin
             MenuManager.Current.Update();
             Debugger.Current.Update(gameTime);
             InputManager.Current.Update();
+            Camera.Current.Update();
         }
         public void Draw(GameTime gameTime)
         {
+            // Use camera transform:
             World.Current.Draw();
             Buildings.Current.Draw();
             EffectsGenerator.Current.Draw();
             Cursor.Current.Draw();
+
+            // Does not use camera
             MenuManager.Current.Draw();
             Debugger.Current.Draw(gameTime);
-            
         }
         #endregion
 

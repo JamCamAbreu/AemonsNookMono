@@ -1,5 +1,6 @@
 ﻿using AemonsNookMono.Admin;
 using AemonsNookMono.GameWorld;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
@@ -87,7 +88,8 @@ namespace AemonsNookMono.Structures
         }
         public void Draw()
         {
-            Graphics.Current.SpriteB.Begin();
+            Graphics.Current.SpriteB.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,
+    null, null, null, null, Camera.Current.TranslationMatrix);
             if (this.Selection != null)
             {
                 this.Selection.Draw();

@@ -144,9 +144,11 @@ namespace AemonsNookMono.GameWorld
         }
         public Tile TileAtPixel(int pixelX, int pixelY)
         {
-            if (!this.InsideBounds(pixelX, pixelY)) { return null; }
-            int relativeX = pixelX - this.StartDrawX;
-            int relativeY = pixelY - this.StartDrawY;
+            Vector2 translation = Camera.Current.ScreenToWorld(new Vector2(pixelX, pixelY));
+
+            if (!this.InsideBounds((int)translation.X, (int)translation.Y)) { return null; }
+            int relativeX = (int)translation.X - this.StartDrawX;
+            int relativeY = (int)translation.Y - this.StartDrawY;
             int tileX = relativeX / TILE_DIMENSION_PIXELS;
             int tileY = relativeY / TILE_DIMENSION_PIXELS;
             return TileAt(tileX, tileY);
@@ -159,7 +161,9 @@ namespace AemonsNookMono.GameWorld
         }
         public void Draw()
         {
-            Graphics.Current.SpriteB.Begin();
+            Graphics.Current.SpriteB.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,
+    null, null, null, null, Camera.Current.TranslationMatrix);
+            //Graphics.Current.SpriteB.Begin();
             Graphics.Current.GraphicsDM.GraphicsDevice.Clear(Color.Black);
 
             for (int row = 0; row < this.Height; row++)

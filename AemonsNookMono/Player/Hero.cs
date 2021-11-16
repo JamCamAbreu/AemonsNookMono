@@ -68,7 +68,6 @@ namespace AemonsNookMono.Player
             this.Spawned = true;
         }
         public bool Spawned { get; set; }
-
         public Tile TileOn { get; set; }
         public int ScreenX { get; set; }
         public int ScreenY { get; set; }
@@ -178,6 +177,8 @@ namespace AemonsNookMono.Player
         {
             this.ScreenX += HorizontalSpeed;
             this.ScreenY += VerticalSpeed;
+
+            Camera.Current.Position = new Vector2(this.ScreenX, this.ScreenY);
         }
     }
 }

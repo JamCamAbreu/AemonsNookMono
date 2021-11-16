@@ -1,4 +1,5 @@
 ﻿using AemonsNookMono.Admin;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,7 +57,8 @@ namespace AemonsNookMono.GameWorld.Effects
         }
         public void Draw()
         {
-            Graphics.Current.SpriteB.Begin();
+            Graphics.Current.SpriteB.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,
+    null, null, null, null, Camera.Current.TranslationMatrix);
             if (this.Components != null && this.Components.Count > 0)
             {
                 foreach (EffectsComponent component in this.Components)

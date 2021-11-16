@@ -88,8 +88,15 @@ namespace AemonsNookMono.Structures
         }
         public void Draw()
         {
-            Graphics.Current.SpriteB.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,
-    null, null, null, null, Camera.Current.TranslationMatrix);
+            if (World.Current.hero != null)
+            {
+                Graphics.Current.SpriteB.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,
+                    null, null, null, null, Camera.Current.TranslationMatrix);
+            }
+            else
+            {
+                Graphics.Current.SpriteB.Begin();
+            }
             if (this.Selection != null)
             {
                 this.Selection.Draw();

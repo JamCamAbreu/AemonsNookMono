@@ -1,4 +1,5 @@
 ﻿using AemonsNookMono.Admin;
+using AemonsNookMono.GameWorld;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -97,6 +98,8 @@ namespace AemonsNookMono.Admin
         }
         public Vector2 ScreenToWorld(Vector2 screenPosition)
         {
+            if (World.Current.hero == null) { return screenPosition; }
+
             return Vector2.Transform(screenPosition,
                 Matrix.Invert(TranslationMatrix));
         }

@@ -303,7 +303,7 @@ namespace AemonsNookMono.Admin
                         WorldMenu menu = MenuManager.Current.Top as WorldMenu;
                         if (menu != null)
                         {
-                            if (menu.HandleLeftClick(worldX, worldY) == true) { return; }
+                            if (menu.HandleLeftClick(x, y) == true) { return; }
                         }
                     }
 

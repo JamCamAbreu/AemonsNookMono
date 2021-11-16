@@ -95,7 +95,14 @@ namespace AemonsNookMono.GameWorld
             MenuManager.Current.ClearAllMenus();
             MenuManager.Current.AddMenu(new WorldMenu());
 
-            this.hero = new Hero();
+            if (World.Current.SpawnTiles != null && World.Current.SpawnTiles.Count > 0)
+            {
+                this.hero = new Hero();
+            }
+            else
+            {
+                this.hero = null;
+            }
         }
         #endregion
 
@@ -161,8 +168,16 @@ namespace AemonsNookMono.GameWorld
         }
         public void Draw()
         {
-            Graphics.Current.SpriteB.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,
-    null, null, null, null, Camera.Current.TranslationMatrix);
+            if (this.hero != null)
+            {
+                Graphics.Current.SpriteB.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,
+                    null, null, null, null, Camera.Current.TranslationMatrix);
+            }
+            else
+            {
+                Graphics.Current.SpriteB.Begin();
+            }
+
             //Graphics.Current.SpriteB.Begin();
             Graphics.Current.GraphicsDM.GraphicsDevice.Clear(Color.Black);
 
@@ -180,7 +195,10 @@ namespace AemonsNookMono.GameWorld
                 peep.Draw();
             }
 
-            this.hero.Draw();
+            if (this.hero != null)
+            {
+                this.hero.Draw();
+            }
 
             Graphics.Current.SpriteB.End();
         }
@@ -202,7 +220,10 @@ namespace AemonsNookMono.GameWorld
                 this.Peeps.Remove(exitpeep);
             }
 
-            this.hero.Update();
+            if (this.hero != null)
+            {
+                this.hero.Update();
+            }
         }
         public Tile RetrieveRandomExit(Tile excluding)
         {

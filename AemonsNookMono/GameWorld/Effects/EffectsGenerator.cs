@@ -57,8 +57,16 @@ namespace AemonsNookMono.GameWorld.Effects
         }
         public void Draw()
         {
-            Graphics.Current.SpriteB.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,
-    null, null, null, null, Camera.Current.TranslationMatrix);
+            if (World.Current.hero != null)
+            {
+                Graphics.Current.SpriteB.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,
+                    null, null, null, null, Camera.Current.TranslationMatrix);
+            }
+            else
+            {
+                Graphics.Current.SpriteB.Begin();
+            }
+
             if (this.Components != null && this.Components.Count > 0)
             {
                 foreach (EffectsComponent component in this.Components)

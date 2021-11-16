@@ -103,9 +103,9 @@ namespace AemonsNookMono.Admin
             World.Current.Draw();
             Buildings.Current.Draw();
             EffectsGenerator.Current.Draw();
-            Cursor.Current.Draw();
 
             // Does not use camera
+            Cursor.Current.Draw();
             MenuManager.Current.Draw();
             Debugger.Current.Draw(gameTime);
         }

@@ -2,6 +2,7 @@
 using AemonsNookMono.GameWorld;
 using AemonsNookMono.Structures;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,6 +15,7 @@ namespace AemonsNookMono.Resources
         public Tree(int x, int y, Tile tile) : base(x, y, tile)
         {
             this.Type = ResourceType.Tree;
+            this.Collectible = false;
 
             Random ran = new Random();
             this.Version = ran.Next(1, 6);
@@ -26,10 +28,34 @@ namespace AemonsNookMono.Resources
         public override void Draw()
         {
             string spritestring = $"tree-{this.Version}";
-            Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName[spritestring], new Vector2(PosX, PosY), Color.White);
+            Vector2 pos = new Vector2(PosX, PosY);
+            Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName[spritestring], pos, Color.White);
+
+            if (this.Collisions != null)
+            {
+                foreach (var collision in this.Collisions)
+                {
+                    if (collision.IsCollision(Cursor.Current.LastWorldX, Cursor.Current.LastWorldY))
+                    {
+                        if (Cursor.Current.CurDistanceFromCenter <= World.Current.hero.Reach)
+                        {
+                            Graphics.Current.DrawOutlineSprite(spritestring, pos, Color.Lerp(Color.White, Color.Red, 0.5f));
+                        }
+                        else
+                        {
+                            Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName["cursor-redx"], new Vector2(pos.X + 8, pos.Y + 8), Color.White);
+                        }
+                    }
+                }
+            }
         }
         public override void HandleLeftClick()
         {
+            if (Cursor.Current.CurDistanceFromCenter > World.Current.hero.Reach)
+            {
+                return;
+            }
+
             Debugger.Current.AddTempString($"You clicked on a Tree!");
             this.Life--;
             if (this.Life <= 0)

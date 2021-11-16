@@ -22,6 +22,7 @@ namespace AemonsNookMono.Resources
         public int Version { get; set; }
         public List<Collision> Collisions { get; set; }
         public int Life { get; set; }
+        public bool Collectible { get; set; }
         public Resource(int x, int y, Tile tile)
         {
             this.PosX = x;

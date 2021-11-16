@@ -275,3 +275,4 @@ C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.
 C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\World\Buildings\Stockpiles\WoodStockB.xnb
 C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\World\Buildings\Stockpiles\WoodStockC.xnb
 C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\World\Buildings\Stockpiles\WoodStockD.xnb
+C:\Users\coolc\Documents\GitHub\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\Cursor\RedX.xnb

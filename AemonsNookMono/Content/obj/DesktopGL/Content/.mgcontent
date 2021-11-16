@@ -4,6 +4,7 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
+    <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/Cursor/RedX.png</File>
     <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/Debug/collisionCircle10by10.png</File>
     <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/Debug/collisionSquare10by10.png</File>
     <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/Debug/TileGreen.png</File>
@@ -121,6 +122,7 @@
     <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Water/Water-Vertical.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

@@ -74,12 +74,8 @@ namespace AemonsNookMono.Admin
         #region Interface
         public void Update()
         {
-            int dist = Global.ApproxDist(
-                new Vector2(Graphics.Current.ScreenMidX, Graphics.Current.ScreenMidY),
-                new Vector2(Cursor.Current.LastX, Cursor.Current.LastY)
-                );
-
-            int threshold = 450;
+            int dist = Cursor.Current.CurDistanceFromCenter;
+            int threshold = 500;
 
             if (dist <= threshold)
             {

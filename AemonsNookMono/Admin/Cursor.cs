@@ -38,6 +38,9 @@ namespace AemonsNookMono.Admin
         public int Timer;
         public int LastX;
         public int LastY;
+        public int LastWorldX;
+        public int LastWorldY;
+        public int CurDistanceFromCenter;
         public int HoverTriggerFrames = 25;
         public bool Triggered;
         public Help.HoverBox CurrentHoverBox { get; set; }
@@ -52,6 +55,15 @@ namespace AemonsNookMono.Admin
             MouseState state = Mouse.GetState();
             this.LastX = state.X;
             this.LastY = state.Y;
+
+            Vector2 worldpos = Camera.Current.ScreenToWorld(new Vector2(this.LastX, this.LastY));
+            this.LastWorldX = (int)worldpos.X;
+            this.LastWorldY = (int)worldpos.Y;
+
+            this.CurDistanceFromCenter = Global.ApproxDist(
+                new Vector2(Graphics.Current.ScreenMidX, Graphics.Current.ScreenMidY),
+                new Vector2(Cursor.Current.LastX, Cursor.Current.LastY)
+                );
         }
         public int Update(GameTime gameTime)
         {
@@ -68,8 +80,18 @@ namespace AemonsNookMono.Admin
                 this.AlarmTrigger();
             }
 
-            LastX = state.X;
-            LastY = state.Y;
+            this.LastX = state.X;
+            this.LastY = state.Y;
+
+            Vector2 worldpos = Camera.Current.ScreenToWorld(new Vector2(this.LastX, this.LastY));
+            this.LastWorldX = (int)worldpos.X;
+            this.LastWorldY = (int)worldpos.Y;
+
+            this.CurDistanceFromCenter = Global.ApproxDist(
+                new Vector2(Graphics.Current.ScreenMidX, Graphics.Current.ScreenMidY),
+                new Vector2(this.LastX, this.LastY)
+                );
+
             return Timer;
         }
         public void Draw()

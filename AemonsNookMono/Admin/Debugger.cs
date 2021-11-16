@@ -85,6 +85,7 @@ namespace AemonsNookMono.Admin
 
             #region Mouse Hover
             debugMessages.Add($"Mouse: {Mouse.GetState().X}, {Mouse.GetState().Y}");
+            debugMessages.Add($"Cursor In World: {Cursor.Current.LastWorldX}, {Cursor.Current.LastWorldY}");
             #endregion
 
             #region World

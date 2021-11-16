@@ -124,6 +124,10 @@ namespace AemonsNookMono.Admin
             SpriteFont spritefont = this.Fonts[font];
             return (int)spritefont.MeasureString(message).X;
         }
+        public void DrawOutlineSprite(string sprite, Vector2 pos, Color color)
+        {
+            this.SpriteB.Draw(this.SpritesByName[sprite], pos, color);
+        }
         #endregion
 
     }

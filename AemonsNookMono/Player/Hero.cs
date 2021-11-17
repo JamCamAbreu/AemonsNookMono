@@ -1,5 +1,6 @@
 ﻿using AemonsNookMono.Admin;
 using AemonsNookMono.GameWorld;
+using AemonsNookMono.Resources;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -36,6 +37,7 @@ namespace AemonsNookMono.Player
             this.PickupReach = 30;
 
             this.Direction = FacingDirection.Right;
+            this.HeldResources = new List<Resource>();
 
             DownAnimations = new Rectangle[]
             {
@@ -80,7 +82,8 @@ namespace AemonsNookMono.Player
         public int HorizontalSpeed { get; set; }
         public Random Ran { get; set; }
         public FacingDirection Direction { get; set; }
-        
+        public List<Resource> HeldResources { get; set; }
+
         Rectangle[] DownAnimations { get; set; }
         Rectangle[] LeftAnimations { get; set; }
         Rectangle[] RightAnimations { get; set; }

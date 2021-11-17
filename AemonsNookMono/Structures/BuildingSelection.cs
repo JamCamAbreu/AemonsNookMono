@@ -53,7 +53,7 @@ namespace AemonsNookMono.Structures
         private List<BuildingSelectionSquare> squares { get; set; }
         private void FollowMouse()
         {
-            Tile t = World.Current.TileAtPixel(Cursor.Current.LastX, Cursor.Current.LastY);
+            Tile t = World.Current.TileAtPixel(Cursor.Current.LastWorldX, Cursor.Current.LastWorldY);
             if (t != null && this.LastTileUnderMouse != t)
             {
                 this.LastTileUnderMouse = t;

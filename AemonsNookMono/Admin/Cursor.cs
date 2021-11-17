@@ -35,14 +35,14 @@ namespace AemonsNookMono.Admin
         #endregion
 
         #region HoverBox Trigger
-        public int Timer;
-        public int LastX;
-        public int LastY;
-        public int LastWorldX;
-        public int LastWorldY;
-        public int CurDistanceFromCenter;
-        public int HoverTriggerFrames = 25;
-        public bool Triggered;
+        public int Timer { get; set; }
+        public int LastX { get; set; }
+        public int LastY { get; set; }
+        public int LastWorldX { get; set; }
+        public int LastWorldY { get; set; }
+        public int CurDistanceFromCenter { get; set; }
+        public int HoverTriggerFrames { get; set; } = 25;
+        public bool Triggered { get; set; }
         public Help.HoverBox CurrentHoverBox { get; set; }
         #endregion
 

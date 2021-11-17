@@ -277,3 +277,4 @@ C:\Users\coolc\Documents\GitHub\AemonsNookMono\AemonsNookMono\obj\Debug\netcorea
 C:\Users\coolc\Documents\GitHub\AemonsNookMono\AemonsNookMono\obj\Debug\netcoreapp3.1\AemonsNookMono.dll
 C:\Users\coolc\Documents\GitHub\AemonsNookMono\AemonsNookMono\obj\Debug\netcoreapp3.1\AemonsNookMono.pdb
 C:\Users\coolc\Documents\GitHub\AemonsNookMono\AemonsNookMono\obj\Debug\netcoreapp3.1\AemonsNookMono.genruntimeconfig.cache
+C:\Users\coolc\Documents\GitHub\AemonsNookMono\AemonsNookMono\obj\Debug\netcoreapp3.1\AemonsNookMono.csproj.AssemblyReference.cache

@@ -15,7 +15,6 @@ namespace AemonsNookMono.Resources
         public Tree(int x, int y, Tile tile) : base(x, y, tile)
         {
             this.Type = ResourceType.Tree;
-            this.CanHarvest = false;
 
             Random ran = new Random();
             this.Version = ran.Next(1, 6);
@@ -27,6 +26,11 @@ namespace AemonsNookMono.Resources
         }
         #endregion
 
+        #region Public Properties
+        public override int MagnetOffsetX { get { return 8; } }
+        public override int MagnetOffsetY { get { return 16; } }
+        #endregion
+
         #region Interface
         public override void Update()
         {
@@ -35,7 +39,7 @@ namespace AemonsNookMono.Resources
         public override void Draw()
         {
             string spritestring;
-            if (this.CanHarvest) { spritestring = "tree-harvest"; }
+            if (this.State != ResourceState.Raw) { spritestring = "tree-harvest"; }
             else { spritestring = $"tree-{this.Version}"; }
             Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName[spritestring], this.Position, Color.White);
 
@@ -65,25 +69,13 @@ namespace AemonsNookMono.Resources
                 return;
             }
 
-            if (this.Life <= 0 || this.CanHarvest)
-            {
-                Debugger.Current.AddTempString($"Get closer to pick up the wood and bring to a stockpile!");
-                return;
-            }
-
             Debugger.Current.AddTempString($"You hack away at the Tree.");
             this.Life--;
             if (this.Life <= 0)
             {
-                this.CanHarvest = true;
+                this.State = ResourceState.Harvestable;
                 this.Collisions.Clear();
             }
-
-            //Stockpile pile = Buildings.Current.GetClosestStockpile(this.TileOn);
-            //if (pile != null)
-            //{
-            //    pile.NumWood++;
-            //}
         }
         public void SetCollisions()
         {

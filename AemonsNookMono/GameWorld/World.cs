@@ -154,9 +154,14 @@ namespace AemonsNookMono.GameWorld
         {
             Vector2 translation = Camera.Current.ScreenToWorld(new Vector2(pixelX, pixelY));
 
-            if (!this.InsideBounds((int)translation.X, (int)translation.Y)) { return null; }
-            int relativeX = (int)translation.X - this.StartDrawX;
-            int relativeY = (int)translation.Y - this.StartDrawY;
+            if (!this.InsideBounds(pixelX, pixelY)) { return null; }
+            int relativeX = pixelX - this.StartDrawX;
+            int relativeY = pixelY - this.StartDrawY;
+
+            //if (!this.InsideBounds((int)translation.X, (int)translation.Y)) { return null; }
+            //int relativeX = (int)translation.X - this.StartDrawX;
+            //int relativeY = (int)translation.Y - this.StartDrawY;
+
             int tileX = relativeX / TILE_DIMENSION_PIXELS;
             int tileY = relativeY / TILE_DIMENSION_PIXELS;
             return TileAt(tileX, tileY);

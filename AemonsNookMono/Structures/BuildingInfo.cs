@@ -249,6 +249,7 @@ namespace AemonsNookMono.Structures
                 case Type.BATH: return "Bath";
                 case Type.CLOTH: return "Clothery";
                 case Type.ROAD: return "Road";
+                case Type.TOWER: return "Wood Tower";
 
                 default:
                     return "Undefined";

@@ -10,16 +10,24 @@ namespace AemonsNookMono.Resources
 {
     public class Stone : Resource
     {
+        #region Constructor
         public Stone(int x, int y, Tile tile) : base(x, y, tile)
         {
             this.Type = ResourceType.Stone;
-            this.CanHarvest = false;
 
             Random ran = new Random();
             this.Version = ran.Next(1, 6);
 
             this.SetCollisions();
         }
+        #endregion
+
+        #region Public Properties
+        public override int MagnetOffsetX { get { return 0; } }
+        public override int MagnetOffsetY { get { return 4; } }
+        #endregion
+
+        #region Interface
         public override void Update()
         {
             base.Update();
@@ -27,7 +35,7 @@ namespace AemonsNookMono.Resources
         public override void Draw()
         {
             string spritestring;
-            if (this.CanHarvest) { spritestring = "stone-harvest"; }
+            if (this.State != ResourceState.Raw) { spritestring = "stone-harvest"; }
             else { spritestring = $"stone-{this.Version}"; }
             Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName[spritestring], this.Position, Color.White);
 
@@ -61,7 +69,7 @@ namespace AemonsNookMono.Resources
             this.Life--;
             if (this.Life <= 0)
             {
-                this.CanHarvest = true;
+                this.State = ResourceState.Harvestable;
                 this.Collisions.Clear();
             }
         }
@@ -90,5 +98,6 @@ namespace AemonsNookMono.Resources
             Collision RockCollision = new Collision(Collision.CollisionShape.Circle, (int)this.Position.X + 8, (int)this.Position.Y + 8, radius, radius);
             this.Collisions.Add(RockCollision);
         }
+        #endregion
     }
 }

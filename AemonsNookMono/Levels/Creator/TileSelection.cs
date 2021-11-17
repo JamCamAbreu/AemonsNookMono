@@ -1,5 +1,6 @@
 ﻿using AemonsNookMono.Admin;
 using AemonsNookMono.GameWorld;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -87,7 +88,7 @@ namespace AemonsNookMono.Levels.Creator
         private List<TileSelectionSquare> squares { get; set; }
         private void FollowMouse()
         {
-            Tile t = World.Current.TileAtPixel(Cursor.Current.LastX, Cursor.Current.LastY);
+            Tile t = World.Current.TileAtPixel(Cursor.Current.LastWorldX, Cursor.Current.LastWorldY);
             if (t != null)
             {
                 if (this.TileUnderMouse != t)

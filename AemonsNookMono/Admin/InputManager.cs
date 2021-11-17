@@ -295,7 +295,6 @@ namespace AemonsNookMono.Admin
 
                 case StateManager.State.World:
                     // todo: Help system / popups
-                    // Todo: buttons
 
                     // buttons:
                     if (MenuManager.Current.Top != null && MenuManager.Current.Top is WorldMenu)
@@ -307,8 +306,6 @@ namespace AemonsNookMono.Admin
                         }
                     }
 
-                    // Todo: Gui
-
                     // Resources:
                     foreach (Resource r in World.Current.Resources.Sorted.Values)
                     {
@@ -319,9 +316,20 @@ namespace AemonsNookMono.Admin
                         }
                     }
 
-                    // Tiles
-                    if (World.Current.InsideBounds(worldX, worldY))
+                    
+                    if (World.Current.InsideBounds(worldX, worldY)) 
                     {
+                        // Buildings
+                        foreach (Building building in Buildings.Current.AllBuildings)
+                        {
+                            if (building.IsCollision(worldX, worldY))
+                            {
+                                building.HandleLeftClick();
+                                return;
+                            }
+                        }
+
+                        // Tiles
                         Tile curTile = World.Current.TileAtPixel(worldX, worldY);
                         if (curTile != null)
                         {

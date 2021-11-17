@@ -1,5 +1,6 @@
 ﻿using AemonsNookMono.Admin;
 using AemonsNookMono.GameWorld;
+using AemonsNookMono.Resources;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,32 @@ namespace AemonsNookMono.Structures
         #endregion
 
         #region Interface
+        public override void HandleLeftClick()
+        {
+            if (World.Current.hero != null && 
+                World.Current.hero.HeldResources != null &&
+                World.Current.hero.HeldResources.Count > 0)
+            {
+                Debugger.Current.AddTempString($"Deposited {World.Current.hero.HeldResources.Count} resources.");
+                foreach (Resource res in World.Current.hero.HeldResources)
+                {
+                    if (res is Tree)
+                    {
+                        this.NumWood++;
+                    }
+                    else if (res is Stone)
+                    {
+                        this.NumStone++;
+                    }
+                    res.Destroy();
+                }
+                World.Current.hero.HeldResources.Clear();
+            }
+            else
+            {
+                Debugger.Current.AddTempString("You have no resources to deposit.");
+            }
+        }
         public override void Update()
         {
 

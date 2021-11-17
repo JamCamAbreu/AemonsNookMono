@@ -15,35 +15,43 @@ namespace AemonsNookMono.Resources
         public Tree(int x, int y, Tile tile) : base(x, y, tile)
         {
             this.Type = ResourceType.Tree;
-            this.Collectible = false;
+            this.CanHarvest = false;
 
             Random ran = new Random();
             this.Version = ran.Next(1, 6);
+
+            this.Value = ran.Next(2, 6);
+            this.Life = this.Value / 2;
 
             this.SetCollisions();
         }
         #endregion
 
         #region Interface
+        public override void Update()
+        {
+           base.Update();
+        }
         public override void Draw()
         {
-            string spritestring = $"tree-{this.Version}";
-            Vector2 pos = new Vector2(PosX, PosY);
-            Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName[spritestring], pos, Color.White);
+            string spritestring;
+            if (this.CanHarvest) { spritestring = "tree-harvest"; }
+            else { spritestring = $"tree-{this.Version}"; }
+            Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName[spritestring], this.Position, Color.White);
 
-            if (this.Collisions != null)
+            if (this.Collisions != null && World.Current.hero != null)
             {
                 foreach (var collision in this.Collisions)
                 {
                     if (collision.IsCollision(Cursor.Current.LastWorldX, Cursor.Current.LastWorldY))
                     {
-                        if (Cursor.Current.CurDistanceFromCenter <= World.Current.hero.Reach)
+                        if (Cursor.Current.CurDistanceFromCenter <= World.Current.hero.InteractReach)
                         {
-                            Graphics.Current.DrawOutlineSprite(spritestring, pos, Color.Lerp(Color.White, Color.Red, 0.5f));
+                            Graphics.Current.DrawOutlineSprite(spritestring, this.Position, Color.Lerp(Color.White, Color.Red, 0.5f));
                         }
                         else
                         {
-                            Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName["cursor-redx"], new Vector2(pos.X + 8, pos.Y + 8), Color.White);
+                            Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName["cursor-redx"], new Vector2(this.Position.X + 8, this.Position.Y + 8), Color.White);
                         }
                     }
                 }
@@ -51,29 +59,37 @@ namespace AemonsNookMono.Resources
         }
         public override void HandleLeftClick()
         {
-            if (Cursor.Current.CurDistanceFromCenter > World.Current.hero.Reach)
+            if (Cursor.Current.CurDistanceFromCenter > World.Current.hero.InteractReach)
             {
+                Debugger.Current.AddTempString($"You need to get closer to harvest this tree.");
                 return;
             }
 
-            Debugger.Current.AddTempString($"You clicked on a Tree!");
+            if (this.Life <= 0 || this.CanHarvest)
+            {
+                Debugger.Current.AddTempString($"Get closer to pick up the wood and bring to a stockpile!");
+                return;
+            }
+
+            Debugger.Current.AddTempString($"You hack away at the Tree.");
             this.Life--;
             if (this.Life <= 0)
             {
-                this.TileOn.ResourcesToRemove.Add(this);
+                this.CanHarvest = true;
+                this.Collisions.Clear();
             }
 
-            Stockpile pile = Buildings.Current.GetClosestStockpile(this.TileOn);
-            if (pile != null)
-            {
-                pile.NumWood++;
-            }
+            //Stockpile pile = Buildings.Current.GetClosestStockpile(this.TileOn);
+            //if (pile != null)
+            //{
+            //    pile.NumWood++;
+            //}
         }
         public void SetCollisions()
         {
             this.Collisions.Clear();
-            Collision TrunkCollision = new Collision(Collision.CollisionShape.Rectangle, this.PosX + 16, this.PosY + 16, 6, 28);
-            Collision BranchesCollision = new Collision(Collision.CollisionShape.Circle, this.PosX + 16, this.PosY + 8, 16, 16);
+            Collision TrunkCollision = new Collision(Collision.CollisionShape.Rectangle, (int)this.Position.X + 16, (int)this.Position.Y + 16, 6, 28);
+            Collision BranchesCollision = new Collision(Collision.CollisionShape.Circle, (int)this.Position.X + 16, (int)this.Position.Y + 8, 16, 16);
             this.Collisions.Add(TrunkCollision);
             this.Collisions.Add(BranchesCollision);
         }

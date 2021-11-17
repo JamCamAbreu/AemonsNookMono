@@ -33,8 +33,9 @@ namespace AemonsNookMono.Admin
         #region Public Properties
         const float DEFAULT_ZOOM = 2.5f;
         const float MAX_ZOOM_OUT = 1.85f;
-        public Vector2 Position { get; set; }
-        public float Zoom { get; set; }
+        private Vector2 Position { get; set; }
+        public Vector2 TargetPosition { get; set; }
+        private float Zoom { get; set; }
         public float TargetZoom { get; set; }
         public int ViewportWidth { get; set; }
         public int ViewportHeight { get; set; }
@@ -64,8 +65,10 @@ namespace AemonsNookMono.Admin
         #region Constructor
         public Camera()
         {
-            this.Position = new Vector2(0, 0);
+            this.Position = Vector2.Zero;
+            this.TargetPosition = Vector2.Zero;
             this.Zoom = DEFAULT_ZOOM;
+            this.TargetZoom = DEFAULT_ZOOM;
             this.ViewportWidth = Graphics.Current.Device.Viewport.Width;
             this.ViewportHeight = Graphics.Current.Device.Viewport.Height;
         }
@@ -74,19 +77,20 @@ namespace AemonsNookMono.Admin
         #region Interface
         public void Update()
         {
-            int dist = Cursor.Current.CurDistanceFromCenter;
-            int threshold = 500;
+            //int dist = Cursor.Current.CurDistanceFromCenter;
+            //int threshold = 500;
 
-            if (dist <= threshold)
-            {
-                this.TargetZoom = DEFAULT_ZOOM;
-            }
-            else
-            {
-                this.TargetZoom = Math.Max(DEFAULT_ZOOM - ((dist - threshold) / 500f), MAX_ZOOM_OUT);
-            }
+            //if (dist <= threshold)
+            //{
+            //    this.TargetZoom = DEFAULT_ZOOM;
+            //}
+            //else
+            //{
+            //    this.TargetZoom = Math.Max(DEFAULT_ZOOM - ((dist - threshold) / 500f), MAX_ZOOM_OUT);
+            //}
 
             this.Zoom = Global.Ease(this.Zoom, this.TargetZoom, 0.02f);
+            this.Position = Global.Ease(this.Position, this.TargetPosition, 0.05f);
         }
         public Vector2 WorldToScreen(Vector2 worldPosition)
         {

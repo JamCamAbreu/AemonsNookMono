@@ -131,8 +131,9 @@ namespace AemonsNookMono.GameWorld
             {
                 foreach (Resource r in this.Resources.Sorted.Values)
                 {
-                    r.PosX = this.StartDrawX + r.TileOn.RelativeX + r.TileRelativeX;
-                    r.PosY = this.StartDrawY + r.TileOn.RelativeY + r.TileRelativeY;
+                    Vector2 position = new Vector2(this.StartDrawX + r.TileOn.RelativeX + r.TileRelativeX, this.StartDrawY + r.TileOn.RelativeY + r.TileRelativeY);
+                    r.Position = position;
+                    r.TargetPosition = position;
                     if (r is Tree) { (r as Tree).SetCollisions(); }
                     else if (r is Stone) { (r as Stone).SetCollisions(); }
                     else { throw new NotImplementedException(); }

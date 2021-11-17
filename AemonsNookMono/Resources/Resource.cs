@@ -1,5 +1,6 @@
 ﻿using AemonsNookMono.Admin;
 using AemonsNookMono.GameWorld;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,27 +14,63 @@ namespace AemonsNookMono.Resources
             Tree,
             Stone
         }
+        const int PICKUP_WIGGLE_DISTANCE = 16;
         public ResourceType Type { get; set; }
+        public int Value { get; set; }
         public int TileRelativeX { get; set; }
         public int TileRelativeY { get; set; }
-        public int PosX { get; set; }
-        public int PosY { get; set; }
+        public Vector2 Position { get; set; }
+        public Vector2 TargetPosition { get; set; }
         public Tile TileOn { get; set; }
         public int Version { get; set; }
         public List<Collision> Collisions { get; set; }
         public int Life { get; set; }
-        public bool Collectible { get; set; }
+        public bool CanHarvest { get; set; }
+        public bool Magnetized { get; set; }
         public Resource(int x, int y, Tile tile)
         {
-            this.PosX = x;
-            this.PosY = y;
+            Vector2 vector2 = new Vector2(x, y);
+            this.Position = vector2;
+            this.TargetPosition = vector2;
+            this.CanHarvest = false;
+            this.Magnetized = false;
+
             this.TileOn = tile;
             this.Collisions = new List<Collision>();
-            this.Life = 1;
+        }
+        public virtual void Destroy()
+        {
+            if (this.TileOn != null)
+            {
+                this.TileOn.ResourcesToRemove.Add(this);
+            }
+            World.Current.Resources.ResourcesToRemove.Add(this);
         }
         public virtual void Update()
         {
+            if (this.CanHarvest && !this.Magnetized && World.Current.hero != null)
+            {
+                int dist = Global.ApproxDist(
+                    new Vector2(World.Current.hero.ScreenX, World.Current.hero.ScreenY),
+                    this.Position
+                );
+                if (dist < World.Current.hero.PickupReach)
+                {
+                    this.Magnetized = true;
+                    int wigglex = World.Current.ran.Next(-PICKUP_WIGGLE_DISTANCE, PICKUP_WIGGLE_DISTANCE);
+                    int wiggley = World.Current.ran.Next(-PICKUP_WIGGLE_DISTANCE, PICKUP_WIGGLE_DISTANCE);
+                    this.TargetPosition = new Vector2(World.Current.hero.ScreenX - 8 + wigglex, World.Current.hero.ScreenY - 16 + wiggley);
+                }
+            }
 
+            this.Position = Global.Ease(this.Position, this.TargetPosition, 0.025f);
+
+            if (this.CanHarvest && this.Magnetized)
+            {
+                int wigglex = World.Current.ran.Next(-PICKUP_WIGGLE_DISTANCE, PICKUP_WIGGLE_DISTANCE);
+                int wiggley = World.Current.ran.Next(-PICKUP_WIGGLE_DISTANCE, PICKUP_WIGGLE_DISTANCE);
+                this.TargetPosition = new Vector2(World.Current.hero.ScreenX - 8 + wigglex, World.Current.hero.ScreenY - 16 + wiggley);
+            }
         }
         public abstract void Draw();
         public bool IsCollision(int x, int y)
@@ -49,11 +86,11 @@ namespace AemonsNookMono.Resources
         }
         public virtual void HandleLeftClick()
         {
-            this.Life--;
-            if (this.Life <= 0)
-            {
-                this.TileOn.ResourcesToRemove.Add(this);
-            }
+            //this.Life--;
+            //if (this.Life <= 0)
+            //{
+            //    this.TileOn.ResourcesToRemove.Add(this);
+            //}
         }
     }
 }

@@ -81,6 +81,7 @@ namespace AemonsNookMono
             #endregion
 
             #region Trees
+            Graphics.Current.SpritesByName.Add("tree-harvest", Content.Load<Texture2D>("World/Terrain/Trees/TreeHarvest"));
             Graphics.Current.SpritesByName.Add("tree-1", Content.Load<Texture2D>("World/Terrain/Trees/Tree1"));
             Graphics.Current.SpritesByName.Add("tree-2", Content.Load<Texture2D>("World/Terrain/Trees/Tree2"));
             Graphics.Current.SpritesByName.Add("tree-3", Content.Load<Texture2D>("World/Terrain/Trees/Tree3"));
@@ -90,6 +91,7 @@ namespace AemonsNookMono
             #endregion
 
             #region Stone
+            Graphics.Current.SpritesByName.Add("stone-harvest", Content.Load<Texture2D>("World/Terrain/Stone/StoneHarvest"));
             Graphics.Current.SpritesByName.Add("stone-1", Content.Load<Texture2D>("World/Terrain/Stone/Stone1"));
             Graphics.Current.SpritesByName.Add("stone-2", Content.Load<Texture2D>("World/Terrain/Stone/Stone2"));
             Graphics.Current.SpritesByName.Add("stone-3", Content.Load<Texture2D>("World/Terrain/Stone/Stone3"));

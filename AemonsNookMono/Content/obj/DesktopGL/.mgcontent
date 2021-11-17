@@ -102,6 +102,7 @@
     <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Stone/Stone4.png</File>
     <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Stone/Stone5.png</File>
     <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Stone/Stone6.png</File>
+    <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Stone/StoneHarvest.png</File>
     <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/World/Terrain/TileOutline.png</File>
     <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Trees/Tree1.png</File>
     <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Trees/Tree2.png</File>
@@ -109,6 +110,7 @@
     <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Trees/Tree4.png</File>
     <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Trees/Tree5.png</File>
     <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Trees/Tree6.png</File>
+    <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Trees/TreeHarvest.png</File>
     <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Water/Water-Corner-BottomLeft.png</File>
     <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Water/Water-Corner-BottomRight.png</File>
     <File>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Water/Water-Corner-TopLeft.png</File>
@@ -213,6 +215,8 @@
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File>World/Terrain/Grass-a.png</File>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

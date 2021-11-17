@@ -1174,6 +1174,18 @@
 /processorParam:TextureFormat=Color
 /build:World/Terrain/Stone/Stone6.png
 
+#begin World/Terrain/Stone/StoneHarvest.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:World/Terrain/Stone/StoneHarvest.png
+
 #begin World/Terrain/TileOutline.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1257,6 +1269,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:World/Terrain/Trees/Tree6.png
+
+#begin World/Terrain/Trees/TreeHarvest.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:World/Terrain/Trees/TreeHarvest.png
 
 #begin World/Terrain/Water/Water-Corner-BottomLeft.png
 /importer:TextureImporter

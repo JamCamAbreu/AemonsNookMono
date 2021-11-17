@@ -40,6 +40,8 @@ namespace AemonsNookMono.Admin
         public bool DrawTileShapes { get; set; }
         public World CurrentWorld { get; set; }
         public bool ShowCircleCollisions { get; set; }
+
+        public int NumCollisionsDetected { get; set; } = 0;
         #endregion
 
         #region Interface
@@ -81,6 +83,7 @@ namespace AemonsNookMono.Admin
 
             #region FPS
             debugMessages.Add($"FPS: {this.fps.AverageFramesPerSecond}");
+            debugMessages.Add($"Sorted List Collisions: {this.NumCollisionsDetected}");
             #endregion
 
             #region Mouse Hover

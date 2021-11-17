@@ -32,7 +32,8 @@ namespace AemonsNookMono.Player
             this.ScreenX = World.Current.StartDrawX + this.TileOn.RelativeX;
             this.ScreenY = World.Current.StartDrawY + this.TileOn.RelativeY;
             this.Speed = 1;
-            this.Reach = 200;
+            this.InteractReach = 250;
+            this.PickupReach = 30;
 
             this.Direction = FacingDirection.Right;
 
@@ -72,7 +73,8 @@ namespace AemonsNookMono.Player
         public Tile TileOn { get; set; }
         public int ScreenX { get; set; }
         public int ScreenY { get; set; }
-        public int Reach { get; set; }
+        public int InteractReach { get; set; }
+        public int PickupReach { get; set; }
         public int Speed { get; set; }
         public int VerticalSpeed { get; set; }
         public int HorizontalSpeed { get; set; }
@@ -179,7 +181,7 @@ namespace AemonsNookMono.Player
             this.ScreenX += HorizontalSpeed;
             this.ScreenY += VerticalSpeed;
 
-            Camera.Current.Position = new Vector2(this.ScreenX, this.ScreenY);
+            Camera.Current.TargetPosition = new Vector2(this.ScreenX, this.ScreenY);
         }
     }
 }

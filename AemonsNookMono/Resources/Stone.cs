@@ -13,31 +13,37 @@ namespace AemonsNookMono.Resources
         public Stone(int x, int y, Tile tile) : base(x, y, tile)
         {
             this.Type = ResourceType.Stone;
+            this.CanHarvest = false;
 
             Random ran = new Random();
             this.Version = ran.Next(1, 6);
 
             this.SetCollisions();
         }
+        public override void Update()
+        {
+            base.Update();
+        }
         public override void Draw()
         {
-            string spritestring = $"stone-{this.Version}";
-            Vector2 pos = new Vector2(PosX, PosY);
-            Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName[spritestring], pos, Color.White);
+            string spritestring;
+            if (this.CanHarvest) { spritestring = "stone-harvest"; }
+            else { spritestring = $"stone-{this.Version}"; }
+            Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName[spritestring], this.Position, Color.White);
 
-            if (this.Collisions != null)
+            if (this.Collisions != null && World.Current.hero != null)
             {
                 foreach (var collision in this.Collisions)
                 {
                     if (collision.IsCollision(Cursor.Current.LastWorldX, Cursor.Current.LastWorldY))
                     {
-                        if (Cursor.Current.CurDistanceFromCenter <= World.Current.hero.Reach)
+                        if (Cursor.Current.CurDistanceFromCenter <= World.Current.hero.InteractReach)
                         {
-                            Graphics.Current.DrawOutlineSprite(spritestring, pos, Color.Lerp(Color.White, Color.Red, 0.5f));
+                            Graphics.Current.DrawOutlineSprite(spritestring, this.Position, Color.Lerp(Color.White, Color.Red, 0.5f));
                         }
                         else
                         {
-                            Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName["cursor-redx"], new Vector2(pos.X, pos.Y), Color.White);
+                            Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName["cursor-redx"], new Vector2(this.Position.X, this.Position.Y), Color.White);
                         }
                     }
                 }
@@ -45,25 +51,20 @@ namespace AemonsNookMono.Resources
         }
         public override void HandleLeftClick()
         {
-            if (Cursor.Current.CurDistanceFromCenter > World.Current.hero.Reach)
+            if (Cursor.Current.CurDistanceFromCenter > World.Current.hero.InteractReach)
             {
+                Debugger.Current.AddTempString($"You need to get closer to harvest this stone.");
                 return;
             }
 
-            Debugger.Current.AddTempString($"You clicked on a Stone!");
+            Debugger.Current.AddTempString($"You chip away at the stone!");
             this.Life--;
             if (this.Life <= 0)
             {
-                this.TileOn.ResourcesToRemove.Add(this);
-            }
-
-            Stockpile pile = Buildings.Current.GetClosestStockpile(this.TileOn);
-            if (pile != null)
-            {
-                pile.NumStone++;
+                this.CanHarvest = true;
+                this.Collisions.Clear();
             }
         }
-
         public void SetCollisions()
         {
             this.Collisions.Clear();
@@ -86,7 +87,7 @@ namespace AemonsNookMono.Resources
                     radius = 6;
                     break;
             }
-            Collision RockCollision = new Collision(Collision.CollisionShape.Circle, this.PosX + 8, this.PosY + 8, radius, radius);
+            Collision RockCollision = new Collision(Collision.CollisionShape.Circle, (int)this.Position.X + 8, (int)this.Position.Y + 8, radius, radius);
             this.Collisions.Add(RockCollision);
         }
     }

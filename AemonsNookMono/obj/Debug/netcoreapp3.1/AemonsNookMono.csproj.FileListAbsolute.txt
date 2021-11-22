@@ -278,3 +278,8 @@ C:\Users\coolc\Documents\GitHub\AemonsNookMono\AemonsNookMono\obj\Debug\netcorea
 C:\Users\coolc\Documents\GitHub\AemonsNookMono\AemonsNookMono\obj\Debug\netcoreapp3.1\AemonsNookMono.pdb
 C:\Users\coolc\Documents\GitHub\AemonsNookMono\AemonsNookMono\obj\Debug\netcoreapp3.1\AemonsNookMono.genruntimeconfig.cache
 C:\Users\coolc\Documents\GitHub\AemonsNookMono\AemonsNookMono\obj\Debug\netcoreapp3.1\AemonsNookMono.csproj.AssemblyReference.cache
+C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\Cursor\RedX.xnb
+C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\World\Terrain\Stone\StoneHarvest.xnb
+C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\World\Terrain\Trees\TreeHarvest.xnb
+C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\obj\Debug\netcoreapp3.1\AemonsNookMono.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\World\Threats\Head.xnb

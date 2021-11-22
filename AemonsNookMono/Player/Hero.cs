@@ -10,6 +10,8 @@ namespace AemonsNookMono.Player
 {
     public class Hero
     {
+        public const int PIXEL_WIDTH = 16;
+        public const int PIXEL_HEIGHT = 16;
         public enum FacingDirection
         {
             Up,
@@ -183,6 +185,8 @@ namespace AemonsNookMono.Player
         {
             this.ScreenX += HorizontalSpeed;
             this.ScreenY += VerticalSpeed;
+
+            this.TileOn = World.Current.TileAtPixel(this.ScreenX + Hero.PIXEL_WIDTH/2, this.ScreenY + Hero.PIXEL_HEIGHT/2);
 
             Camera.Current.TargetPosition = new Vector2(this.ScreenX, this.ScreenY);
         }

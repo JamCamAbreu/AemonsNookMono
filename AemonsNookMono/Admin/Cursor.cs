@@ -123,7 +123,7 @@ namespace AemonsNookMono.Admin
                 }
             }
 
-            Tile t = World.Current.TileAtPixel(this.LastX, this.LastY);
+            Tile t = World.Current.TileAtPixel(this.LastWorldX, this.LastWorldY);
             if (t != null)
             {
                 this.CurrentHoverBox = new Help.HoverBox($"{t.Type} Tile");

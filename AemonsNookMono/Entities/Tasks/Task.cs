@@ -10,11 +10,11 @@ namespace AemonsNookMono.Entities.Tasks
     public class Task
     {
         #region Constructor
-        public Task(Entity entity)
+        public Task(Entity entity, int updateinterval)
         {
             Random ran = new Random();
-            this.TimerLength = ran.Next(20, 100);
-            this.Timer = this.TimerLength;
+            this.UpdateInterval = updateinterval;
+            this.UpdateTimer = 1;
             this.Finished = false;
             this.Entity = entity;
         }
@@ -22,8 +22,8 @@ namespace AemonsNookMono.Entities.Tasks
 
         #region Public Properties
         public Entity Entity { get; set; }
-        public int TimerLength { get; set; }
-        public int Timer { get; set; }
+        public int UpdateInterval { get; set; }
+        public int UpdateTimer { get; set; }
         public bool Finished { get; set; }
         #endregion
 

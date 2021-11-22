@@ -9,8 +9,8 @@ namespace AemonsNookMono.Entities
     public class Entity
     {
         #region Public Properties
-        public int CenterX { get; set; }
-        public int CenterY { get; set; }
+        public float CenterX { get; set; }
+        public float CenterY { get; set; }
         public Tile TileOn { get; set; }
         public Tile EntranceTile { get; set; }
         public Tile ExitTile { get; set; }

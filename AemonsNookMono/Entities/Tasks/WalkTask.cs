@@ -10,9 +10,9 @@ namespace AemonsNookMono.Entities.Tasks
     public class WalkTask : Task
     {
         #region Constructor
-        public WalkTask(Entity entity, Tile target) : base(entity)
+        public WalkTask(Entity entity, int updateinterval, Tile target, bool offroad = false) : base(entity, updateinterval)
         {
-            this.WalkPath = new Path(entity.TileOn, target);
+            this.WalkPath = new Path(entity.TileOn, target, offroad);
         }
         #endregion
 
@@ -46,15 +46,15 @@ namespace AemonsNookMono.Entities.Tasks
         }
         public override void Update()
         {
-            this.Timer--;
-            if (this.Timer <= 0)
+            this.UpdateTimer--;
+            if (this.UpdateTimer <= 0)
             {
                 this.StepPath();
-                this.Timer = this.TimerLength;
+                this.UpdateTimer = this.UpdateInterval;
             }
             if (this.NextTile != null)
             {
-                float speed = 1.0f / this.Timer;
+                float speed = 1.0f / this.UpdateTimer;
                 Vector2 cur = new Vector2(this.Entity.CenterX, this.Entity.CenterY);
                 Vector2 targ = new Vector2(World.Current.StartDrawX + this.NextTile.RelativeX, World.Current.StartDrawY + this.NextTile.RelativeY);
                 this.Direction = targ - cur;
@@ -62,10 +62,10 @@ namespace AemonsNookMono.Entities.Tasks
                 if (distance >= 1)
                 {
                     Vector2 updated = cur + (this.Direction * speed);
-                    this.Entity.CenterX = (int)updated.X;
-                    this.Entity.CenterY = (int)updated.Y;
+                    this.Entity.CenterX = updated.X;
+                    this.Entity.CenterY = updated.Y;
                 }
-                if (this.Timer == 1 || distance < 1)
+                if (this.UpdateTimer == 1 || distance < 1)
                 {
                     this.Entity.CenterX = (int)targ.X;
                     this.Entity.CenterY = (int)targ.Y;

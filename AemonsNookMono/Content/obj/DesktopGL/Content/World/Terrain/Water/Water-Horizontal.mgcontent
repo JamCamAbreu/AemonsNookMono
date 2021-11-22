@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Water/Water-Horizontal.png</SourceFile>
-  <SourceTime>2021-11-13T13:33:04.0956988-07:00</SourceTime>
-  <DestFile>C:/Users/coolc/Documents/GitHub/AemonsNookMono/AemonsNookMono/Content/bin/DesktopGL/Content/World/Terrain/Water/Water-Horizontal.xnb</DestFile>
-  <DestTime>2021-11-16T11:20:34.8986073-07:00</DestTime>
+  <SourceFile>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Terrain/Water/Water-Horizontal.png</SourceFile>
+  <SourceTime>2020-02-15T12:17:12.7459765-07:00</SourceTime>
+  <DestFile>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/bin/DesktopGL/Content/World/Terrain/Water/Water-Horizontal.xnb</DestFile>
+  <DestTime>2021-11-20T11:05:42.5683441-07:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2020-08-10T10:17:54-06:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

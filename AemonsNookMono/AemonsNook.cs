@@ -176,6 +176,10 @@ namespace AemonsNookMono
             Graphics.Current.SpritesByName.Add("peep-royal", Content.Load<Texture2D>("World/Peeps/Peep-royal"));
             #endregion
 
+            #region Threats
+            Graphics.Current.SpritesByName.Add("threats-head", Content.Load<Texture2D>("World/Threats/Head"));
+            #endregion
+
             #region Cursor
             Graphics.Current.SpritesByName.Add("cursor-redx", Content.Load<Texture2D>("Cursor/RedX"));
             #endregion

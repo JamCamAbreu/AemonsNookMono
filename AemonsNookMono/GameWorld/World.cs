@@ -57,6 +57,7 @@ namespace AemonsNookMono.GameWorld
         public List<List<Tile>> TileLists { get; set; }
         public SortedResourceList Resources { get; set; }
         public List<Peep> Peeps { get; set; }
+        public List<Threat> Threats { get; set; }
         public Random ran { get; set; }
         public Hero hero { get; set; }
         #endregion
@@ -84,6 +85,7 @@ namespace AemonsNookMono.GameWorld
 
             this.Resources = new SortedResourceList();
             this.Peeps = new List<Peep>();
+            this.Threats = new List<Threat>();
             this.LoadLevel(level);
             this.sizeX = level.WIDTH * TILE_DIMENSION_PIXELS;
             this.sizeY = level.HEIGHT * TILE_DIMENSION_PIXELS;
@@ -152,7 +154,6 @@ namespace AemonsNookMono.GameWorld
         }
         public Tile TileAtPixel(int pixelX, int pixelY)
         {
-            Vector2 translation = Camera.Current.ScreenToWorld(new Vector2(pixelX, pixelY));
 
             if (!this.InsideBounds(pixelX, pixelY)) { return null; }
             int relativeX = pixelX - this.StartDrawX;
@@ -201,6 +202,11 @@ namespace AemonsNookMono.GameWorld
                 peep.Draw();
             }
 
+            foreach (Threat threat in this.Threats)
+            {
+                threat.Draw();
+            }
+
             if (this.hero != null)
             {
                 this.hero.Draw();
@@ -215,6 +221,8 @@ namespace AemonsNookMono.GameWorld
                 t.Update();
             }
             this.Resources.Update();
+
+            #region Peeps
             List<Peep> exitPeeps = new List<Peep>();
             foreach (Peep peep in this.Peeps)
             {
@@ -225,6 +233,20 @@ namespace AemonsNookMono.GameWorld
             {
                 this.Peeps.Remove(exitpeep);
             }
+            #endregion
+
+            #region Threats
+            List<Threat> exitThreats = new List<Threat>();
+            foreach (Threat threat in this.Threats)
+            {
+                threat.Update();
+                if (threat.ReadyToExit) { exitThreats.Add(threat); }
+            }
+            foreach (Threat exitThreat in exitThreats)
+            {
+                this.Threats.Remove(exitThreat);
+            }
+            #endregion
 
             if (this.hero != null)
             {

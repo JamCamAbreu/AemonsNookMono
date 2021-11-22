@@ -10,6 +10,8 @@ namespace AemonsNookMono.Entities
 {
     public class Peep : Entity
     {
+        const int DEFAULT_WALK_SPEED = 40;
+
         #region Constructor
         public Peep()
         {
@@ -36,7 +38,8 @@ namespace AemonsNookMono.Entities
             this.WanderEndlessly = false;
             Tile target = this.ExitTile;
 
-            Task walktask = new WalkTask(this, target);
+            //Task walktask = new WalkTask(this, DEFAULT_WALK_SPEED, target);
+            Task walktask = new WalkTask(this, Ran.Next(DEFAULT_WALK_SPEED - 15, DEFAULT_WALK_SPEED + 15), target);
             this.Tasks.Enqueue(walktask);
         }
         #endregion
@@ -59,7 +62,7 @@ namespace AemonsNookMono.Entities
                     if (this.WanderEndlessly)
                     {
                         Tile target = World.Current.RoadTiles[Ran.Next(0, World.Current.RoadTiles.Count - 1)];
-                        Task task = new WalkTask(this, target);
+                        Task task = new WalkTask(this, DEFAULT_WALK_SPEED, target);
                         this.Tasks.Enqueue(task);
                     }
                     else

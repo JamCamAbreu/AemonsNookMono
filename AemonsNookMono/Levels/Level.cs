@@ -6,6 +6,7 @@ namespace AemonsNookMono.Levels
 {
     public class Level
     {
+        public virtual string Name { get; set; }
         public virtual int WIDTH { get; set; }
         public virtual int HEIGHT { get; set; }
         public virtual string ascii { get; set; }

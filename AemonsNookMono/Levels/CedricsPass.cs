@@ -6,6 +6,7 @@ namespace AemonsNookMono.Levels
 {
     public class CedricsPass : Level
     {
+        public override string Name { get { return "Cedric's Pass"; } }
         public override int WIDTH
         {
             get { return 39; }

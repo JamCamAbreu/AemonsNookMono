@@ -46,6 +46,7 @@ namespace AemonsNookMono.Menus.World
             this.Spans.Add(rows);
 
             Span levelButtons = new Span(this.CenterX, rows.Cells[0].ScreenY, this.Width, rows.Cells[0].Height, this.PadWidth, 0, Span.SpanType.Horizontal);
+            levelButtons.AddColorButton("Intro Wood", "Intro Wood", ProfileManager.Current.ColorPrimary);
             levelButtons.AddColorButton("Small Meadow", "Small Meadow", ProfileManager.Current.ColorPrimary);
             levelButtons.AddColorButton("Cedric's Pass", "Cedric's Pass", ProfileManager.Current.ColorPrimary);
             this.Spans.Add(levelButtons);
@@ -134,6 +135,12 @@ namespace AemonsNookMono.Menus.World
                         SaveManager.Current.SaveProfile(ProfileManager.Current.Loaded);
                         StateManager.Current.CurrentState = StateManager.State.World;
                         GameWorld.World.Current.Init(new Levels.SmallMeadow());
+                        return true;
+
+                    case "Intro Wood":
+                        SaveManager.Current.SaveProfile(ProfileManager.Current.Loaded);
+                        StateManager.Current.CurrentState = StateManager.State.World;
+                        GameWorld.World.Current.Init(new Levels.IntroWood());
                         return true;
 
                     case "Cedric's Pass":

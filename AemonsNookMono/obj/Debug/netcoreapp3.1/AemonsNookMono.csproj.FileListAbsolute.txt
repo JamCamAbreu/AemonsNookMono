@@ -283,8 +283,6 @@ C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.
 C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\World\Terrain\Trees\TreeHarvest.xnb
 C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\obj\Debug\netcoreapp3.1\AemonsNookMono.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\World\Threats\Head.xnb
-C:\Github\AemonsNookMono\AemonsNookMono\obj\Debug\netcoreapp3.1\AemonsNookMono.dll
-C:\Github\AemonsNookMono\AemonsNookMono\obj\Debug\netcoreapp3.1\AemonsNookMono.pdb
 C:\Github\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\Cursor\RedX.xnb
 C:\Github\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\Debug\collisionCircle10by10.xnb
 C:\Github\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\Debug\collisionSquare10by10.xnb
@@ -419,10 +417,11 @@ C:\Github\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\runtimes\win-x64
 C:\Github\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\soft_oal.dll
 C:\Github\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\SDL2.dll
 C:\Github\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\soft_oal.dll
-C:\Github\AemonsNookMono\AemonsNookMono\obj\Debug\netcoreapp3.1\AemonsNookMono.csproj.AssemblyReference.cache
 C:\Github\AemonsNookMono\AemonsNookMono\obj\Debug\netcoreapp3.1\AemonsNookMono.GeneratedMSBuildEditorConfig.editorconfig
 C:\Github\AemonsNookMono\AemonsNookMono\obj\Debug\netcoreapp3.1\AemonsNookMono.AssemblyInfoInputs.cache
 C:\Github\AemonsNookMono\AemonsNookMono\obj\Debug\netcoreapp3.1\AemonsNookMono.AssemblyInfo.cs
 C:\Github\AemonsNookMono\AemonsNookMono\obj\Debug\netcoreapp3.1\AemonsNookMono.csproj.CoreCompileInputs.cache
 C:\Github\AemonsNookMono\AemonsNookMono\obj\Debug\netcoreapp3.1\AemonsNookMono.csproj.CopyComplete
+C:\Github\AemonsNookMono\AemonsNookMono\obj\Debug\netcoreapp3.1\AemonsNookMono.dll
+C:\Github\AemonsNookMono\AemonsNookMono\obj\Debug\netcoreapp3.1\AemonsNookMono.pdb
 C:\Github\AemonsNookMono\AemonsNookMono\obj\Debug\netcoreapp3.1\AemonsNookMono.genruntimeconfig.cache

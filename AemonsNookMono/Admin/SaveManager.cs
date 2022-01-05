@@ -1,4 +1,5 @@
-﻿using AemonsNookMono.Player;
+﻿using AemonsNookMono.Levels;
+using AemonsNookMono.Player;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -162,11 +163,29 @@ namespace AemonsNookMono.Admin
                 savefile.Save();
             }
         }
+        public void SaveLevel(Level level)
+        {
+            if (level != null)
+            {
+                NookFile savefile = new NookFile("Level", level.Name);
+                foreach (var prop in typeof(Level).GetProperties())
+                {
+                    savefile.SetValue(prop.Name, prop.GetValue(level).ToString());
+                }
+                savefile.Save();
+            }
+        }
         public bool CheckProfileExists(string profileName)
         {
             NookFile file = new NookFile("Profile", profileName);
             return file.CheckFileExists();
         }
+        public bool CheckLevelExists(string levelName)
+        {
+            NookFile file = new NookFile("Level", levelName);
+            return file.CheckFileExists();
+        }
+
         public Profile LoadProfile(string profileName)
         {
             Profile profile = null;
@@ -216,6 +235,39 @@ namespace AemonsNookMono.Admin
             }
 
             return profile;
+        }
+        public Level LoadLevel(string levelName)
+        {
+            Level level = null;
+            NookFile file = new NookFile("Level", levelName);
+            if (file.CheckFileExists())
+            {
+                level = new Level();
+                file.LoadProperties();
+                foreach (var prop in typeof(Level).GetProperties())
+                {
+                    string valueString = file.GetValue(prop.Name);
+
+                    if (prop.PropertyType == typeof(int))
+                    {
+                        prop.SetValue(level, int.Parse(valueString));
+                    }
+                    else if (prop.PropertyType == typeof(double))
+                    {
+                        prop.SetValue(level, double.Parse(valueString));
+                    }
+                    else if (prop.PropertyType == typeof(string))
+                    {
+                        prop.SetValue(level, valueString);
+                    }
+                    else
+                    {
+                        throw new Exception("Whoops! This data type is not supported in Save()/Load() yet!");
+                    }
+                }
+            }
+
+            return level;
         }
         #endregion
 

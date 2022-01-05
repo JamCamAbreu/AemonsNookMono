@@ -1,6 +1,7 @@
 ﻿using AemonsNookMono.Entities;
 using AemonsNookMono.GameWorld;
 using AemonsNookMono.Menus;
+using AemonsNookMono.Menus.General;
 using AemonsNookMono.Menus.LevelEditor;
 using AemonsNookMono.Menus.World;
 using AemonsNookMono.Player;
@@ -272,6 +273,11 @@ namespace AemonsNookMono.Admin
             int worldX = (int)worldPos.X;
             int worldY = (int)worldPos.Y;
 
+            if (MenuManager.Current.Top != null && MenuManager.Current.Top is MessagePopupMenu)
+            {
+                if (MenuManager.Current.Top.HandleLeftClick(x, y) == true) { return; }
+            }
+
             switch (curState)
             {
                 case StateManager.State.MainMenu:
@@ -360,6 +366,14 @@ namespace AemonsNookMono.Admin
                     if (MenuManager.Current.Top != null && MenuManager.Current.Top is EditorTileMenu)
                     {
                         EditorTileMenu menu = MenuManager.Current.Top as EditorTileMenu;
+                        if (menu != null)
+                        {
+                            if (menu.HandleLeftClick(x, y) == true) { return; }
+                        }
+                    }
+                    if (MenuManager.Current.Top != null && MenuManager.Current.Top is EditorSaveLevel)
+                    {
+                        EditorSaveLevel menu = MenuManager.Current.Top as EditorSaveLevel;
                         if (menu != null)
                         {
                             if (menu.HandleLeftClick(x, y) == true) { return; }

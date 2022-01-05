@@ -62,21 +62,27 @@ namespace AemonsNookMono.Structures
         }
         public void Update()
         {
-            if (this.Selection == null && Keyboard.GetState().IsKeyDown(Keys.D1))
+            #region DEBUG PURPOSES
+            if (Admin.StateManager.Current.CurrentState == StateManager.State.World)
             {
-                this.Selection = new BuildingSelection(BuildingInfo.Type.STOCKPILE);
-                StateManager.Current.CurrentState = StateManager.State.BuildSelection;
+                if (this.Selection == null && Keyboard.GetState().IsKeyDown(Keys.D1))
+                {
+                    this.Selection = new BuildingSelection(BuildingInfo.Type.STOCKPILE);
+                    StateManager.Current.CurrentState = StateManager.State.BuildSelection;
+                }
+                if (this.Selection == null && Keyboard.GetState().IsKeyDown(Keys.D2))
+                {
+                    this.Selection = new BuildingSelection(BuildingInfo.Type.TOWER);
+                    StateManager.Current.CurrentState = StateManager.State.BuildSelection;
+                }
+                if (this.Selection == null && Keyboard.GetState().IsKeyDown(Keys.D3))
+                {
+                    this.Selection = new BuildingSelection(BuildingInfo.Type.BOOTH_GEMS);
+                    StateManager.Current.CurrentState = StateManager.State.BuildSelection;
+                }
             }
-            if (this.Selection == null && Keyboard.GetState().IsKeyDown(Keys.D2))
-            {
-                this.Selection = new BuildingSelection(BuildingInfo.Type.TOWER);
-                StateManager.Current.CurrentState = StateManager.State.BuildSelection;
-            }
-            if (this.Selection == null && Keyboard.GetState().IsKeyDown(Keys.D3))
-            {
-                this.Selection = new BuildingSelection(BuildingInfo.Type.BOOTH_GEMS);
-                StateManager.Current.CurrentState = StateManager.State.BuildSelection;
-            }
+            #endregion
+
             if (this.Selection != null)
             {
                 this.Selection.Update();

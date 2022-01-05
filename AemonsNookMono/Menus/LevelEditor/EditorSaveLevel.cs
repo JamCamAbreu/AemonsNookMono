@@ -1,4 +1,7 @@
 ﻿using AemonsNookMono.Admin;
+using AemonsNookMono.GameWorld;
+using AemonsNookMono.Levels;
+using AemonsNookMono.Menus.General;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -29,7 +32,7 @@ namespace AemonsNookMono.Menus.LevelEditor
 
             Span rows = new Span(this.CenterX, this.CenterY, this.Width, this.Height, this.PadWidth, this.PadHeight, Span.SpanType.Vertical);
             rows.AddText("Please enter a name for your level:");
-            rows.AddTextInput("Level Name", "New Level", Color.White);
+            rows.AddTextInput("Level Name", "New Level", Color.White).Selected = true;
             rows.AddBlank();
             rows.AddBlank();
 
@@ -49,6 +52,35 @@ namespace AemonsNookMono.Menus.LevelEditor
                 Debugger.Current.AddTempString($"You clicked on the {clicked.ButtonCode} button!");
                 switch (clicked.ButtonCode)
                 {
+                    case "Level Name":
+                        clicked.Selected = true;
+                        return true;
+
+                    case "Save":
+                        if (!string.IsNullOrEmpty(this.GetButton("Level Name").Title))
+                        {
+                            if (SaveManager.Current.CheckLevelExists(this.GetButton("Level Name").Title) == false)
+                            {
+                                Level level = this.CreateLevelFromEditor(this.GetButton("Level Name").Title);
+                                if (level != null)
+                                {
+                                    SaveManager.Current.SaveLevel(level);
+                                    MenuManager.Current.CloseTop();
+                                    MenuManager.Current.Top.Refresh();
+                                    MenuManager.Current.AddMenu(new MessagePopupMenu("Level Saved", "Your level was saved successfully.", "Okay", MenuManager.Current.Top));
+                                }
+                            }
+                            else
+                            {
+                                MenuManager.Current.AddMenu(new MessagePopupMenu("", "A level with this name already exists, please choose a different name.", "Okay", this));
+                            }
+                        }
+                        else
+                        {
+                            MenuManager.Current.AddMenu(new MessagePopupMenu("", "Please enter a name for your level", "Okay", this));
+                        }
+                        return true;
+
                     case "Cancel":
                         MenuManager.Current.CloseTop();
                         return true;
@@ -58,12 +90,56 @@ namespace AemonsNookMono.Menus.LevelEditor
                 }
             }
 
-            //if (this.worldMenu != null)
-            //{
-            //    return this.worldMenu.HandleLeftClick(x, y);
-            //}
-
             return false;
+        }
+
+        public Level CreateLevelFromEditor(string levelname)
+        {
+            Level newlevel = new Level();
+            newlevel.Name = levelname;
+
+            Tile[,] worldtiles = AemonsNookMono.GameWorld.World.Current.Tiles;
+            newlevel.WIDTH = AemonsNookMono.GameWorld.World.Current.Width;
+            newlevel.HEIGHT = AemonsNookMono.GameWorld.World.Current.Height;
+
+            StringBuilder levelstring = new StringBuilder();
+            Tile curTile;
+            for (int row = 0; row < newlevel.HEIGHT; row++)
+            {
+                for (int col = 0; col < newlevel.WIDTH; col++)
+                {
+                    curTile = worldtiles[row, col];
+                    if (curTile != null)
+                    {
+                        switch (curTile.Type)
+                        {
+                            case Tile.TileType.Grass:
+                                levelstring.Append('-');
+                                break;
+
+                            case Tile.TileType.Tree:
+                                levelstring.Append('T');
+                                break;
+
+                            case Tile.TileType.Stone:
+                                levelstring.Append('S');
+                                break;
+
+                            case Tile.TileType.Water:
+                                levelstring.Append('W');
+                                break;
+
+                            case Tile.TileType.Dirt:
+                                levelstring.Append('D');
+                                break;
+                        }
+                    }
+                }
+                levelstring.Append(' ');
+            }
+
+            newlevel.ascii = levelstring.ToString();
+            return newlevel;
         }
     }
 }

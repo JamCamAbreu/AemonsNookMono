@@ -6,6 +6,7 @@ namespace AemonsNookMono.Levels
 {
     public class SmallMeadow : Level
     {
+        public override string Name { get { return "Small Meadow"; } }
         public override int WIDTH
         {
             get { return 19; }

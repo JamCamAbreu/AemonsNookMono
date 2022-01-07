@@ -27,7 +27,7 @@ namespace AemonsNookMono.Menus.World
         public override void InitButtons()
         {
             this.StaticCells.Clear();
-            this.Spans.Clear();
+            this.CellGroupings.Clear();
 
             ButtonSprite gear = new ButtonSprite("menu-world-gear", "menu-world-gear-hover", "menu-world-gear-hover", 32, 32);
             ButtonSprite circle = new ButtonSprite("menu-world-circle", "menu-world-circle-hover", "menu-world-circle-hover", 32, 32);
@@ -41,7 +41,7 @@ namespace AemonsNookMono.Menus.World
             menuItems.AddSpriteButton("Levels", "Levels", square, Collision.CollisionShape.Rectangle);
             menuItems.AddSpriteButton("Test", "Test", diamond, Collision.CollisionShape.Circle);
             //menuItems.AddButtonSprite("Option 5", "Option 5", pentagon, Collision.CollisionShape.Circle);
-            this.Spans.Add(menuItems);
+            this.CellGroupings.Add(menuItems);
 
             foreach (Button b in menuItems.Cells)
             {

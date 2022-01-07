@@ -28,7 +28,7 @@ namespace AemonsNookMono.Menus.LevelEditor
 
         public override void InitButtons()
         {
-            this.Spans.Clear();
+            this.CellGroupings.Clear();
 
             Span rows = new Span(this.CenterX, this.CenterY, this.Width, this.Height, this.PadWidth, this.PadHeight, Span.SpanType.Vertical);
             rows.AddText("Please enter a name for your level:");
@@ -41,7 +41,7 @@ namespace AemonsNookMono.Menus.LevelEditor
             bottomrow.AddColorButton("Cancel", "Cancel", Color.Black);
             rows.AddSpan(bottomrow);
 
-            this.Spans.Add(rows);
+            this.CellGroupings.Add(rows);
         }
 
         public override bool HandleLeftClick(int x, int y)

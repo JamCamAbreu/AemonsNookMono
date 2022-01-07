@@ -62,14 +62,14 @@ namespace AemonsNookMono.Menus.General
         }
         public override void InitButtons()
         {
-            this.Spans.Clear();
+            this.CellGroupings.Clear();
             this.StaticCells.Clear();
             int bottomRowHeight = this.Height / 12;
             Span rows = new Span(this.CenterX, this.CenterY, this.Width, this.Height, this.PadWidth, this.PadHeight, Span.SpanType.Vertical);
             rows.InnerPadScale = 0.2f;
             rows.AddText(this.message);
             rows.AddColorButton(confirmButtonString, confirmButtonString, ProfileManager.Current.ColorPrimary);
-            this.Spans.Add(rows);
+            this.CellGroupings.Add(rows);
         }
         public override void Refresh()
         {

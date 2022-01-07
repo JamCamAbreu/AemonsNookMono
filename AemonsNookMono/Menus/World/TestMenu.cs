@@ -43,7 +43,7 @@ namespace AemonsNookMono.Menus.World
         #region Interface
         public override void InitButtons()
         {
-            this.Spans.Clear();
+            this.CellGroupings.Clear();
             this.StaticCells.Clear();
 
             Span rows = new Span(this.CenterX, this.CenterY, this.Width, this.Height, this.PadWidth, this.PadHeight, Span.SpanType.Vertical);
@@ -96,8 +96,8 @@ namespace AemonsNookMono.Menus.World
 
             rows.AddColorButton("Back", "Back", Color.Black);
 
-            this.Spans.Add(rows);
-            foreach (Span span in this.Spans)
+            this.CellGroupings.Add(rows);
+            foreach (Span span in this.CellGroupings)
             {
                 span.Refresh();
             }

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace AemonsNookMono.Menus
 {
-    public class PagingSpan : Cell
+    public class PagingSpan : Cell, CellGrouping
     {
         #region Constructor
         public PagingSpan(string uniquename, Span.SpanType type, int maxButtons = 5)
@@ -178,6 +178,10 @@ namespace AemonsNookMono.Menus
         public void AddSpan(Span span)
         {
             this.AddDynamicCell(span);
+        }
+        public void AddPagingSpan(PagingSpan pagingSpan)
+        {
+            this.AddDynamicCell(pagingSpan);
         }
         #endregion
     }

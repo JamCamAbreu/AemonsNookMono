@@ -7,7 +7,7 @@ using System.Text;
 
 namespace AemonsNookMono.Menus
 {
-    public class Span : Cell
+    public class Span : Cell, CellGrouping
     {
         #region Enums
         public enum SpanType
@@ -153,6 +153,10 @@ namespace AemonsNookMono.Menus
         {
             this.AddDynamicCell(span);
             //this.ChildSpans.Add(span);
+        }
+        public void AddPagingSpan(PagingSpan pagingSpan)
+        {
+            this.AddDynamicCell(pagingSpan);
         }
         public override void Draw()
         {

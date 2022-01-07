@@ -15,8 +15,7 @@ namespace AemonsNookMono.Menus
             if ((padHeight * 2) >= height || (padWidth * 2) >= width) { throw new Exception("Desired padding is too large and malforms Menu."); }
 
             this.MenuName = menuname;
-            this.Spans = new List<Span>();
-            this.PagingSpans = new List<PagingSpan>();
+            this.CellGroupings = new List<CellGrouping>();
             this.StaticCells = new List<Cell>();
             this.Width = width;
             this.Height = height;
@@ -48,8 +47,7 @@ namespace AemonsNookMono.Menus
 
         #region Public Properties
         public string MenuName { get; set; }
-        public List<Span> Spans { get; set; }
-        public List<PagingSpan> PagingSpans { get; set; }
+        public List<CellGrouping> CellGroupings { get; set; }
         public List<Cell> StaticCells { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
@@ -97,13 +95,7 @@ namespace AemonsNookMono.Menus
                 if (b != null) { return b; }
             }
 
-            foreach (Span span in this.Spans)
-            {
-                Button b;
-                b = span.CheckButtonCollisions(x, y);
-                if (b != null) { return b; }
-            }
-            foreach (PagingSpan span in this.PagingSpans)
+            foreach (CellGrouping span in this.CellGroupings)
             {
                 Button b;
                 b = span.CheckButtonCollisions(x, y);
@@ -129,14 +121,7 @@ namespace AemonsNookMono.Menus
                 }
             }
 
-            foreach (Span span in this.Spans)
-            {
-                if (span.ContainsButton(name))
-                {
-                    return span.GetButton(name);
-                }
-            }
-            foreach (PagingSpan span in this.PagingSpans)
+            foreach (CellGrouping span in this.CellGroupings)
             {
                 if (span.ContainsButton(name))
                 {
@@ -163,11 +148,7 @@ namespace AemonsNookMono.Menus
                     c.Draw();
                 }
 
-                foreach (Span span in this.Spans)
-                {
-                    span.Draw();
-                }
-                foreach (PagingSpan span in this.PagingSpans)
+                foreach (CellGrouping span in this.CellGroupings)
                 {
                     span.Draw();
                 }
@@ -190,11 +171,7 @@ namespace AemonsNookMono.Menus
             {
                 cell.Update();
             }
-            foreach (Span span in this.Spans)
-            {
-                span.Update();
-            }
-            foreach (PagingSpan span in this.PagingSpans)
+            foreach (CellGrouping span in this.CellGroupings)
             {
                 span.Update();
             }

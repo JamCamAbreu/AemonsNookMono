@@ -33,7 +33,7 @@ namespace AemonsNookMono.Menus.World
         #region Interface
         public override void InitButtons()
         {
-            this.Spans.Clear();
+            this.CellGroupings.Clear();
             int bottomRowHeight = this.Height / 10;
             Span columns = new Span(this.CenterX, this.CenterY - (bottomRowHeight / 2), this.Width, this.Height - bottomRowHeight, this.PadWidth, this.PadHeight, Span.SpanType.Horizontal);
             columns.InnerPadScale = 0.2f;
@@ -67,8 +67,8 @@ namespace AemonsNookMono.Menus.World
             columns.AddSpan(leftColumn);
             columns.AddSpan(rightColumn);
 
-            this.Spans.Add(columns);
-            foreach (Span span in this.Spans)
+            this.CellGroupings.Add(columns);
+            foreach (Span span in this.CellGroupings)
             {
                 span.Refresh();
             }

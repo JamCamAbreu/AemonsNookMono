@@ -38,13 +38,13 @@ namespace AemonsNookMono.Menus.World
         #region Interface
         public override void InitButtons()
         {
-            this.Spans.Clear();
+            this.CellGroupings.Clear();
 
             Span rows = new Span(this.CenterX, this.CenterY, this.Width, this.Height, this.PadWidth, this.PadHeight, Span.SpanType.Vertical);
             rows.AddColorButton("", "", null);
             rows.AddColorButton("", "", null);
             rows.AddColorButton("Back", "Back", Color.Black);
-            this.Spans.Add(rows);
+            this.CellGroupings.Add(rows);
 
             PagingSpan levelButtons = new PagingSpan("LevelButtons", this.CenterX, rows.Cells[0].ScreenY, this.Width, rows.Cells[0].Height, this.PadWidth, 0, Span.SpanType.Horizontal, 3);
             levelButtons.AddColorButton("Intro Wood", "Intro Wood", ProfileManager.Current.ColorPrimary);
@@ -57,7 +57,7 @@ namespace AemonsNookMono.Menus.World
                 levelButtons.AddColorButton($"level-{levelname}", levelname, ProfileManager.Current.ColorPrimary);
             }
 
-            this.PagingSpans.Add(levelButtons);
+            this.CellGroupings.Add(levelButtons);
             this.LevelButtons = levelButtons;
 
             Span editorButtons = new Span(
@@ -67,21 +67,21 @@ namespace AemonsNookMono.Menus.World
             editorButtons.AddColorButton("Width", "Width", null, false);
             editorButtons.AddColorButton("Height",  "Height", null, false);
             editorButtons.AddColorButton("Create",  "Create", ProfileManager.Current.ColorPrimary);
-            this.Spans.Add(editorButtons);
+            this.CellGroupings.Add(editorButtons);
 
             int colNum = 0;
             Span WidthButtons = new Span(editorButtons.Cells[colNum].ScreenX, editorButtons.Cells[colNum].ScreenY, editorButtons.Cells[colNum].Width, editorButtons.Cells[colNum].Height, 4, 4, Span.SpanType.Vertical);
             WidthButtons.AddColorButton("WidthTitle", string.Empty, null, false);
             WidthButtons.AddColorButton("widthplus", "+", ProfileManager.Current.ColorPrimary);
             WidthButtons.AddColorButton("widthminus", "-", ProfileManager.Current.ColorPrimary);
-            this.Spans.Add(WidthButtons);
+            this.CellGroupings.Add(WidthButtons);
 
             colNum = 1;
             Span HeightButtons = new Span(editorButtons.Cells[colNum].ScreenX, editorButtons.Cells[colNum].ScreenY, editorButtons.Cells[colNum].Width, editorButtons.Cells[colNum].Height, 4, 4, Span.SpanType.Vertical);
             HeightButtons.AddColorButton("HeightTitle", string.Empty, null, false);
             HeightButtons.AddColorButton("heightplus", "+", ProfileManager.Current.ColorPrimary);
             HeightButtons.AddColorButton("heightminus", "-", ProfileManager.Current.ColorPrimary);
-            this.Spans.Add(HeightButtons);
+            this.CellGroupings.Add(HeightButtons);
         }
         public override void Refresh()
         {

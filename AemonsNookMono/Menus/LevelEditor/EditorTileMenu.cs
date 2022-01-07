@@ -25,8 +25,8 @@ namespace AemonsNookMono.Menus.LevelEditor
             this.InitButtons();
             this.worldMenu = MenuManager.Current.RetrieveMenu("WorldMenu") as WorldMenu;
 
-            this.SelectedBrush.Select(this.Spans[0].GetButton("1X1"));
-            this.SelectedTileType.Select(this.Spans[0].GetButton("Tree"));
+            this.SelectedBrush.Select(this.CellGroupings[0].GetButton("1X1"));
+            this.SelectedTileType.Select(this.CellGroupings[0].GetButton("Tree"));
             this.CurSelection = new TileSelection(GameWorld.Tile.TileType.Tree);
         }
 
@@ -67,7 +67,7 @@ namespace AemonsNookMono.Menus.LevelEditor
         }
         public override void InitButtons()
         {
-            this.Spans.Clear();
+            this.CellGroupings.Clear();
 
             Span columns = new Span(this.CenterX, this.CenterY, this.Width, this.Height, this.PadWidth, this.PadHeight, Span.SpanType.Horizontal);
 
@@ -89,12 +89,12 @@ namespace AemonsNookMono.Menus.LevelEditor
             this.SelectedTileType.Add(TileTypes.AddColorButton("Water",  "Water", Color.Blue));
             columns.AddSpan(TileTypes);
 
-            foreach (Span span in this.Spans)
+            foreach (Span span in this.CellGroupings)
             {
                 span.Refresh();
             }
 
-            this.Spans.Add(columns);
+            this.CellGroupings.Add(columns);
         }
         public override bool HandleLeftClick(int x, int y)
         {

@@ -24,7 +24,7 @@ namespace AemonsNookMono.Menus.World
         public override void InitButtons()
         {
             this.StaticCells.Clear();
-            this.Spans.Clear();
+            this.CellGroupings.Clear();
 
             Span buttonSpan = new Span(this.CenterX, this.CenterY, this.Width, this.Height, this.PadWidth, this.PadHeight, Span.SpanType.Vertical);
             buttonSpan.AddColorButton("Show Circle Collisions", "Show Circle Collisions", ProfileManager.Current.ColorPrimary);
@@ -32,7 +32,7 @@ namespace AemonsNookMono.Menus.World
             buttonSpan.AddColorButton("", "", null, false);
             buttonSpan.AddColorButton("", "", null, false);
             buttonSpan.AddColorButton("Back", "Back", Color.Black);
-            this.Spans.Add(buttonSpan);
+            this.CellGroupings.Add(buttonSpan);
 
             ButtonSprite bulletUnselectedSprites = new ButtonSprite("menu-bullet-unselected", "menu-bullet-unselected-hover", "menu-bullet-unselected-click", 50, 50);
             ButtonSprite bulletSelectedSprites = new ButtonSprite("menu-bullet-selected", "menu-bullet-selected-hover", "menu-bullet-selected-hover", 50, 50);

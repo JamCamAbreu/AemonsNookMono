@@ -16,6 +16,7 @@ namespace AemonsNookMono.Menus
 
             this.MenuName = menuname;
             this.Spans = new List<Span>();
+            this.PagingSpans = new List<PagingSpan>();
             this.StaticCells = new List<Cell>();
             this.Width = width;
             this.Height = height;
@@ -48,6 +49,7 @@ namespace AemonsNookMono.Menus
         #region Public Properties
         public string MenuName { get; set; }
         public List<Span> Spans { get; set; }
+        public List<PagingSpan> PagingSpans { get; set; }
         public List<Cell> StaticCells { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
@@ -101,6 +103,12 @@ namespace AemonsNookMono.Menus
                 b = span.CheckButtonCollisions(x, y);
                 if (b != null) { return b; }
             }
+            foreach (PagingSpan span in this.PagingSpans)
+            {
+                Button b;
+                b = span.CheckButtonCollisions(x, y);
+                if (b != null) { return b; }
+            }
 
             return null;
         }
@@ -122,6 +130,13 @@ namespace AemonsNookMono.Menus
             }
 
             foreach (Span span in this.Spans)
+            {
+                if (span.ContainsButton(name))
+                {
+                    return span.GetButton(name);
+                }
+            }
+            foreach (PagingSpan span in this.PagingSpans)
             {
                 if (span.ContainsButton(name))
                 {
@@ -152,6 +167,10 @@ namespace AemonsNookMono.Menus
                 {
                     span.Draw();
                 }
+                foreach (PagingSpan span in this.PagingSpans)
+                {
+                    span.Draw();
+                }
             }
         }
         public virtual void Refresh()
@@ -172,6 +191,10 @@ namespace AemonsNookMono.Menus
                 cell.Update();
             }
             foreach (Span span in this.Spans)
+            {
+                span.Update();
+            }
+            foreach (PagingSpan span in this.PagingSpans)
             {
                 span.Update();
             }

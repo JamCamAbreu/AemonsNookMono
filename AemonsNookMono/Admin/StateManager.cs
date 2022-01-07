@@ -81,7 +81,7 @@ namespace AemonsNookMono.Admin
             if (this.CurrentState != State.Pause)
             {
                 #region TEMP
-                if (Keyboard.GetState().IsKeyDown(Keys.R))
+                if (this.CurrentState == State.World && Keyboard.GetState().IsKeyDown(Keys.R))
                 {
                     World.Current.Init(this.level);
                 }               

@@ -85,6 +85,14 @@ namespace AemonsNookMono.Admin
                 }
             }
         }
+        public static string RetrieveFilePath(string foldername, string filename, string ext)
+        {
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), $"AemonsNook{Path.DirectorySeparatorChar}{foldername}{Path.DirectorySeparatorChar}{filename}.{ext}");
+        }
+        public static string RetrieveFolderPath(string foldername)
+        {
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), $"AemonsNook{Path.DirectorySeparatorChar}{foldername}{Path.DirectorySeparatorChar}");
+        }
         #endregion
 
         #region Internal
@@ -96,10 +104,6 @@ namespace AemonsNookMono.Admin
             {
                 Directory.CreateDirectory(path);
             }
-        }
-        private static string RetrieveFilePath(string foldername, string filename, string ext)
-        {
-            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), $"AemonsNook{Path.DirectorySeparatorChar}{foldername}{Path.DirectorySeparatorChar}{filename}.{ext}");
         }
         #endregion
     }
@@ -184,6 +188,18 @@ namespace AemonsNookMono.Admin
         {
             NookFile file = new NookFile("Level", levelName);
             return file.CheckFileExists();
+        }
+        public string[] RetrieveLevelNames()
+        {
+            string levelfolderpath = NookFile.RetrieveFolderPath("Level");
+            string[] filenames = System.IO.Directory.GetFiles(levelfolderpath, "*.nook");
+            List<string> fileonlynames = new List<string>();
+            foreach (string filename in filenames)
+            {
+                string name = Path.GetFileName(filename).Replace(".nook", "");
+                fileonlynames.Add(name);
+            }
+            return fileonlynames.ToArray();
         }
 
         public Profile LoadProfile(string profileName)

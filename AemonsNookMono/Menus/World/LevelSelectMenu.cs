@@ -32,6 +32,7 @@ namespace AemonsNookMono.Menus.World
 
         #region Public Properties
         public StateManager.State OriginalState { get; set; }
+        public PagingSpan LevelButtons { get; set; }
         #endregion
 
         #region Interface
@@ -45,11 +46,19 @@ namespace AemonsNookMono.Menus.World
             rows.AddColorButton("Back", "Back", Color.Black);
             this.Spans.Add(rows);
 
-            Span levelButtons = new Span(this.CenterX, rows.Cells[0].ScreenY, this.Width, rows.Cells[0].Height, this.PadWidth, 0, Span.SpanType.Horizontal);
+            PagingSpan levelButtons = new PagingSpan("LevelButtons", this.CenterX, rows.Cells[0].ScreenY, this.Width, rows.Cells[0].Height, this.PadWidth, 0, Span.SpanType.Horizontal, 3);
             levelButtons.AddColorButton("Intro Wood", "Intro Wood", ProfileManager.Current.ColorPrimary);
             levelButtons.AddColorButton("Small Meadow", "Small Meadow", ProfileManager.Current.ColorPrimary);
             levelButtons.AddColorButton("Cedric's Pass", "Cedric's Pass", ProfileManager.Current.ColorPrimary);
-            this.Spans.Add(levelButtons);
+
+            string[] levelnames = SaveManager.Current.RetrieveLevelNames();
+            foreach (string levelname in levelnames)
+            {
+                levelButtons.AddColorButton($"level-{levelname}", levelname, ProfileManager.Current.ColorPrimary);
+            }
+
+            this.PagingSpans.Add(levelButtons);
+            this.LevelButtons = levelButtons;
 
             Span editorButtons = new Span(
                 this.CenterX + (this.Width)/4, rows.Cells[1].ScreenY, 
@@ -121,6 +130,24 @@ namespace AemonsNookMono.Menus.World
             if (clicked != null)
             {
                 Debugger.Current.AddTempString($"You clicked on the {clicked.ButtonCode} button!");
+
+                if(!string.IsNullOrEmpty(clicked.ButtonCode) && clicked.ButtonCode.Contains("level-"))
+                {
+                    string stripped = clicked.ButtonCode.Replace("level-", "");
+                    Level level = SaveManager.Current.LoadLevel(stripped);
+                    if (level != null)
+                    {
+                        SaveManager.Current.SaveProfile(ProfileManager.Current.Loaded);
+                        StateManager.Current.CurrentState = StateManager.State.World;
+                        GameWorld.World.Current.Init(level);
+                        return true;
+                    }
+                    else
+                    {
+                        Debugger.Current.AddTempString($"Error loading corrupted level with name: {level}");
+                    }
+                }
+
                 switch (clicked.ButtonCode)
                 {
                     case "Create":
@@ -147,6 +174,14 @@ namespace AemonsNookMono.Menus.World
                         SaveManager.Current.SaveProfile(ProfileManager.Current.Loaded);
                         StateManager.Current.CurrentState = StateManager.State.World;
                         GameWorld.World.Current.Init(new Levels.CedricsPass());
+                        return true;
+
+                    case "LevelButtons-PagePrev":
+                        this.LevelButtons.PagePrev();
+                        return true;
+
+                    case "LevelButtons-PageNext":
+                        this.LevelButtons.PageNext();
                         return true;
 
                     case "Back":

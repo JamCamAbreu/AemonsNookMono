@@ -65,7 +65,6 @@ namespace AemonsNookMono.Menus
         public List<Cell> Cells { get; set; }
         public int TopY { get { return this.CenterY - (this.Height / 2); } }
         public int LeftX { get { return this.CenterX - (this.Width / 2); } }
-        //public List<Span> ChildSpans = new List<Span>();
         public float InnerPadScale { get; set; }
         #endregion
 

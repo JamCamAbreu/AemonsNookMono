@@ -374,24 +374,33 @@ namespace AemonsNookMono.GameWorld
             Tile curTile = this.TileAt(col, row);
             switch (c)
             {
+                case '-':
+                    curTile.Type = Tile.TileType.Grass;
+                    curTile.Unobstructed = true;
+                    break;
+
                 case 'T':
                     curTile.Type = Tile.TileType.Tree;
+                    curTile.Unobstructed = true;
                     this.TreeTiles.Add(curTile);
                     break;
 
                 case 'S':
                     curTile.Type = Tile.TileType.Stone;
+                    curTile.Unobstructed = true;
                     this.StoneTiles.Add(curTile);
                     break;
 
                 case 'W':
                     curTile.Type = Tile.TileType.Water;
+                    curTile.Unobstructed = false;
                     this.WaterTiles.Add(curTile);
                     break;
 
                 case 'D':
                     curTile.Type = Tile.TileType.Dirt;
-                    curTile.IsPath = true;
+                    curTile.IsRoad = true;
+                    curTile.Unobstructed = true;
                     this.RoadTiles.Add(curTile);
                     break;
 
@@ -406,7 +415,8 @@ namespace AemonsNookMono.GameWorld
                 case '8':
                 case '9':
                     curTile.Type = Tile.TileType.Dirt;
-                    curTile.IsPath = true;
+                    curTile.IsRoad = true;
+                    curTile.Unobstructed = true;
                     curTile.IsMapEdge = true;
                     curTile.MapEdgeId = int.Parse(c.ToString());
                     this.SpawnTiles.Add(curTile);
@@ -456,7 +466,7 @@ namespace AemonsNookMono.GameWorld
 
                             case Tile.TileType.Dirt:
                                 curTile.Type = Tile.TileType.Dirt;
-                                curTile.IsPath = true;
+                                curTile.IsRoad = true;
                                 this.RoadTiles.Add(curTile);
                                 if (mapEdgeId < 10 && curTile.TileAbove == null || curTile.TileRight == null || curTile.TileBelow == null || curTile.TileLeft == null)
                                 {

@@ -13,7 +13,14 @@ namespace AemonsNookMono.Entities
         #region Public Properties
         public Tile TargetTile { get; set; }
         public int InterruptInterval { get; set; }
+        public int InterruptIntervalRandom { get; set; }
         public int InterruptTimer { get; set; }
+        public int AttackReach { get; set; }
+        public int AttackDelay { get; set; }
+        #endregion
+
+        #region Internal
+        protected int attacktimer { get; set; }
         #endregion
 
         #region Constructor
@@ -22,8 +29,13 @@ namespace AemonsNookMono.Entities
             this.TileOn = null;
             this.Tasks = new Queue<Task>();
 
-            this.InterruptInterval = 20;
+            this.InterruptInterval = 120;
+            this.InterruptIntervalRandom = (int)((float)this.InterruptInterval * 0.4f);
             this.InterruptTimer = this.InterruptInterval;
+
+            this.AttackReach = 20; // make this configurable later
+            this.AttackDelay = 100; // make this configurable later
+            this.attacktimer = 0;
 
             if (World.Current.SpawnTiles == null || World.Current.SpawnTiles.Count <= 0) { throw new Exception("No where to spawn! Oh my!"); }
             if (World.Current.RoadTiles == null || World.Current.RoadTiles.Count <= 0) { throw new Exception("No where to go! Oh my!"); }
@@ -69,7 +81,7 @@ namespace AemonsNookMono.Entities
                 this.InterruptTimer--;
                 if (this.InterruptTimer <= 0)
                 {
-                    this.InterruptTimer = this.InterruptInterval;
+                    this.InterruptTimer = this.InterruptInterval + this.Ran.Next(-InterruptIntervalRandom, InterruptIntervalRandom);
                     if (this.TargetTile != World.Current.hero.TileOn)
                     {
                         this.CurrentTask = null;
@@ -85,6 +97,8 @@ namespace AemonsNookMono.Entities
                     if (this.CurrentTask.Finished) { this.CurrentTask = null; }
                 }
             }
+
+            this.AttemptAttack();
         }
         public void Draw()
         {
@@ -93,6 +107,20 @@ namespace AemonsNookMono.Entities
             {
                 this.CurrentTask.Draw();
             }
+        }
+        public void AttemptAttack()
+        {
+            if (this.TileOn != null && this.TargetTile != null &&
+                Global.ApproxDist(this.TileOn.RelativeX, this.TileOn.RelativeY, this.TargetTile.RelativeX, this.TargetTile.RelativeY) <= this.AttackReach)
+            {
+                if (this.attacktimer <= 0)
+                {
+                    Debugger.Current.AddTempString("Wham!");
+                    this.attacktimer = this.AttackDelay;
+                }
+            }
+            if (this.attacktimer > 0) { this.attacktimer--; }
+
         }
         #endregion
     }

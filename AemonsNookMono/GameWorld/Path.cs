@@ -34,7 +34,7 @@ namespace AemonsNookMono.GameWorld
         #endregion
 
         #region Constructor
-        public Path(Tile starttile, Tile targettile, bool offroad = false)
+        public Path(Tile starttile, Tile targettile, bool allowOffroad = false)
         {
             this.StartTile = starttile;
             this.TargetTile = targettile;
@@ -61,10 +61,10 @@ namespace AemonsNookMono.GameWorld
                     return;
                 }
 
-                if (cur.TileAbove != null && (cur.TileAbove.IsPath || offroad) && !Visited.ContainsKey(cur.TileAbove)) { Neighbors.Enqueue(new Tuple<Tile, Tile>(cur, cur.TileAbove)); Visited.Add(cur.TileAbove, cur); }
-                if (cur.TileRight != null && (cur.TileRight.IsPath || offroad) && !Visited.ContainsKey(cur.TileRight)) { Neighbors.Enqueue(new Tuple<Tile, Tile>(cur, cur.TileRight)); Visited.Add(cur.TileRight, cur); }
-                if (cur.TileBelow != null && (cur.TileBelow.IsPath || offroad) && !Visited.ContainsKey(cur.TileBelow)) { Neighbors.Enqueue(new Tuple<Tile, Tile>(cur, cur.TileBelow)); Visited.Add(cur.TileBelow, cur); }
-                if (cur.TileLeft != null  && (cur.TileLeft.IsPath  || offroad) && !Visited.ContainsKey(cur.TileLeft))  { Neighbors.Enqueue(new Tuple<Tile, Tile>(cur, cur.TileLeft));  Visited.Add(cur.TileLeft,  cur); }
+                if (cur.TileAbove != null && cur.TileAbove.IsWalkable(allowOffroad) && !Visited.ContainsKey(cur.TileAbove)) { Neighbors.Enqueue(new Tuple<Tile, Tile>(cur, cur.TileAbove)); Visited.Add(cur.TileAbove, cur); }
+                if (cur.TileRight != null && cur.TileRight.IsWalkable(allowOffroad) && !Visited.ContainsKey(cur.TileRight)) { Neighbors.Enqueue(new Tuple<Tile, Tile>(cur, cur.TileRight)); Visited.Add(cur.TileRight, cur); }
+                if (cur.TileBelow != null && cur.TileBelow.IsWalkable(allowOffroad) && !Visited.ContainsKey(cur.TileBelow)) { Neighbors.Enqueue(new Tuple<Tile, Tile>(cur, cur.TileBelow)); Visited.Add(cur.TileBelow, cur); }
+                if (cur.TileLeft != null  && cur.TileLeft.IsWalkable(allowOffroad) && !Visited.ContainsKey(cur.TileLeft))  { Neighbors.Enqueue(new Tuple<Tile, Tile>(cur, cur.TileLeft));  Visited.Add(cur.TileLeft,  cur); }
             }
         }
         #endregion

@@ -81,7 +81,8 @@ namespace AemonsNookMono.GameWorld
         public TileType Type { get; set; }
         public bool IsMapEdge { get; set; }
         public int MapEdgeId { get; set; }
-        public bool IsPath { get; set; }
+        public bool IsRoad { get; set; }
+        public bool Unobstructed { get; set; }
         public Tile TileAbove { get; set; }
         public Tile TileRight { get; set; }
         public Tile TileBelow { get; set; }
@@ -205,6 +206,15 @@ namespace AemonsNookMono.GameWorld
                     this.Decorations.Add(new TileDecoration($"decoration-flowers-{flowertype}", new Vector2(RelativeX + ranx, RelativeY + rany), rot, new Vector2(8, 8)));
                 }
             }
+        }
+        public bool IsWalkable(bool offroadAllowed)
+        {
+            if (this.IsRoad) { return true; }
+            if (offroadAllowed && this.Unobstructed)
+            {
+                return true;
+            }
+            return false;
         }
         #endregion
 

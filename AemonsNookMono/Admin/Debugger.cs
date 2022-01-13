@@ -120,6 +120,8 @@ namespace AemonsNookMono.Admin
             debugMessages.Add($"Peep Count: {World.Current.Peeps.Count}");
             #endregion
 
+            debugMessages.Add($"Single Effects: {EffectsGenerator.Current.SingleEffects.Count()}");
+
             debugMessages.Add($"Debugger 1: {this.Debugger1}");
             debugMessages.Add($"Debugger 2: {this.Debugger2}");
 

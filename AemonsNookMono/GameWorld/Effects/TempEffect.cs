@@ -6,11 +6,11 @@ using System.Text;
 
 namespace AemonsNookMono.GameWorld.Effects
 {
-    public abstract class TempEffect
+    public class TempEffect
     {
         #region Implement Properties
-        protected abstract string spriteBaseName { get; }
-        protected abstract int spriteNumFrames { get; }
+        protected virtual string spriteBaseName { get; set; }
+        protected virtual int spriteNumFrames { get; set; }
         #endregion
 
         #region Public Properties
@@ -18,7 +18,7 @@ namespace AemonsNookMono.GameWorld.Effects
         #endregion
 
         #region Constructors
-        public TempEffect(int x, int y, int life, int speed)
+        public TempEffect(int x, int y, int life, int speed, string spritename = "cursor-redx", int spriteFrames = 1)
         {
             this.xpos = x;
             this.ypos = y;
@@ -27,6 +27,9 @@ namespace AemonsNookMono.GameWorld.Effects
             this.curFrame = 1;
             this.spriteAlarm = speed;
             this.Dead = false;
+
+            this.spriteBaseName = spritename;
+            this.spriteNumFrames = spriteFrames;
         }
         #endregion
 
@@ -54,7 +57,14 @@ namespace AemonsNookMono.GameWorld.Effects
 
         public virtual void Draw()
         {
-            Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName[$"{this.spriteBaseName}-{this.curFrame}"], new Vector2(World.Current.StartDrawX + xpos, World.Current.StartDrawY + ypos), Color.White);
+            if (spriteNumFrames > 1)
+            {
+                Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName[$"{this.spriteBaseName}-{this.curFrame}"], new Vector2(World.Current.StartDrawX + xpos, World.Current.StartDrawY + ypos), Color.White);
+            }
+            else
+            {
+                Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName[$"{this.spriteBaseName}"], new Vector2(World.Current.StartDrawX + xpos, World.Current.StartDrawY + ypos), Color.White);
+            }
         }
         #endregion
 

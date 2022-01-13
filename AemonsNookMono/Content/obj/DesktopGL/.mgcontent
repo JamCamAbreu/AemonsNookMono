@@ -53,6 +53,11 @@
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Buildings/TileGreen.png</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Buildings/TileOrange.png</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Buildings/TileRed.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Effects/AttackAnimations/swordswing-1.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Effects/AttackAnimations/swordswing-2.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Effects/AttackAnimations/swordswing-3.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Effects/AttackAnimations/swordswing-4.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Effects/AttackAnimations/swordswing-5.png</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Effects/Sparkle/sparkle1.png</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Effects/Sparkle/sparkle2.png</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Effects/Sparkle/sparkle3.png</File>
@@ -125,6 +130,11 @@
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Threats/Head.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

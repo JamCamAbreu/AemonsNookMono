@@ -1,6 +1,7 @@
 ﻿using AemonsNookMono.Admin;
 using AemonsNookMono.Entities.Tasks;
 using AemonsNookMono.GameWorld;
+using AemonsNookMono.GameWorld.Effects;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -130,6 +131,7 @@ namespace AemonsNookMono.Entities
                 Global.ApproxDist(this.TileOn.RelativeX, this.TileOn.RelativeY, this.TargetTile.RelativeX, this.TargetTile.RelativeY) <= this.AttackReach)
             {
                 Debugger.Current.AddTempString("Wham!");
+                EffectsGenerator.Current.AddSingleEffect(new TempEffect(this.TileOn.RelativeX + 8, this.TileOn.RelativeY, 10, 2, "SwordSwing", 5));
                 ResetInterruptTimer(40);
                 ResetAttackTimer();
             }

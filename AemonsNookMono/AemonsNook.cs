@@ -107,11 +107,11 @@ namespace AemonsNookMono
             Graphics.Current.SpritesByName.Add("sparkle-4", Content.Load<Texture2D>("World/Effects/Sparkle/sparkle4"));
             Graphics.Current.SpritesByName.Add("sparkle-5", Content.Load<Texture2D>("World/Effects/Sparkle/sparkle5"));
 
-            Graphics.Current.SpritesByName.Add("sparkle-1", Content.Load<Texture2D>("World/Effects/AttackAnimations/SwordSwing1"));
-            Graphics.Current.SpritesByName.Add("sparkle-1", Content.Load<Texture2D>("World/Effects/AttackAnimations/SwordSwing2"));
-            Graphics.Current.SpritesByName.Add("sparkle-1", Content.Load<Texture2D>("World/Effects/AttackAnimations/SwordSwing3"));
-            Graphics.Current.SpritesByName.Add("sparkle-1", Content.Load<Texture2D>("World/Effects/AttackAnimations/SwordSwing4"));
-            Graphics.Current.SpritesByName.Add("sparkle-1", Content.Load<Texture2D>("World/Effects/AttackAnimations/SwordSwing5"));
+            Graphics.Current.SpritesByName.Add("SwordSwing-1", Content.Load<Texture2D>("World/Effects/AttackAnimations/swordswing-1"));
+            Graphics.Current.SpritesByName.Add("SwordSwing-2", Content.Load<Texture2D>("World/Effects/AttackAnimations/swordswing-2"));
+            Graphics.Current.SpritesByName.Add("SwordSwing-3", Content.Load<Texture2D>("World/Effects/AttackAnimations/swordswing-3"));
+            Graphics.Current.SpritesByName.Add("SwordSwing-4", Content.Load<Texture2D>("World/Effects/AttackAnimations/swordswing-4"));
+            Graphics.Current.SpritesByName.Add("SwordSwing-5", Content.Load<Texture2D>("World/Effects/AttackAnimations/swordswing-5"));
             #endregion
 
             #region Decoration

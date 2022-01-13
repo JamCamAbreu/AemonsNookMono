@@ -34,6 +34,7 @@ namespace AemonsNookMono.GameWorld.Effects
 
         #region Public Properties
         public List<EffectsComponent> Components { get; set; }
+        public List<TempEffect> SingleEffects { get; set; }
         #endregion
 
         #region Interface
@@ -41,10 +42,19 @@ namespace AemonsNookMono.GameWorld.Effects
         {
             ran = new Random();
             this.Components = new List<EffectsComponent>();
+            this.SingleEffects = new List<TempEffect>();
 
             int maxWaterEffects = World.Current.WaterTiles.Count * 4;
             this.waterSparkles = new EffectsComponent(maxWaterEffects, 16);
-            this.Components.Add(this.waterSparkles);
+            this.AddEffectsComponent(this.waterSparkles);
+        }
+        public void AddEffectsComponent(EffectsComponent component)
+        {
+            this.Components.Add(component);
+        }
+        public void AddSingleEffect(TempEffect effect)
+        {
+            this.SingleEffects.Add(effect);
         }
         public void Update()
         {
@@ -54,6 +64,17 @@ namespace AemonsNookMono.GameWorld.Effects
                 this.waterSparkles.AddEffect(new WaterSparkle(coord.Item1, coord.Item2, 160, 30));
             }
             this.waterSparkles.Update();
+
+            foreach (TempEffect effect in this.SingleEffects)
+            {
+                effect.Update();
+            }
+
+            TempEffect[] destroyeffects = this.SingleEffects.Where(e => e.Dead == true).ToArray();
+            foreach (TempEffect effect in destroyeffects)
+            {
+                this.SingleEffects.Remove(effect);
+            }
         }
         public void Draw()
         {
@@ -74,6 +95,12 @@ namespace AemonsNookMono.GameWorld.Effects
                     component.Draw();
                 }
             }
+
+            foreach (TempEffect effect in this.SingleEffects)
+            {
+                effect.Draw();
+            }
+
             Graphics.Current.SpriteB.End();
         }
         public int CountTotalEffects()

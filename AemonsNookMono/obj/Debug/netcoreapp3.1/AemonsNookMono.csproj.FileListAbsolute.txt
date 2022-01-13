@@ -426,3 +426,8 @@ C:\Github\AemonsNookMono\AemonsNookMono\obj\Debug\netcoreapp3.1\AemonsNookMono.d
 C:\Github\AemonsNookMono\AemonsNookMono\obj\Debug\netcoreapp3.1\AemonsNookMono.pdb
 C:\Github\AemonsNookMono\AemonsNookMono\obj\Debug\netcoreapp3.1\AemonsNookMono.genruntimeconfig.cache
 C:\Github\AemonsNookMono\AemonsNookMono\obj\Debug\netcoreapp3.1\AemonsNookMono.csproj.AssemblyReference.cache
+C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\World\Effects\AttackAnimations\swordswing-1.xnb
+C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\World\Effects\AttackAnimations\swordswing-2.xnb
+C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\World\Effects\AttackAnimations\swordswing-3.xnb
+C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\World\Effects\AttackAnimations\swordswing-4.xnb
+C:\Users\coolc\source\repos\AemonsNookMono\AemonsNookMono\bin\Debug\netcoreapp3.1\Content\World\Effects\AttackAnimations\swordswing-5.xnb

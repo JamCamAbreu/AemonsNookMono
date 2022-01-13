@@ -61,14 +61,23 @@ namespace AemonsNookMono.Menus.LevelEditor
                         {
                             if (SaveManager.Current.CheckLevelExists(this.GetButton("Level Name").Title) == false)
                             {
-                                Level level = this.CreateLevelFromEditor(this.GetButton("Level Name").Title);
-                                if (level != null)
+                                string validationResult = this.ValidateLevel();
+                                if (validationResult == "okay")
                                 {
-                                    SaveManager.Current.SaveLevel(level);
-                                    MenuManager.Current.CloseTop();
-                                    MenuManager.Current.Top.Refresh();
-                                    MenuManager.Current.AddMenu(new MessagePopupMenu("Level Saved", "Your level was saved successfully.", "Okay", MenuManager.Current.Top));
+                                    Level level = this.CreateLevelFromEditor(this.GetButton("Level Name").Title);
+                                    if (level != null)
+                                    {
+                                        SaveManager.Current.SaveLevel(level);
+                                        MenuManager.Current.CloseTop();
+                                        MenuManager.Current.Top.Refresh();
+                                        MenuManager.Current.AddMenu(new MessagePopupMenu("Level Saved", "Your level was saved successfully.", "Okay", MenuManager.Current.Top));
+                                    }
                                 }
+                                else
+                                {
+                                    MenuManager.Current.AddMenu(new MessagePopupMenu("", validationResult, "Okay", this));
+                                }
+
                             }
                             else
                             {
@@ -93,6 +102,47 @@ namespace AemonsNookMono.Menus.LevelEditor
             return false;
         }
 
+        public string ValidateLevel()
+        {
+            int edgePathTiles = 0; // Test: Count edge paths:
+            Tile[,] worldtiles = AemonsNookMono.GameWorld.World.Current.Tiles;
+            Tile curTile;
+            for (int row = 0; row < AemonsNookMono.GameWorld.World.Current.Height; row++)
+            {
+                for (int col = 0; col < AemonsNookMono.GameWorld.World.Current.Width; col++)
+                {
+                    curTile = worldtiles[row, col];
+                    if (curTile != null)
+                    {
+                        switch (curTile.Type)
+                        {
+                            case Tile.TileType.Grass:
+                                break;
+
+                            case Tile.TileType.Tree:
+                                break;
+
+                            case Tile.TileType.Stone:
+                                break;
+
+                            case Tile.TileType.Water:
+                                break;
+
+                            case Tile.TileType.Dirt:
+                                if (curTile.IsMapEdge) { edgePathTiles++; }
+                                break;
+                        }
+                    }
+                }
+            }
+
+            if (edgePathTiles > 10)
+            {
+                return "The maximum amount of entrances (dirt paths) on the edge of the level is 10. Please remove paths from the edge.";
+            }
+
+            return "okay";
+        }
         public Level CreateLevelFromEditor(string levelname)
         {
             Level newlevel = new Level();
@@ -103,6 +153,7 @@ namespace AemonsNookMono.Menus.LevelEditor
             newlevel.HEIGHT = AemonsNookMono.GameWorld.World.Current.Height;
 
             StringBuilder levelstring = new StringBuilder();
+            int entranceNumber = 0;
             Tile curTile;
             for (int row = 0; row < newlevel.HEIGHT; row++)
             {
@@ -130,7 +181,15 @@ namespace AemonsNookMono.Menus.LevelEditor
                                 break;
 
                             case Tile.TileType.Dirt:
-                                levelstring.Append('D');
+                                if (curTile.IsMapEdge)
+                                {
+                                    levelstring.Append(entranceNumber.ToString());
+                                    entranceNumber++;
+                                }
+                                else
+                                {
+                                    levelstring.Append('D');
+                                }
                                 break;
                         }
                     }

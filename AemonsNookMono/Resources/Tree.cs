@@ -63,7 +63,7 @@ namespace AemonsNookMono.Resources
         }
         public override void HandleLeftClick()
         {
-            if (Cursor.Current.CurDistanceFromCenter > World.Current.hero.InteractReach)
+            if (World.Current.hero != null && Cursor.Current.CurDistanceFromCenter > World.Current.hero.InteractReach)
             {
                 Debugger.Current.AddTempString($"You need to get closer to harvest this tree.");
                 return;

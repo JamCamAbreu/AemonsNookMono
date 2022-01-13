@@ -56,6 +56,14 @@ namespace AemonsNookMono.Admin
             if (File.Exists(this.Filepath)) { return true; }
             return false;
         }
+        public static void EnsureFolderLocation(string foldername)
+        {
+            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), $"AemonsNook{Path.DirectorySeparatorChar}{foldername}");
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+        }
         public void LoadProperties()
         {
             string[] lines = System.IO.File.ReadAllLines(this.Filepath);
@@ -97,14 +105,6 @@ namespace AemonsNookMono.Admin
 
         #region Internal
         private Dictionary<string, string> properties { get; set; }
-        private static void EnsureFolderLocation(string foldername)
-        {
-            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), $"AemonsNook{Path.DirectorySeparatorChar}{foldername}");
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-        }
         #endregion
     }
     public class SaveManager
@@ -192,6 +192,7 @@ namespace AemonsNookMono.Admin
         public string[] RetrieveLevelNames()
         {
             string levelfolderpath = NookFile.RetrieveFolderPath("Level");
+            NookFile.EnsureFolderLocation("Level");
             string[] filenames = System.IO.Directory.GetFiles(levelfolderpath, "*.nook");
             List<string> fileonlynames = new List<string>();
             foreach (string filename in filenames)

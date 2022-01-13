@@ -16,8 +16,9 @@ namespace AemonsNookMono.Entities
         public Tile ExitTile { get; set; }
         public bool ReadyToExit { get; set; }
         public int Health { get; set; } 
+        public int TotalTaskCapacity { get; set; } // how much can they remember?
 
-        protected Queue<Task> Tasks { get; set; }
+        protected Stack<Task> Tasks { get; set; }
         protected Task CurrentTask { get; set; }
         protected Random Ran { get; set; }
         #endregion

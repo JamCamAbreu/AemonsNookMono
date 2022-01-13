@@ -450,8 +450,8 @@ namespace AemonsNookMono.Admin
         {
             for (int i = 0; i < 1; i++)
             {
-                //Peep p = new Peep();
-                //World.Current.Peeps.Add(p);
+                Peep p = new Peep();
+                World.Current.Peeps.Add(p);
 
                 Threat t = new Threat();
                 World.Current.Threats.Add(t);

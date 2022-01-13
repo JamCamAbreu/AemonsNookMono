@@ -1,4 +1,5 @@
 ﻿using AemonsNookMono.Admin;
+using AemonsNookMono.Entities;
 using AemonsNookMono.GameWorld;
 using AemonsNookMono.Resources;
 using Microsoft.Xna.Framework;
@@ -8,7 +9,7 @@ using System.Text;
 
 namespace AemonsNookMono.Player
 {
-    public class Hero
+    public class Hero : Entity
     {
         public const int PIXEL_WIDTH = 16;
         public const int PIXEL_HEIGHT = 16;
@@ -74,7 +75,6 @@ namespace AemonsNookMono.Player
             this.Spawned = true;
         }
         public bool Spawned { get; set; }
-        public Tile TileOn { get; set; }
         public int ScreenX { get; set; }
         public int ScreenY { get; set; }
         public int InteractReach { get; set; }

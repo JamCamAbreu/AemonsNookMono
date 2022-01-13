@@ -16,7 +16,7 @@ namespace AemonsNookMono.Entities
         public Peep()
         {
             this.TileOn = null;
-            this.Tasks = new Queue<Task>();
+            this.Tasks = new Stack<Task>();
 
             if (World.Current.SpawnTiles == null || World.Current.SpawnTiles.Count <= 0) { throw new Exception("No where to spawn! Oh my!"); }
             if (World.Current.RoadTiles == null || World.Current.RoadTiles.Count <= 0) { throw new Exception("No where to go! Oh my!"); }
@@ -40,7 +40,7 @@ namespace AemonsNookMono.Entities
 
             //Task walktask = new WalkTask(this, DEFAULT_WALK_SPEED, target);
             Task walktask = new WalkTask(this, Ran.Next(DEFAULT_WALK_SPEED - 15, DEFAULT_WALK_SPEED + 15), target);
-            this.Tasks.Enqueue(walktask);
+            this.Tasks.Push(walktask);
         }
         #endregion
 
@@ -55,7 +55,7 @@ namespace AemonsNookMono.Entities
             {
                 if (Tasks.Count > 0)
                 {
-                    CurrentTask = Tasks.Dequeue();
+                    CurrentTask = Tasks.Pop();
                 }
                 else
                 {
@@ -63,7 +63,7 @@ namespace AemonsNookMono.Entities
                     {
                         Tile target = World.Current.RoadTiles[Ran.Next(0, World.Current.RoadTiles.Count - 1)];
                         Task task = new WalkTask(this, DEFAULT_WALK_SPEED, target);
-                        this.Tasks.Enqueue(task);
+                        this.Tasks.Push(task);
                     }
                     else
                     {

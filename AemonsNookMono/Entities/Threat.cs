@@ -13,25 +13,26 @@ namespace AemonsNookMono.Entities
         #region Public Properties
         public Tile TargetTile { get; set; }
         public int InterruptInterval { get; set; }
-        public int InterruptIntervalRandom { get; set; }
-        public int InterruptTimer { get; set; }
         public int AttackReach { get; set; }
         public int AttackDelay { get; set; }
         #endregion
 
         #region Internal
         protected int attacktimer { get; set; }
+        protected int interrupttimer { get; set; }
+        protected int interruptintervalrandom { get; set; }
         #endregion
 
         #region Constructor
         public Threat()
         {
             this.TileOn = null;
-            this.Tasks = new Queue<Task>();
+            this.Tasks = new Stack<Task>();
+            this.TotalTaskCapacity = 8; // make this configurable later (how much can they remember? Interrupts can cause things to stack up.)
 
-            this.InterruptInterval = 120;
-            this.InterruptIntervalRandom = (int)((float)this.InterruptInterval * 0.4f);
-            this.InterruptTimer = this.InterruptInterval;
+            this.InterruptInterval = 80; // make this configurable later
+            this.interruptintervalrandom = (int)((float)this.InterruptInterval * 0.25f);
+            this.interrupttimer = this.InterruptInterval;
 
             this.AttackReach = 20; // make this configurable later
             this.AttackDelay = 100; // make this configurable later
@@ -51,43 +52,50 @@ namespace AemonsNookMono.Entities
 
             this.TargetTile = World.Current.hero.TileOn;
 
-            Task walkTowardsHero = new WalkTask(this, 30, TargetTile, true);
-            this.Tasks.Enqueue(walkTowardsHero);
+            Task walkTowardsHero = new WalkTask(this, 30, TargetTile, true); // replace this with Seek and Destroy
+            this.Tasks.Push(walkTowardsHero);
         }
         #endregion
 
 
         #region Interface
+        public void AddTask(Task task)
+        {
+
+        }
         public void Update()
         {
+            this.interrupttimer--;
             if (this.CurrentTask == null)
             {
                 if (Tasks.Count > 0)
                 {
-                    CurrentTask = Tasks.Dequeue();
+                    CurrentTask = Tasks.Pop();
                 }
                 // No more tasks:
                 else
                 {
-                    //this.ReadyToExit = true;
-                    this.TargetTile = World.Current.hero.TileOn;
-                    Task walkTowardsHero = new WalkTask(this, 30, TargetTile, true);
-                    this.Tasks.Enqueue(walkTowardsHero);
+                    if (this.interrupttimer <= 0)
+                    {
+                        //this.ReadyToExit = true;
+                        this.TargetTile = World.Current.hero.TileOn;
+                        Task walkTowardsHero = new WalkTask(this, 30, TargetTile, true);
+                        this.Tasks.Push(walkTowardsHero);
+                    }
                 }
             }
 
             if (this.CurrentTask != null)
             {
-                this.InterruptTimer--;
-                if (this.InterruptTimer <= 0)
+                if (this.interrupttimer <= 0)
                 {
-                    this.InterruptTimer = this.InterruptInterval + this.Ran.Next(-InterruptIntervalRandom, InterruptIntervalRandom);
+                    ResetInterruptTimer();
                     if (this.TargetTile != World.Current.hero.TileOn)
                     {
                         this.CurrentTask = null;
                         this.TargetTile = World.Current.hero.TileOn;
                         Task walkTowardsHero = new WalkTask(this, 30, TargetTile, true);
-                        this.Tasks.Enqueue(walkTowardsHero);
+                        this.Tasks.Push(walkTowardsHero);
                     }
                 }
 
@@ -99,6 +107,12 @@ namespace AemonsNookMono.Entities
             }
 
             this.AttemptAttack();
+
+            if (this.TargetTile != null)
+            {
+                Debugger.Current.Debugger1 = $"{this.TargetTile.Column}, {this.TargetTile.Row}";
+            }
+            Debugger.Current.Debugger2 = $"{this.interrupttimer}";
         }
         public void Draw()
         {
@@ -111,16 +125,24 @@ namespace AemonsNookMono.Entities
         public void AttemptAttack()
         {
             if (this.TileOn != null && this.TargetTile != null &&
+                this.attacktimer <= 0 &&
+                this.TargetTile == World.Current.hero.TileOn &&
                 Global.ApproxDist(this.TileOn.RelativeX, this.TileOn.RelativeY, this.TargetTile.RelativeX, this.TargetTile.RelativeY) <= this.AttackReach)
             {
-                if (this.attacktimer <= 0)
-                {
-                    Debugger.Current.AddTempString("Wham!");
-                    this.attacktimer = this.AttackDelay;
-                }
+                Debugger.Current.AddTempString("Wham!");
+                ResetInterruptTimer(40);
+                ResetAttackTimer();
             }
             if (this.attacktimer > 0) { this.attacktimer--; }
+        }
 
+        public void ResetInterruptTimer(int additionalFramesDelay = 0)
+        {
+            this.interrupttimer = this.InterruptInterval + this.Ran.Next(-interruptintervalrandom, interruptintervalrandom) + additionalFramesDelay;
+        }
+        public void ResetAttackTimer(int additionalFramesDelay = 0)
+        {
+            this.attacktimer = this.AttackDelay + additionalFramesDelay;
         }
         #endregion
     }

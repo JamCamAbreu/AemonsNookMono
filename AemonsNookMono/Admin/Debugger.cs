@@ -42,6 +42,9 @@ namespace AemonsNookMono.Admin
         public bool ShowCircleCollisions { get; set; }
 
         public int NumCollisionsDetected { get; set; } = 0;
+
+        public string Debugger1 { get; set; }
+        public string Debugger2 { get; set; }
         #endregion
 
         #region Interface
@@ -117,7 +120,14 @@ namespace AemonsNookMono.Admin
             debugMessages.Add($"Peep Count: {World.Current.Peeps.Count}");
             #endregion
 
+            debugMessages.Add($"Debugger 1: {this.Debugger1}");
+            debugMessages.Add($"Debugger 2: {this.Debugger2}");
+
+
+
             debugMessages.Add($"--------------------------------");
+
+
 
             int maxLength = 0;
             foreach (string message in debugMessages)

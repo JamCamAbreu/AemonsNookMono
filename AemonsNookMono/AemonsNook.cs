@@ -106,6 +106,12 @@ namespace AemonsNookMono
             Graphics.Current.SpritesByName.Add("sparkle-3", Content.Load<Texture2D>("World/Effects/Sparkle/sparkle3"));
             Graphics.Current.SpritesByName.Add("sparkle-4", Content.Load<Texture2D>("World/Effects/Sparkle/sparkle4"));
             Graphics.Current.SpritesByName.Add("sparkle-5", Content.Load<Texture2D>("World/Effects/Sparkle/sparkle5"));
+
+            Graphics.Current.SpritesByName.Add("sparkle-1", Content.Load<Texture2D>("World/Effects/AttackAnimations/SwordSwing1"));
+            Graphics.Current.SpritesByName.Add("sparkle-1", Content.Load<Texture2D>("World/Effects/AttackAnimations/SwordSwing2"));
+            Graphics.Current.SpritesByName.Add("sparkle-1", Content.Load<Texture2D>("World/Effects/AttackAnimations/SwordSwing3"));
+            Graphics.Current.SpritesByName.Add("sparkle-1", Content.Load<Texture2D>("World/Effects/AttackAnimations/SwordSwing4"));
+            Graphics.Current.SpritesByName.Add("sparkle-1", Content.Load<Texture2D>("World/Effects/AttackAnimations/SwordSwing5"));
             #endregion
 
             #region Decoration

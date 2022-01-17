@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace AemonsNookMono.GameWorld.Effects
@@ -44,9 +45,11 @@ namespace AemonsNookMono.GameWorld.Effects
             this.SingleEffects = new List<TempEffect>();
 
             int maxWaterEffects = World.Current.WaterTiles.Count * 4;
-<<<<<<< Updated upstream
-            this.waterSparkles = new EffectsComponent(maxWaterEffects, 16);
-            this.AddEffectsComponent(this.waterSparkles);
+            if (maxWaterEffects > 0)
+            {
+                var waterSparkles = new WaterSparkle(maxWaterEffects, 16);
+                this.Components.Add(waterSparkles);
+            }
         }
         public void AddEffectsComponent(EffectsComponent component)
         {
@@ -55,17 +58,11 @@ namespace AemonsNookMono.GameWorld.Effects
         public void AddSingleEffect(TempEffect effect)
         {
             this.SingleEffects.Add(effect);
-=======
-            if (maxWaterEffects > 0)
-            {
-                var waterSparkles = new WaterSparkle(maxWaterEffects, 16);
-                this.Components.Add(waterSparkles);
-            }
+
 
             // Rain effect would be fun!
             // Wind
             // Birds
->>>>>>> Stashed changes
         }
         public void Update()
         {
@@ -73,8 +70,6 @@ namespace AemonsNookMono.GameWorld.Effects
             {
                 component.Update();
             }
-<<<<<<< Updated upstream
-            this.waterSparkles.Update();
 
             foreach (TempEffect effect in this.SingleEffects)
             {
@@ -86,8 +81,6 @@ namespace AemonsNookMono.GameWorld.Effects
             {
                 this.SingleEffects.Remove(effect);
             }
-=======
->>>>>>> Stashed changes
         }
         public void Draw()
         {

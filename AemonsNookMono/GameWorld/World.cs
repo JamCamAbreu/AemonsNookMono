@@ -173,6 +173,19 @@ namespace AemonsNookMono.GameWorld
             int y = this.ran.Next(0, this.Height - 1);
             return TileAt(x, y);
         }
+
+        public Tuple<int, int> RetrieveRandomTileCoords(List<Tile> tiles)
+        {
+            if (tiles != null && tiles.Count > 0)
+            {
+                int r = this.ran.Next(0, tiles.Count - 1);
+                int pad = World.TILE_DIMENSION_PIXELS / 4;
+                int tilex = this.ran.Next(pad, World.TILE_DIMENSION_PIXELS - pad);
+                int tiley = this.ran.Next(pad, World.TILE_DIMENSION_PIXELS - pad);
+                return new Tuple<int, int>(tiles[r].RelativeX + tilex, tiles[r].RelativeY + tiley);
+            }
+            return null;
+        }
         public void Draw()
         {
             if (this.hero != null)

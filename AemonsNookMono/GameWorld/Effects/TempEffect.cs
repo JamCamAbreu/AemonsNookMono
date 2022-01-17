@@ -9,8 +9,13 @@ namespace AemonsNookMono.GameWorld.Effects
     public class TempEffect
     {
         #region Implement Properties
+<<<<<<< Updated upstream
         protected virtual string spriteBaseName { get; set; }
         protected virtual int spriteNumFrames { get; set; }
+=======
+        protected string spriteBaseName { get; }
+        protected int spriteNumFrames { get; }
+>>>>>>> Stashed changes
         #endregion
 
         #region Public Properties
@@ -18,23 +23,31 @@ namespace AemonsNookMono.GameWorld.Effects
         #endregion
 
         #region Constructors
+<<<<<<< Updated upstream
         public TempEffect(int x, int y, int life, int speed, string spritename = "cursor-redx", int spriteFrames = 1)
+=======
+        public TempEffect(int x, int y, int life, int spriteframes, string spritename = "cursor-redx", int spritenumframes = 1)
+>>>>>>> Stashed changes
         {
             this.xpos = x;
             this.ypos = y;
             this.life = life;
-            this.speed = speed;
+            this.spriteAlarmFrames = spriteframes;
             this.curFrame = 1;
-            this.spriteAlarm = speed;
+            this.spriteAlarm = spriteframes;
             this.Dead = false;
 
             this.spriteBaseName = spritename;
+<<<<<<< Updated upstream
             this.spriteNumFrames = spriteFrames;
+=======
+            this.spriteNumFrames = spritenumframes;
+>>>>>>> Stashed changes
         }
         #endregion
 
         #region Interface
-        public virtual void Update()
+        public void Update()
         {
             #region Kill
             if (life > 0)
@@ -50,12 +63,12 @@ namespace AemonsNookMono.GameWorld.Effects
             if (this.spriteAlarm <= 0)
             {
                 this.IncrementFrame();
-                this.spriteAlarm = this.speed;
+                this.spriteAlarm = this.spriteAlarmFrames;
             }
             #endregion
         }
 
-        public virtual void Draw()
+        public void Draw()
         {
             if (spriteNumFrames > 1)
             {
@@ -72,8 +85,7 @@ namespace AemonsNookMono.GameWorld.Effects
         private int life { get; set; }
         private int xpos { get; set; }
         private int ypos { get; set; }
-        private int speed { get; set; }
-        private bool kill { get; set; }
+        private int spriteAlarmFrames { get; set; }
         private int curFrame { get; set; }
         private int spriteAlarm { get; set; }
         #endregion

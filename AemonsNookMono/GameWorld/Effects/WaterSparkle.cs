@@ -4,13 +4,17 @@ using System.Text;
 
 namespace AemonsNookMono.GameWorld.Effects
 {
-    public class WaterSparkle : TempEffect
+    public class WaterSparkle : EffectsComponent
     {
-        public WaterSparkle(int x, int y, int life, int speed) : base(x, y, life, speed)
+        public WaterSparkle(int maxEffects, int resetBase) : base(maxEffects, resetBase)
         {
         }
 
-        protected override string spriteBaseName { get { return "sparkle"; } }
-        protected override int spriteNumFrames { get { return 5; } }
+        public override void GenerateEffect()
+        {
+            Tuple<int, int> coord = World.Current.RetrieveRandomTileCoords(World.Current.WaterTiles);
+            this.AddEffect(new TempEffect(coord.Item1, coord.Item2, 160, 30, "sparkle", 5));
+            base.GenerateEffect();
+        }
     }
 }

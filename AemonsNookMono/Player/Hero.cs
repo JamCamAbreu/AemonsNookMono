@@ -9,7 +9,7 @@ using System.Text;
 
 namespace AemonsNookMono.Player
 {
-    public class Hero : Entity
+    public class Hero : Humanoid
     {
         public const int PIXEL_WIDTH = 16;
         public const int PIXEL_HEIGHT = 16;
@@ -33,8 +33,8 @@ namespace AemonsNookMono.Player
 
             this.Ran = new Random();
             this.TileOn = World.Current.SpawnTiles[Ran.Next(0, World.Current.SpawnTiles.Count - 1)];
-            this.ScreenX = World.Current.StartDrawX + this.TileOn.RelativeX;
-            this.ScreenY = World.Current.StartDrawY + this.TileOn.RelativeY;
+            this.CenterX = World.Current.StartDrawX + this.TileOn.RelativeX;
+            this.CenterY = World.Current.StartDrawY + this.TileOn.RelativeY;
             this.Speed = 1;
             this.InteractReach = 250;
             this.PickupReach = 30;
@@ -75,8 +75,6 @@ namespace AemonsNookMono.Player
             this.Spawned = true;
         }
         public bool Spawned { get; set; }
-        public int ScreenX { get; set; }
-        public int ScreenY { get; set; }
         public int InteractReach { get; set; }
         public int PickupReach { get; set; }
         public int Speed { get; set; }
@@ -97,9 +95,12 @@ namespace AemonsNookMono.Player
         public void Update()
         {
             if (!Spawned) { return; }
-
-            this.SetMovementVector();
-            this.Move();
+            bool interrupt = this.UpdatePosition();
+            if (!interrupt)
+            {
+                this.SetMovementVector();
+                this.Move();
+            }
         }
 
         public void Draw()
@@ -123,7 +124,7 @@ namespace AemonsNookMono.Player
                     break;
             }
 
-            Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName["char"], new Vector2(this.ScreenX, this.ScreenY), spriteBox, Color.White);
+            Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName["char"], new Vector2(this.CenterX, this.CenterY), spriteBox, Color.White);
         }
 
         protected void SetMovementVector()
@@ -183,12 +184,12 @@ namespace AemonsNookMono.Player
         }
         protected void Move()
         {
-            this.ScreenX += HorizontalSpeed;
-            this.ScreenY += VerticalSpeed;
+            this.CenterX += HorizontalSpeed;
+            this.CenterY += VerticalSpeed;
 
-            this.TileOn = World.Current.TileAtPixel(this.ScreenX + Hero.PIXEL_WIDTH/2, this.ScreenY + Hero.PIXEL_HEIGHT/2);
+            this.TileOn = World.Current.TileAtPixel((int)this.CenterX + Hero.PIXEL_WIDTH/2, (int)this.CenterY + Hero.PIXEL_HEIGHT/2);
 
-            Camera.Current.TargetPosition = new Vector2(this.ScreenX, this.ScreenY);
+            Camera.Current.TargetPosition = new Vector2(this.CenterX, this.CenterY);
         }
     }
 }

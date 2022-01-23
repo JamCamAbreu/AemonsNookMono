@@ -1,5 +1,4 @@
-﻿using AemonsNookMono.Entities.Tasks;
-using AemonsNookMono.GameWorld;
+﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,19 +7,45 @@ namespace AemonsNookMono.Entities
 {
     public class Entity
     {
-        #region Public Properties
+        public Entity()
+        {
+            this.CenterX = 0;
+            this.CenterY = 0;
+            this.ImpactX = 0;
+            this.ImpactY = 0;
+        }
         public float CenterX { get; set; }
         public float CenterY { get; set; }
-        public Tile TileOn { get; set; }
-        public Tile EntranceTile { get; set; }
-        public Tile ExitTile { get; set; }
-        public bool ReadyToExit { get; set; }
-        public int Health { get; set; } 
-        public int TotalTaskCapacity { get; set; } // how much can they remember?
+        public int Weight { get; set; }
+        public void Impact(int xVector, int yVector)
+        {
+            this.ImpactX += xVector;
+            this.ImpactY += yVector;
+        }
+        public bool UpdatePosition()
+        {
+            if (this.ImpactX > 0 || this.ImpactY > 0)
+            {
+                this.CenterX += this.ImpactX;
+                this.CenterY += this.ImpactY;
 
-        protected Stack<Task> Tasks { get; set; }
-        protected Task CurrentTask { get; set; }
-        protected Random Ran { get; set; }
-        #endregion
+                this.ImpactX = (int)(this.ImpactX * 0.8f); // use weight eventually
+                if (this.ImpactX > 0 && this.ImpactX == this.lastImpactX) { this.ImpactX = 0; }
+                this.lastImpactX = this.ImpactX;
+                
+                this.ImpactY = (int)(this.ImpactY * 0.8f);
+                if (this.ImpactY > 0 && this.ImpactY == this.lastImpactY) { this.ImpactY = 0; }
+                this.lastImpactY = this.ImpactY;
+
+                return true;
+            }
+
+            return false;
+        }
+
+        protected virtual int ImpactX { get; set; }
+        protected virtual int ImpactY { get; set; }
+        protected virtual int lastImpactX { get; set; }
+        protected virtual int lastImpactY { get; set; }
     }
 }

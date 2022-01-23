@@ -58,7 +58,7 @@ namespace AemonsNookMono.Resources
             if (this.State == ResourceState.Harvestable && World.Current.hero != null)
             {
                 int dist = Global.ApproxDist(
-                    new Vector2(World.Current.hero.ScreenX, World.Current.hero.ScreenY),
+                    new Vector2(World.Current.hero.CenterX, World.Current.hero.CenterY),
                     this.Position
                 );
                 if (dist < World.Current.hero.PickupReach)
@@ -100,7 +100,7 @@ namespace AemonsNookMono.Resources
         {
             int wigglex = World.Current.ran.Next(-PICKUP_WIGGLE_DISTANCE, PICKUP_WIGGLE_DISTANCE);
             int wiggley = World.Current.ran.Next(-PICKUP_WIGGLE_DISTANCE, PICKUP_WIGGLE_DISTANCE);
-            this.TargetPosition = new Vector2(World.Current.hero.ScreenX - MagnetOffsetX + wigglex, World.Current.hero.ScreenY - MagnetOffsetY + wiggley);
+            this.TargetPosition = new Vector2(World.Current.hero.CenterX - MagnetOffsetX + wigglex, World.Current.hero.CenterY - MagnetOffsetY + wiggley);
         }
     }
 }

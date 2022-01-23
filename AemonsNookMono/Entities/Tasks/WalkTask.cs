@@ -10,7 +10,7 @@ namespace AemonsNookMono.Entities.Tasks
     public class WalkTask : Task
     {
         #region Constructor
-        public WalkTask(Entity entity, int updateinterval, Tile target, bool offroad = false) : base(entity, updateinterval)
+        public WalkTask(Humanoid entity, int updateinterval, Tile target, bool offroad = false) : base(entity, updateinterval)
         {
             this.WalkPath = new Path(entity.TileOn, target, offroad);
         }

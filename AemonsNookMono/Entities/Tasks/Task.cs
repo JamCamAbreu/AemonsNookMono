@@ -10,7 +10,7 @@ namespace AemonsNookMono.Entities.Tasks
     public class Task
     {
         #region Constructor
-        public Task(Entity entity, int updateinterval)
+        public Task(Humanoid entity, int updateinterval)
         {
             Random ran = new Random();
             this.UpdateInterval = updateinterval;
@@ -21,23 +21,45 @@ namespace AemonsNookMono.Entities.Tasks
         #endregion
 
         #region Public Properties
-        public Entity Entity { get; set; }
+        public Humanoid Entity { get; set; }
         public int UpdateInterval { get; set; }
         public int UpdateTimer { get; set; }
         public bool Finished { get; set; }
+        public Task CurrentChildTask { get; set; }
+        public Stack<Task> ChildrenTasks { get; set; }
         #endregion
 
-
-
         #region Interface
+        public void AddChildTask(Task task)
+        {
+            this.ChildrenTasks.Push(task);
+        }
         public virtual void Draw()
         {
-
+            if (this.CurrentChildTask != null)
+            {
+                this.CurrentChildTask.Draw();
+            }
         }
         public virtual void Update()
         {
-            // Make sure each task defines itself, and when its finished.
-            throw new NotImplementedException();
+
+        }
+
+        public virtual void UpdateChildrenTasks()
+        {
+            if (this.CurrentChildTask == null && ChildrenTasks.Count > 0)
+            {
+                CurrentChildTask = ChildrenTasks.Pop();
+            }
+            if (this.CurrentChildTask != null)
+            {
+                this.CurrentChildTask.Update();
+                if (this.CurrentChildTask.Finished)
+                {
+                    this.CurrentChildTask = null;
+                }
+            }
         }
 
         #endregion

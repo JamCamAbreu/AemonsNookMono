@@ -8,9 +8,8 @@ using System.Text;
 
 namespace AemonsNookMono.Entities
 {
-    public class Peep : Entity
+    public class Peep : Humanoid
     {
-        const int DEFAULT_WALK_SPEED = 40;
 
         #region Constructor
         public Peep()
@@ -44,13 +43,16 @@ namespace AemonsNookMono.Entities
         }
         #endregion
 
-        #region Public Properties
-        public bool WanderEndlessly { get; set; }
-        #endregion
 
         #region Interface
         public void Update()
         {
+            bool interrupt = this.UpdatePosition();
+            if (interrupt)
+            {
+                return;
+            }
+
             if (this.CurrentTask == null)
             {
                 if (Tasks.Count > 0)

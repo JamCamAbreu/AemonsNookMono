@@ -9,19 +9,9 @@ using System.Text;
 
 namespace AemonsNookMono.Entities
 {
-    public class Threat : Entity
+    public class Threat : Humanoid
     {
         #region Public Properties
-        public Tile TargetTile { get; set; }
-        public int InterruptInterval { get; set; }
-        public int AttackReach { get; set; }
-        public int AttackDelay { get; set; }
-        #endregion
-
-        #region Internal
-        protected int attacktimer { get; set; }
-        protected int interrupttimer { get; set; }
-        protected int interruptintervalrandom { get; set; }
         #endregion
 
         #region Constructor
@@ -30,14 +20,6 @@ namespace AemonsNookMono.Entities
             this.TileOn = null;
             this.Tasks = new Stack<Task>();
             this.TotalTaskCapacity = 8; // make this configurable later (how much can they remember? Interrupts can cause things to stack up.)
-
-            this.InterruptInterval = 80; // make this configurable later
-            this.interruptintervalrandom = (int)((float)this.InterruptInterval * 0.25f);
-            this.interrupttimer = this.InterruptInterval;
-
-            this.AttackReach = 20; // make this configurable later
-            this.AttackDelay = 100; // make this configurable later
-            this.attacktimer = 0;
 
             if (World.Current.SpawnTiles == null || World.Current.SpawnTiles.Count <= 0) { throw new Exception("No where to spawn! Oh my!"); }
             if (World.Current.RoadTiles == null || World.Current.RoadTiles.Count <= 0) { throw new Exception("No where to go! Oh my!"); }
@@ -51,69 +33,49 @@ namespace AemonsNookMono.Entities
             this.ExitTile = World.Current.RetrieveRandomExit(this.EntranceTile);
             this.ReadyToExit = false;
 
-            this.TargetTile = World.Current.hero.TileOn;
-
-            Task walkTowardsHero = new WalkTask(this, 30, TargetTile, true); // replace this with Seek and Destroy
-            this.Tasks.Push(walkTowardsHero);
+            Task seekOutHero = new SeekAndDestroy(this, World.Current.hero, 30);
+            this.Tasks.Push(seekOutHero);
         }
         #endregion
 
 
         #region Interface
-        public void AddTask(Task task)
+        public override void Update()
         {
+            bool interrupt = this.UpdatePosition();
+            if (interrupt)
+            {
+                return;
+            }
 
-        }
-        public void Update()
-        {
-            this.interrupttimer--;
             if (this.CurrentTask == null)
             {
                 if (Tasks.Count > 0)
                 {
                     CurrentTask = Tasks.Pop();
                 }
-                // No more tasks:
                 else
                 {
-                    if (this.interrupttimer <= 0)
+                    if (this.WanderEndlessly)
                     {
-                        //this.ReadyToExit = true;
-                        this.TargetTile = World.Current.hero.TileOn;
-                        Task walkTowardsHero = new WalkTask(this, 30, TargetTile, true);
-                        this.Tasks.Push(walkTowardsHero);
+                        Tile target = World.Current.RoadTiles[Ran.Next(0, World.Current.RoadTiles.Count - 1)];
+                        Task task = new WalkTask(this, DEFAULT_WALK_SPEED, target);
+                        this.Tasks.Push(task);
+                    }
+                    else
+                    {
+                        this.ReadyToExit = true;
                     }
                 }
             }
 
             if (this.CurrentTask != null)
             {
-                if (this.interrupttimer <= 0)
-                {
-                    ResetInterruptTimer();
-                    if (this.TargetTile != World.Current.hero.TileOn)
-                    {
-                        this.CurrentTask = null;
-                        this.TargetTile = World.Current.hero.TileOn;
-                        Task walkTowardsHero = new WalkTask(this, 30, TargetTile, true);
-                        this.Tasks.Push(walkTowardsHero);
-                    }
-                }
-
-                else
-                {
-                    this.CurrentTask.Update();
-                    if (this.CurrentTask.Finished) { this.CurrentTask = null; }
-                }
+                this.CurrentTask.Update();
+                if (this.CurrentTask.Finished) { this.CurrentTask = null; }
             }
 
-            this.AttemptAttack();
-
-            if (this.TargetTile != null)
-            {
-                Debugger.Current.Debugger1 = $"{this.TargetTile.Column}, {this.TargetTile.Row}";
-            }
-            Debugger.Current.Debugger2 = $"{this.interrupttimer}";
+            base.Update();
         }
         public void Draw()
         {
@@ -122,29 +84,6 @@ namespace AemonsNookMono.Entities
             {
                 this.CurrentTask.Draw();
             }
-        }
-        public void AttemptAttack()
-        {
-            if (this.TileOn != null && this.TargetTile != null &&
-                this.attacktimer <= 0 &&
-                this.TargetTile == World.Current.hero.TileOn &&
-                Global.ApproxDist(this.TileOn.RelativeX, this.TileOn.RelativeY, this.TargetTile.RelativeX, this.TargetTile.RelativeY) <= this.AttackReach)
-            {
-                Debugger.Current.AddTempString("Wham!");
-                EffectsGenerator.Current.AddSingleEffect(new TempEffect(this.TileOn.RelativeX + 8, this.TileOn.RelativeY, 10, 2, "SwordSwing", 5));
-                ResetInterruptTimer(40);
-                ResetAttackTimer();
-            }
-            if (this.attacktimer > 0) { this.attacktimer--; }
-        }
-
-        public void ResetInterruptTimer(int additionalFramesDelay = 0)
-        {
-            this.interrupttimer = this.InterruptInterval + this.Ran.Next(-interruptintervalrandom, interruptintervalrandom) + additionalFramesDelay;
-        }
-        public void ResetAttackTimer(int additionalFramesDelay = 0)
-        {
-            this.attacktimer = this.AttackDelay + additionalFramesDelay;
         }
         #endregion
     }

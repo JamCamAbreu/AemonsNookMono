@@ -101,6 +101,10 @@ namespace AemonsNookMono.Player
                 this.SetMovementVector();
                 this.Move();
             }
+
+            Admin.Debugger.Current.Debugger1 = this.ImpactX.ToString();
+            Admin.Debugger.Current.Debugger2 = this.ImpactY.ToString();
+
         }
 
         public void Draw()

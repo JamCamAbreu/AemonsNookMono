@@ -13,6 +13,8 @@ namespace AemonsNookMono.Entities.Tasks
         {
             this.TargetEntity = targetEntity;
             this.ChildrenTasks = new Stack<Task>();
+            this.InterruptInterval = 80;
+            this.interruptintervalrandom = (int)(InterruptInterval * 0.25f);
             this.ResetInterruptTimer(40);
         }
         #endregion
@@ -46,7 +48,7 @@ namespace AemonsNookMono.Entities.Tasks
                     }
                     else
                     {
-                        if (this.TargetTile != World.Current.hero.TileOn)
+                        if (this.interrupttimer <= 0 && this.TargetTile != World.Current.hero.TileOn)
                         {
                             this.TargetTile = World.Current.hero.TileOn;
                             Task walkTowardsHero = new WalkTask(this.Entity, 30, this.TargetTile, true);
@@ -62,11 +64,13 @@ namespace AemonsNookMono.Entities.Tasks
                 if (this.interrupttimer <= 0)
                 {
                     this.ResetInterruptTimer();
+                    Admin.Debugger.Current.AddTempString("Interrupt");
                     if (this.TargetTile != World.Current.hero.TileOn)
                     {
                         this.CurrentChildTask = null;
                         this.TargetTile = World.Current.hero.TileOn;
                         Task walkTowardsHero = new WalkTask(this.Entity, 30, TargetTile, true);
+                        
                         this.ChildrenTasks.Push(walkTowardsHero);
                     }
                 }
@@ -77,6 +81,7 @@ namespace AemonsNookMono.Entities.Tasks
                     if (this.CurrentChildTask.Finished) { this.CurrentChildTask = null; }
                 }
             }
+
             this.UpdateChildrenTasks();
         }
         #endregion

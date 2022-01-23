@@ -24,7 +24,7 @@ namespace AemonsNookMono.Entities
         }
         public bool UpdatePosition()
         {
-            if (this.ImpactX > 0 || this.ImpactY > 0)
+            if (Math.Abs(this.ImpactX) > 0 || Math.Abs(this.ImpactY) > 0)
             {
                 this.CenterX += this.ImpactX;
                 this.CenterY += this.ImpactY;

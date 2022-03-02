@@ -55,3 +55,13 @@ monodroid*.msi
 /CompiledContent/Windows/IgnoreMe.dll
 *.cachefile
 *.dll
+*.mgcontent
+*.mgcontent
+AemonsNookMono/bin/Debug/netcoreapp3.1/AemonsNookMono.runtimeconfig.dev.json
+*.pdb
+AemonsNookMono/bin/Debug/netcoreapp3.1/AemonsNookMono.exe
+AemonsNookMono/bin/Debug/netcoreapp3.1/AemonsNookMono.dll
+.vs/AemonsNookMono/DesignTimeBuild/.dtbcache.v2
+.vs/AemonsNookMono/project-colors.json
+.vs/AemonsNookMono/v17/.futdcache.v1
+.vs/AemonsNookMono/v17/fileList.bin

@@ -1,4 +1,5 @@
 ﻿using AemonsNookMono.Admin;
+using AemonsNookMono.Entities;
 using AemonsNookMono.GameWorld;
 using Microsoft.Xna.Framework;
 using System;
@@ -35,6 +36,7 @@ namespace AemonsNookMono.Resources
         public int Life { get; set; }
         public abstract int MagnetOffsetX { get; }
         public abstract int MagnetOffsetY { get; }
+        public List<Entity> CurrentHarvesters { get; set; }
         public Resource(int x, int y, Tile tile)
         {
             Vector2 vector2 = new Vector2(x, y);
@@ -44,6 +46,7 @@ namespace AemonsNookMono.Resources
 
             this.TileOn = tile;
             this.Collisions = new List<Collision>();
+            this.CurrentHarvesters = new List<Entity>();
         }
         public virtual void Destroy()
         {
@@ -55,7 +58,7 @@ namespace AemonsNookMono.Resources
         }
         public virtual void Update()
         {
-            if (this.State == ResourceState.Harvestable && World.Current.hero != null)
+            if (this.State == ResourceState.Harvestable && World.Current.hero != null) // TODO: Move this logic to hero?! 
             {
                 int dist = Global.ApproxDist(
                     new Vector2(World.Current.hero.CenterX, World.Current.hero.CenterY),
@@ -90,11 +93,15 @@ namespace AemonsNookMono.Resources
         }
         public virtual void HandleLeftClick()
         {
-            //this.Life--;
-            //if (this.Life <= 0)
-            //{
-            //    this.TileOn.ResourcesToRemove.Add(this);
-            //}
+        }
+        public virtual void AttackResource()
+        {
+            this.Life--;
+            if (this.Life <= 0)
+            {
+                this.State = ResourceState.Harvestable;
+                this.Collisions.Clear();
+            }
         }
         public virtual void MagnetizeToHero()
         {

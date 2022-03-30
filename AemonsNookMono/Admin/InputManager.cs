@@ -1,4 +1,5 @@
 ﻿using AemonsNookMono.Entities;
+using AemonsNookMono.Entities.Tasks;
 using AemonsNookMono.GameWorld;
 using AemonsNookMono.Menus;
 using AemonsNookMono.Menus.General;
@@ -223,6 +224,43 @@ namespace AemonsNookMono.Admin
                 this.HandleZero();
             }
 
+            #region TEMP
+            if (StateManager.Current.CurrentState == StateManager.State.World && Keyboard.GetState().IsKeyDown(Keys.R))
+            {
+                throw new Exception("Yikes. I can't clear out those tiles because there are so many references to them.");
+                // I'll need to create a new world method for clearing out ALL objects first!
+                    // Buildings, peepes, threats, resources, ALL of it!
+                    // THEN, and only then can I clear out the tiles.
+
+                World.Current.Init(StateManager.Current.CurrentLevel);
+            }
+            #region DEBUG PURPOSES
+            if (Admin.StateManager.Current.CurrentState == StateManager.State.World)
+            {
+                if (BuildingManager.Current.Selection == null && Keyboard.GetState().IsKeyDown(Keys.D1))
+                {
+                    BuildingManager.Current.Selection = new BuildingSelection(BuildingInfo.Type.STOCKPILE);
+                    StateManager.Current.CurrentState = StateManager.State.BuildSelection;
+                }
+                if (BuildingManager.Current.Selection == null && Keyboard.GetState().IsKeyDown(Keys.D2))
+                {
+                    BuildingManager.Current.Selection = new BuildingSelection(BuildingInfo.Type.TOWER);
+                    StateManager.Current.CurrentState = StateManager.State.BuildSelection;
+                }
+                if (BuildingManager.Current.Selection == null && Keyboard.GetState().IsKeyDown(Keys.D3))
+                {
+                    BuildingManager.Current.Selection = new BuildingSelection(BuildingInfo.Type.BOOTH_GEMS);
+                    StateManager.Current.CurrentState = StateManager.State.BuildSelection;
+                }
+                if (BuildingManager.Current.Selection == null && Keyboard.GetState().IsKeyDown(Keys.D4))
+                {
+                    BuildingManager.Current.Selection = new BuildingSelection(BuildingInfo.Type.WOODCAMP);
+                    StateManager.Current.CurrentState = StateManager.State.BuildSelection;
+                }
+            }
+            #endregion
+            #endregion
+
             #region Keyboard and Mouse Button Press Speed
             List<Keys> update = new List<Keys>();
             List<Keys> released = new List<Keys>();
@@ -291,10 +329,10 @@ namespace AemonsNookMono.Admin
                     break;
 
                 case StateManager.State.BuildSelection:
-                    if (Buildings.Current.Selection != null)
+                    if (BuildingManager.Current.Selection != null)
                     {
-                        Buildings.Current.Selection.Build();
-                        Buildings.Current.Selection = null;
+                        BuildingManager.Current.Selection.Build();
+                        BuildingManager.Current.Selection = null;
                         StateManager.Current.CurrentState = StateManager.State.World;
                     }
                     break;
@@ -326,7 +364,7 @@ namespace AemonsNookMono.Admin
                     if (World.Current.InsideBounds(worldX, worldY)) 
                     {
                         // Buildings
-                        foreach (Building building in Buildings.Current.AllBuildings)
+                        foreach (Building building in BuildingManager.Current.AllBuildings)
                         {
                             if (building.IsCollision(worldX, worldY))
                             {
@@ -451,10 +489,13 @@ namespace AemonsNookMono.Admin
             for (int i = 0; i < 1; i++)
             {
                 Peep p = new Peep();
+                p.Tasks.Clear();
+                p.Tasks.Push(new WoodCampWork(p, 3, 30));
                 World.Current.Peeps.Add(p);
 
-                Threat t = new Threat();
-                World.Current.Threats.Add(t);
+
+                //Threat t = new Threat();
+                //World.Current.Threats.Add(t);
             }
             //if (ProfileManager.Current.Loaded != null)
             //{

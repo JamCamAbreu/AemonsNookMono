@@ -381,6 +381,8 @@ namespace AemonsNookMono.GameWorld
             this.SpawnStones(0, 3);
 
             this.SetTileShapes();
+
+            StateManager.Current.CurrentLevel = level;
         }
         private void LoadChar(int row, int col, char c)
         {

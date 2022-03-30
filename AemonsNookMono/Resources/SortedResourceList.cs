@@ -10,10 +10,14 @@ namespace AemonsNookMono.Resources
     {
         public SortedList<int, Resource> Sorted { get; set; }
         public List<Resource> ResourcesToRemove { get; set; }
+        public List<Tree> AllTrees { get; set; }
+        public List<Stone> AllStones { get; set; }
         public Random ran { get; set; }
         public SortedResourceList()
         {
             Sorted = new SortedList<int, Resource>();
+            this.AllStones = new List<Stone>();
+            this.AllTrees = new List<Tree>();
             ResourcesToRemove = new List<Resource>();
             ran = new Random();
         }
@@ -29,6 +33,16 @@ namespace AemonsNookMono.Resources
                 int yfactor = (int)r.Position.Y * 10000;
                 int collision = 0;
                 bool added = false;
+                switch (r.Type)
+                {
+                    case Resource.ResourceType.Tree:
+                        this.AllTrees.Add(r as Tree);
+                        break;
+
+                    case Resource.ResourceType.Stone:
+                        this.AllStones.Add(r as Stone);
+                        break;
+                }
                 while (!added)
                 {
                     try
@@ -58,6 +72,16 @@ namespace AemonsNookMono.Resources
                 if (key != -1)
                 {
                     this.Sorted.RemoveAt(key);
+                }
+                switch (resource.Type)
+                {
+                    case Resource.ResourceType.Tree:
+                        this.AllTrees.Remove(resource as Tree);
+                        break;
+
+                    case Resource.ResourceType.Stone:
+                        this.AllStones.Remove(resource as Stone);
+                        break;
                 }
             }
             this.ResourcesToRemove.Clear();

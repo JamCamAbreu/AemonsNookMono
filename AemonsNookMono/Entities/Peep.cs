@@ -34,7 +34,7 @@ namespace AemonsNookMono.Entities
             //Tile target = World.Current.RoadTiles[Ran.Next(0, World.Current.RoadTiles.Count - 1)];
 
             // Go straight to the other exit tile, if it exists:
-            this.WanderEndlessly = false;
+            this.WanderEndlessly = true;
             Tile target = this.ExitTile;
 
             //Task walktask = new WalkTask(this, DEFAULT_WALK_SPEED, target);
@@ -45,8 +45,9 @@ namespace AemonsNookMono.Entities
 
 
         #region Interface
-        public void Update()
+        public override void Update()
         {
+            base.Update();
             bool interrupt = this.UpdatePosition();
             if (interrupt)
             {
@@ -64,7 +65,7 @@ namespace AemonsNookMono.Entities
                     if (this.WanderEndlessly)
                     {
                         Tile target = World.Current.RoadTiles[Ran.Next(0, World.Current.RoadTiles.Count - 1)];
-                        Task task = new WalkTask(this, DEFAULT_WALK_SPEED, target);
+                        Task task = new WalkTask(this, DEFAULT_WALK_SPEED, target, !this.TileOn.IsRoad);
                         this.Tasks.Push(task);
                     }
                     else

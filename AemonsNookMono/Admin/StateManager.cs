@@ -58,7 +58,7 @@ namespace AemonsNookMono.Admin
         #endregion
 
         #region Temp
-        public Level level { get; set; }
+        public Level CurrentLevel { get; set; }
         #endregion
 
         #region Interface
@@ -68,27 +68,20 @@ namespace AemonsNookMono.Admin
             Cursor.Current.Init();
             ProfileManager.Current.Init();
 
-            this.level = new SmallMeadow();
+            this.CurrentLevel = new SmallMeadow();
             //this.level = new Level2();
 
-            Buildings.Current.Init();
-            World.Current.Init(this.level);
+            BuildingManager.Current.Init();
+            World.Current.Init(this.CurrentLevel);
 
             
         }
         public void Update(GameTime gameTime)
         {
             if (this.CurrentState != State.Pause)
-            {
-                #region TEMP
-                if (this.CurrentState == State.World && Keyboard.GetState().IsKeyDown(Keys.R))
-                {
-                    World.Current.Init(this.level);
-                }               
-                #endregion
-                
+            {               
                 World.Current.Update(gameTime);
-                Buildings.Current.Update();
+                BuildingManager.Current.Update();
                 EffectsGenerator.Current.Update();
                 Cursor.Current.Update(gameTime);
             }
@@ -101,7 +94,7 @@ namespace AemonsNookMono.Admin
         {
             // Use camera transform:
             World.Current.Draw();
-            Buildings.Current.Draw();
+            BuildingManager.Current.Draw();
             EffectsGenerator.Current.Draw();
 
             // Does not use camera

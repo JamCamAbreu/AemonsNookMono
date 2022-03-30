@@ -2,6 +2,7 @@
 using AemonsNookMono.Entities.Tasks;
 using AemonsNookMono.GameWorld;
 using AemonsNookMono.GameWorld.Effects;
+using AemonsNookMono.Resources;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -34,7 +35,7 @@ namespace AemonsNookMono.Entities
         public bool WanderEndlessly { get; set; }
         public Random Ran { get; set; }
 
-        protected Stack<Task> Tasks { get; set; }
+        public Stack<Task> Tasks { get; set; }
         protected Task CurrentTask { get; set; }
         #endregion
 
@@ -51,8 +52,15 @@ namespace AemonsNookMono.Entities
             this.Impact(-xImpact/2, -yImpact/2);
 
             ResetAttackTimer();
+        }
+        public void Attack(Resource target)
+        {
+            Debugger.Current.AddTempString("Chop!");
+            EffectsGenerator.Current.AddSingleEffect(new TempEffect(this.TileOn.RelativeX + 8, this.TileOn.RelativeY, 10, 2, "SwordSwing", 5));
 
-            if (this.attacktimer > 0) { this.attacktimer--; }
+            target.AttackResource();
+
+            ResetAttackTimer();
         }
         public virtual void Update()
         {

@@ -10,6 +10,7 @@ namespace AemonsNookMono.Structures
         public enum Type
         {
             STOCKPILE,
+            WOODCAMP,
             WOODSHOP,
             TAVERN,
             ARCHERY,
@@ -41,6 +42,9 @@ namespace AemonsNookMono.Structures
             switch (t)
             {
                 case Type.STOCKPILE:
+                    break;
+
+                case Type.WOODCAMP:
                     break;
 
                 case Type.ARCHERY:
@@ -173,6 +177,7 @@ namespace AemonsNookMono.Structures
             {
                 case Type.STOCKPILE:
                 case Type.WOODSHOP:
+                case Type.WOODCAMP:
                 case Type.TAVERN:
                 case Type.ARCHERY:
                 case Type.BLACKSMITH:
@@ -202,6 +207,7 @@ namespace AemonsNookMono.Structures
             {
                 case Type.STOCKPILE:
                 case Type.WOODSHOP:
+                case Type.WOODCAMP:
                 case Type.TAVERN:
                 case Type.ARCHERY:
                 case Type.BLACKSMITH:
@@ -233,6 +239,7 @@ namespace AemonsNookMono.Structures
             {
                 case Type.STOCKPILE: return "Stockpile"; 
                 case Type.WOODSHOP: return "Woodshop";
+                case Type.WOODCAMP: return "Wood Camp";
                 case Type.TAVERN: return "Tavern";
                 case Type.ARCHERY: return "Archery";
                 case Type.BLACKSMITH: return "Blacksmith";
@@ -266,6 +273,7 @@ namespace AemonsNookMono.Structures
                 case Type.BOOTH_SEEDS: return "building-booth-seeds";
                 case Type.TOWER: return "debug-tower";
                 case Type.STOCKPILE: return "building-stockpile";
+                case Type.WOODCAMP: return "building-production-woodcamp";
 
                 case Type.WOODSHOP:
                 case Type.TAVERN:

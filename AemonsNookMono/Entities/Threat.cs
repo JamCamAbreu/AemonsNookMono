@@ -42,6 +42,7 @@ namespace AemonsNookMono.Entities
         #region Interface
         public override void Update()
         {
+            base.Update();
             bool interrupt = this.UpdatePosition();
             if (interrupt)
             {

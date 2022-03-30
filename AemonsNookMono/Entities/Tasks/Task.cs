@@ -17,6 +17,8 @@ namespace AemonsNookMono.Entities.Tasks
             this.UpdateTimer = 1;
             this.Finished = false;
             this.Entity = entity;
+            this.ChildrenTasks = new Stack<Task>();
+            this.Active = true;
         }
         #endregion
 
@@ -24,6 +26,7 @@ namespace AemonsNookMono.Entities.Tasks
         public Humanoid Entity { get; set; }
         public int UpdateInterval { get; set; }
         public int UpdateTimer { get; set; }
+        public bool Active { get; set; }
         public bool Finished { get; set; }
         public Task CurrentChildTask { get; set; }
         public Stack<Task> ChildrenTasks { get; set; }
@@ -43,6 +46,15 @@ namespace AemonsNookMono.Entities.Tasks
         }
         public virtual void Update()
         {
+            if (CurrentChildTask != null || this.ChildrenTasks.Count > 0)
+            {
+                this.Active = false;
+                UpdateChildrenTasks();
+            }
+            else
+            {
+                this.Active = true;
+            }
 
         }
 

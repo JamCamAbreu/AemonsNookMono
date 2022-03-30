@@ -1,20 +1,21 @@
 ﻿using AemonsNookMono.Admin;
 using AemonsNookMono.GameWorld;
+using AemonsNookMono.Structures;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AemonsNookMono.Structures
+namespace AemonsNookMono.Admin
 {
-    public class Buildings
+    public class BuildingManager
     {
         #region Singleton Implementation
-        private static Buildings instance;
+        private static BuildingManager instance;
         private static object _lock = new object();
-        private Buildings() { }
-        public static Buildings Current
+        private BuildingManager() { }
+        public static BuildingManager Current
         {
             get
             {
@@ -24,7 +25,7 @@ namespace AemonsNookMono.Structures
                     {
                         if (instance == null)
                         {
-                            instance = new Buildings();
+                            instance = new BuildingManager();
                         }
                     }
                 }
@@ -62,27 +63,6 @@ namespace AemonsNookMono.Structures
         }
         public void Update()
         {
-            #region DEBUG PURPOSES
-            if (Admin.StateManager.Current.CurrentState == StateManager.State.World)
-            {
-                if (this.Selection == null && Keyboard.GetState().IsKeyDown(Keys.D1))
-                {
-                    this.Selection = new BuildingSelection(BuildingInfo.Type.STOCKPILE);
-                    StateManager.Current.CurrentState = StateManager.State.BuildSelection;
-                }
-                if (this.Selection == null && Keyboard.GetState().IsKeyDown(Keys.D2))
-                {
-                    this.Selection = new BuildingSelection(BuildingInfo.Type.TOWER);
-                    StateManager.Current.CurrentState = StateManager.State.BuildSelection;
-                }
-                if (this.Selection == null && Keyboard.GetState().IsKeyDown(Keys.D3))
-                {
-                    this.Selection = new BuildingSelection(BuildingInfo.Type.BOOTH_GEMS);
-                    StateManager.Current.CurrentState = StateManager.State.BuildSelection;
-                }
-            }
-            #endregion
-
             if (this.Selection != null)
             {
                 this.Selection.Update();

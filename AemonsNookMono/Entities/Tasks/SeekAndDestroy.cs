@@ -12,7 +12,6 @@ namespace AemonsNookMono.Entities.Tasks
         public SeekAndDestroy(Humanoid entity, Humanoid targetEntity, int updateinterval) : base(entity, updateinterval)
         {
             this.TargetEntity = targetEntity;
-            this.ChildrenTasks = new Stack<Task>();
             this.InterruptInterval = 80;
             this.interruptintervalrandom = (int)(InterruptInterval * 0.25f);
             this.ResetInterruptTimer(40);
@@ -31,58 +30,60 @@ namespace AemonsNookMono.Entities.Tasks
         #region Interface
         public override void Update()
         {
-            if (this.CurrentChildTask == null && this.ChildrenTasks.Count <= 0)
+            base.Update();
+            if (this.Active)
             {
-                if (this.TargetEntity != null)
+                if (this.CurrentChildTask == null && this.ChildrenTasks.Count <= 0)
                 {
-                    if (Admin.Global.ApproxDist(
-                        new Vector2(this.Entity.CenterX, this.Entity.CenterY), 
-                        new Vector2(this.TargetEntity.CenterX, this.TargetEntity.CenterY)
-                        ) <= this.Entity.AttackReach)
+                    if (this.TargetEntity != null)
                     {
-                        if (this.Entity.CanAttack())
+                        if (Admin.Global.ApproxDist(
+                            new Vector2(this.Entity.CenterX, this.Entity.CenterY),
+                            new Vector2(this.TargetEntity.CenterX, this.TargetEntity.CenterY)
+                            ) <= this.Entity.AttackReach)
                         {
-                            this.Entity.Attack(this.TargetEntity);
-                            this.ResetInterruptTimer(40);
+                            if (this.Entity.CanAttack())
+                            {
+                                this.Entity.Attack(this.TargetEntity);
+                                this.ResetInterruptTimer(40);
+                            }
+                        }
+                        else
+                        {
+                            if (this.interrupttimer <= 0 && this.TargetTile != World.Current.hero.TileOn)
+                            {
+                                this.TargetTile = World.Current.hero.TileOn;
+                                Task walkTowardsHero = new WalkTask(this.Entity, 30, this.TargetTile, true);
+                                this.ChildrenTasks.Push(walkTowardsHero);
+                            }
                         }
                     }
-                    else
+                }
+
+                this.interrupttimer--;
+                if (this.CurrentChildTask != null)
+                {
+                    if (this.interrupttimer <= 0)
                     {
-                        if (this.interrupttimer <= 0 && this.TargetTile != World.Current.hero.TileOn)
+                        this.ResetInterruptTimer();
+                        Admin.Debugger.Current.AddTempString("Interrupt");
+                        if (this.TargetTile != World.Current.hero.TileOn)
                         {
+                            this.CurrentChildTask = null;
                             this.TargetTile = World.Current.hero.TileOn;
-                            Task walkTowardsHero = new WalkTask(this.Entity, 30, this.TargetTile, true);
+                            Task walkTowardsHero = new WalkTask(this.Entity, 30, TargetTile, true);
+
                             this.ChildrenTasks.Push(walkTowardsHero);
                         }
                     }
-                }
-            }
 
-            this.interrupttimer--;
-            if (this.CurrentChildTask != null)
-            {
-                if (this.interrupttimer <= 0)
-                {
-                    this.ResetInterruptTimer();
-                    Admin.Debugger.Current.AddTempString("Interrupt");
-                    if (this.TargetTile != World.Current.hero.TileOn)
+                    else
                     {
-                        this.CurrentChildTask = null;
-                        this.TargetTile = World.Current.hero.TileOn;
-                        Task walkTowardsHero = new WalkTask(this.Entity, 30, TargetTile, true);
-                        
-                        this.ChildrenTasks.Push(walkTowardsHero);
+                        this.CurrentChildTask.Update();
+                        if (this.CurrentChildTask.Finished) { this.CurrentChildTask = null; }
                     }
                 }
-
-                else
-                {
-                    this.CurrentChildTask.Update();
-                    if (this.CurrentChildTask.Finished) { this.CurrentChildTask = null; }
-                }
             }
-
-            this.UpdateChildrenTasks();
         }
         #endregion
 

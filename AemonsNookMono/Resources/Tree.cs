@@ -70,12 +70,7 @@ namespace AemonsNookMono.Resources
             }
 
             Debugger.Current.AddTempString($"You hack away at the Tree.");
-            this.Life--;
-            if (this.Life <= 0)
-            {
-                this.State = ResourceState.Harvestable;
-                this.Collisions.Clear();
-            }
+            this.AttackResource();
         }
         public void SetCollisions()
         {

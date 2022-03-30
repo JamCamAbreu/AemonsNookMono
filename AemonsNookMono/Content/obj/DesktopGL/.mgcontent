@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SourceFileCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<SourceFileCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Profile>Reach</Profile>
   <Platform>DesktopGL</Platform>
   <Config />
@@ -53,6 +53,7 @@
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Buildings/TileGreen.png</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Buildings/TileOrange.png</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Buildings/TileRed.png</File>
+    <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Buildings/WoodCuttersCamp.png</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Effects/AttackAnimations/swordswing-1.png</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Effects/AttackAnimations/swordswing-2.png</File>
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Effects/AttackAnimations/swordswing-3.png</File>
@@ -130,6 +131,7 @@
     <File>C:/Users/coolc/source/repos/AemonsNookMono/AemonsNookMono/Content/World/Threats/Head.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

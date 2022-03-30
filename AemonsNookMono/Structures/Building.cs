@@ -28,7 +28,7 @@ namespace AemonsNookMono.Structures
             {
                 for (int h = 0; h < this.Height; h++)
                 {
-                    tile = World.Current.TileAtPixel(World.Current.StartDrawX + x + w, World.Current.StartDrawY + y + h);
+                    tile = World.Current.TileAtPixel(World.Current.StartDrawX + x + (w * World.TILE_DIMENSION_PIXELS), World.Current.StartDrawY + y + (h * World.TILE_DIMENSION_PIXELS));
                     if (tile != null)
                     {
                         this.TilesUnderneath.Add(tile);

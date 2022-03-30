@@ -92,8 +92,10 @@ namespace AemonsNookMono.Player
         protected int AnimationTimerReset { get; set; }
         protected int SpriteIndex { get; set; }
 
-        public void Update()
+        public override void Update()
         {
+            base.Update();
+
             if (!Spawned) { return; }
             bool interrupt = this.UpdatePosition();
             if (!interrupt)
@@ -101,10 +103,6 @@ namespace AemonsNookMono.Player
                 this.SetMovementVector();
                 this.Move();
             }
-
-            Admin.Debugger.Current.Debugger1 = this.ImpactX.ToString();
-            Admin.Debugger.Current.Debugger2 = this.ImpactY.ToString();
-
         }
 
         public void Draw()

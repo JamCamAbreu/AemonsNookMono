@@ -130,6 +130,8 @@ namespace AemonsNookMono
             Graphics.Current.SpritesByName.Add("building-booth-jewels", Content.Load<Texture2D>("World/Buildings/Booth_Jewels"));
             Graphics.Current.SpritesByName.Add("building-booth-produce", Content.Load<Texture2D>("World/Buildings/booth_produce"));
             Graphics.Current.SpritesByName.Add("building-booth-seeds", Content.Load<Texture2D>("World/Buildings/Booth_Seeds"));
+
+            Graphics.Current.SpritesByName.Add("building-production-woodcamp", Content.Load<Texture2D>("World/Buildings/WoodCuttersCamp"));
             #endregion
 
             #region Stockpiles

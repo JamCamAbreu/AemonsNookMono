@@ -34,7 +34,7 @@ namespace AemonsNookMono.Structures
         #region Interface
         public void Build()
         {
-            Buildings.Current.AddBuilding(LastTileUnderMouse.RelativeX, LastTileUnderMouse.RelativeY, this.Type);
+            BuildingManager.Current.AddBuilding(LastTileUnderMouse.RelativeX, LastTileUnderMouse.RelativeY, this.Type);
         }
         public void Update()
         {

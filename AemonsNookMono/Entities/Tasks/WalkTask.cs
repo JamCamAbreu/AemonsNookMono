@@ -9,9 +9,11 @@ namespace AemonsNookMono.Entities.Tasks
 {
     public class WalkTask : Task
     {
+        // Note that the Update Interval is essentially the speed of the Entity here.
         #region Constructor
         public WalkTask(Humanoid entity, int updateinterval, Tile target, bool offroad = false) : base(entity, updateinterval)
         {
+            Admin.Debugger.Current.AddTempString("New Walk Task");
             this.WalkPath = new Path(entity.TileOn, target, offroad);
         }
         #endregion
@@ -26,13 +28,13 @@ namespace AemonsNookMono.Entities.Tasks
         public override void Draw()
         {
             #region DEBUG: DRAW PATH
-            //foreach (Tile tile in this.Path)
+            //foreach (Tile tile in this.WalkPath.TileStack)
             //{
             //    if (tile == this.NextTile)
             //    {
             //        Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName["debug-tile-orange"], new Vector2(World.Current.StartDrawX + tile.RelativeX, World.Current.StartDrawY + tile.RelativeY), Color.White);
             //    }
-            //    else if (tile == this.TargetTile)
+            //    else if (tile == this.NextTile)
             //    {
             //        Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName["debug-tile-red"], new Vector2(World.Current.StartDrawX + tile.RelativeX, World.Current.StartDrawY + tile.RelativeY), Color.White);
             //    }
@@ -46,31 +48,35 @@ namespace AemonsNookMono.Entities.Tasks
         }
         public override void Update()
         {
-            this.UpdateTimer--;
-            if (this.UpdateTimer <= 0)
+            base.Update();
+            if (this.Active)
             {
-                this.StepPath();
-                this.UpdateTimer = this.UpdateInterval;
-            }
-            if (this.NextTile != null)
-            {
-                float speed = 1.0f / this.UpdateTimer;
-                Vector2 cur = new Vector2(this.Entity.CenterX, this.Entity.CenterY);
-                Vector2 targ = new Vector2(World.Current.StartDrawX + this.NextTile.RelativeX, World.Current.StartDrawY + this.NextTile.RelativeY);
-                this.Direction = targ - cur;
-                int distance = Global.ApproxDist(cur, targ);
-                if (distance >= 1)
+                this.UpdateTimer--;
+                if (this.UpdateTimer <= 0)
                 {
-                    Vector2 updated = cur + (this.Direction * speed);
-                    this.Entity.CenterX = updated.X;
-                    this.Entity.CenterY = updated.Y;
+                    this.StepPath();
+                    this.UpdateTimer = this.UpdateInterval;
                 }
-                if (this.UpdateTimer == 1 || distance < 1)
+                if (this.NextTile != null)
                 {
-                    this.Entity.CenterX = (int)targ.X;
-                    this.Entity.CenterY = (int)targ.Y;
-                    this.Entity.TileOn = this.NextTile;
-                    this.NextTile = null;
+                    float speed = 1.0f / this.UpdateTimer;
+                    Vector2 cur = new Vector2(this.Entity.CenterX, this.Entity.CenterY);
+                    Vector2 targ = new Vector2(World.Current.StartDrawX + this.NextTile.RelativeX, World.Current.StartDrawY + this.NextTile.RelativeY);
+                    this.Direction = targ - cur;
+                    int distance = Global.ApproxDist(cur, targ);
+                    if (distance >= 1)
+                    {
+                        Vector2 updated = cur + (this.Direction * speed);
+                        this.Entity.CenterX = updated.X;
+                        this.Entity.CenterY = updated.Y;
+                    }
+                    if (this.UpdateTimer == 1 || distance < 1)
+                    {
+                        this.Entity.CenterX = (int)targ.X;
+                        this.Entity.CenterY = (int)targ.Y;
+                        this.Entity.TileOn = this.NextTile;
+                        this.NextTile = null;
+                    }
                 }
             }
         }

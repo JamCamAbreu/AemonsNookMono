@@ -11,12 +11,27 @@ namespace AemonsNookMono.Entities
 {
     public class Humanoid : Entity
     {
+        public enum InterruptStateReset
+        {
+            CannotInterrupt = -1,
+            EveryStep = 1,
+            ExtremelyAlarmed = 4,
+            Alarmed = 8,
+            Watchful = 16,
+            Normal = 32,
+            SlightlyDistracted = 64,
+            Distracted = 128,
+            Drunk = 256,
+            HardToInterract = 512,
+        }
+
         public const int DEFAULT_WALK_SPEED = 40;
         public Humanoid()
         {
             this.AttackReach = 25; // make this configurable later
             this.AttackDelay = 100; // make this configurable later
             this.attacktimer = 0;
+            this.InterruptTimer = (int)InterruptStateReset.Normal;
         }
 
         #region Internal
@@ -32,6 +47,7 @@ namespace AemonsNookMono.Entities
         public int TotalTaskCapacity { get; set; } // how much can they remember?
         public int AttackReach { get; set; }
         public int AttackDelay { get; set; }
+        public int InterruptTimer { get; set; }
         public bool WanderEndlessly { get; set; }
         public Random Ran { get; set; }
 

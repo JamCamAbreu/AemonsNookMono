@@ -40,12 +40,12 @@ namespace AemonsNookMono
             #endregion
 
             #region Debug
-            Graphics.Current.SpritesByName.Add("debug-square", Content.Load<Texture2D>("Debug/collisionSquare10by10"));
-            Graphics.Current.SpritesByName.Add("debug-circle", Content.Load<Texture2D>("Debug/collisionCircle10by10"));
-            Graphics.Current.SpritesByName.Add("debug-tile-green", Content.Load<Texture2D>("Debug/TileGreen"));
-            Graphics.Current.SpritesByName.Add("debug-tile-orange", Content.Load<Texture2D>("Debug/TileOrange"));
-            Graphics.Current.SpritesByName.Add("debug-tile-red", Content.Load<Texture2D>("Debug/TileRed"));
-            Graphics.Current.SpritesByName.Add("debug-tower", Content.Load<Texture2D>("Debug/TowerConcept"));
+            Graphics.Current.SpritesByName.Add("debug-square", Content.Load<Texture2D>("Test/collisionSquare10by10"));
+            Graphics.Current.SpritesByName.Add("debug-circle", Content.Load<Texture2D>("Test/collisionCircle10by10"));
+            Graphics.Current.SpritesByName.Add("debug-tile-green", Content.Load<Texture2D>("Test/TileGreen"));
+            Graphics.Current.SpritesByName.Add("debug-tile-orange", Content.Load<Texture2D>("Test/TileOrange"));
+            Graphics.Current.SpritesByName.Add("debug-tile-red", Content.Load<Texture2D>("Test/TileRed"));
+            Graphics.Current.SpritesByName.Add("debug-tower", Content.Load<Texture2D>("Test/TowerConcept"));
             #endregion
 
             #region Dirt

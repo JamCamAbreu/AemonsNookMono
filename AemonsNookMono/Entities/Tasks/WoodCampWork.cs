@@ -101,8 +101,7 @@ namespace AemonsNookMono.Entities.Tasks
                 }
                 else
                 {
-                    
-                    //Admin.Debugger.Current.Debugger2 = this.ImpactY.ToString();
+                    this.TargetCamp = this.RetrieveClosestCamp();
 
                     // Todo: Update to use building entrance tileon instead of index 0? 
                     if (this.Entity.TileOn != this.TargetCamp.TilesUnderneath[0])
@@ -142,11 +141,12 @@ namespace AemonsNookMono.Entities.Tasks
             foreach (Building camp in camps)
             {
                 int dist = int.MaxValue;
-                dist = Global.ApproxDist(camp.OriginX, camp.OriginY, (int)this.Entity.CenterX, (int)this.Entity.CenterY);
+                dist = Global.ApproxDist(World.Current.StartDrawX + camp.OriginX, World.Current.StartDrawY + camp.OriginY, (int)this.Entity.CenterX, (int)this.Entity.CenterY);
 
                 if (dist < closestDist)
                 {
                     closestCamp = camp;
+                    closestDist = dist;
                 }
             }
             return closestCamp;

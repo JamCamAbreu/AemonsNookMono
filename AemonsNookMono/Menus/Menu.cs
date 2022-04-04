@@ -131,27 +131,24 @@ namespace AemonsNookMono.Menus
 
             return null;
         }
-        public virtual void Draw(bool isTop)
+        public virtual void Draw()
         {
-            if (isTop)
+            Graphics.Current.SpriteB.Begin();
+            int titlex = Graphics.Current.CenterStringX(this.CenterX, this.MenuName, "couriernew");
+            int titley = this.TopY - 32;
+            Graphics.Current.SpriteB.DrawString(Graphics.Current.Fonts["couriernew"], this.MenuName, new Vector2(titlex, titley), Color.White);
+            Graphics.Current.SpriteB.End();
+
+            this.backPanel.Draw();
+
+            foreach (Cell c in this.StaticCells)
             {
-                Graphics.Current.SpriteB.Begin();
-                int titlex = Graphics.Current.CenterStringX(this.CenterX, this.MenuName, "couriernew");
-                int titley = this.TopY - 32;
-                Graphics.Current.SpriteB.DrawString(Graphics.Current.Fonts["couriernew"], this.MenuName, new Vector2(titlex, titley), Color.White);
-                Graphics.Current.SpriteB.End();
+                c.Draw();
+            }
 
-                this.backPanel.Draw();
-
-                foreach (Cell c in this.StaticCells)
-                {
-                    c.Draw();
-                }
-
-                foreach (CellGrouping span in this.CellGroupings)
-                {
-                    span.Draw();
-                }
+            foreach (CellGrouping span in this.CellGroupings)
+            {
+                span.Draw();
             }
         }
         public virtual void Refresh()
@@ -197,7 +194,7 @@ namespace AemonsNookMono.Menus
         //}
         public virtual bool HandleEscape()
         {
-            MenuManager.Current.CloseTop();
+            MenuManager.Current.CloseTopMenu();
             return true;
         }
     #endregion

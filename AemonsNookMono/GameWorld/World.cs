@@ -95,7 +95,7 @@ namespace AemonsNookMono.GameWorld
             EffectsGenerator.Current.Init();
 
             MenuManager.Current.ClearAllMenus();
-            MenuManager.Current.AddMenu(new WorldMenu());
+            MenuManager.Current.AddMenu(new WorldMenu(), true, false);
 
             if (World.Current.SpawnTiles != null && World.Current.SpawnTiles.Count > 0)
             {

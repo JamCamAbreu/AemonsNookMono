@@ -83,7 +83,15 @@ namespace AemonsNookMono.Entities
         }
         public void Draw()
         {
-            Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName["peep-royal"], new Vector2(this.CenterX, this.CenterY), Color.White);
+            if (Graphics.Current.Preset == Graphics.GraphicsPreset.Normal)
+            {
+                Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName["peep-royal"], new Vector2(this.CenterX, this.CenterY), Color.White);
+            }
+            else
+            {
+                Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName["addy-ella"], new Vector2(this.CenterX, this.CenterY), Color.White);
+            }
+            
             if (this.CurrentTask != null)
             {
                 this.CurrentTask.Draw();

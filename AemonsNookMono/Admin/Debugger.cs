@@ -112,7 +112,7 @@ namespace AemonsNookMono.Admin
             #region Menu Manager
             debugMessages.Add($"Menu Count: {MenuManager.Current.Count}");
 
-            string menuname = MenuManager.Current.Top?.MenuName ?? "None";
+            string menuname = MenuManager.Current.TopMenu?.MenuName ?? "None";
             debugMessages.Add($"Top Menu: {menuname}");
             #endregion
 

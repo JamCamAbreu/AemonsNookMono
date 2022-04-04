@@ -66,12 +66,10 @@ namespace AemonsNookMono.Menus.World
             base.Refresh();
             this.InitButtons();
         }
-        public override void Draw(bool isTop)
+        public override void Draw()
         {
-            if (isTop)
-            {
-                base.Draw(isTop);
-            }
+            base.Draw();
+
         }
 
         public override bool HandleLeftClick(int x, int y)
@@ -83,7 +81,7 @@ namespace AemonsNookMono.Menus.World
                 switch (clicked.ButtonCode)
                 {
                     case "Back":
-                        MenuManager.Current.CloseTop();
+                        MenuManager.Current.CloseMenuType<PauseOptionsMenu>();
                         return true;
 
                     case "Windowed":

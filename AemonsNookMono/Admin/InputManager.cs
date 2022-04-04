@@ -223,6 +223,14 @@ namespace AemonsNookMono.Admin
             {
                 this.HandleZero();
             }
+            if (this.CheckKeyboardPressed(Keys.D9))
+            {
+                this.HandleNine();
+            }
+            if (this.CheckKeyboardPressed(Keys.D8))
+            {
+                Graphics.Current.GraphicsPresetIterate();
+            }
 
             #region TEMP
             if (StateManager.Current.CurrentState == StateManager.State.World && Keyboard.GetState().IsKeyDown(Keys.R))
@@ -311,114 +319,117 @@ namespace AemonsNookMono.Admin
             int worldX = (int)worldPos.X;
             int worldY = (int)worldPos.Y;
 
-            if (MenuManager.Current.Top != null && MenuManager.Current.Top is MessagePopupMenu)
+            MessagePopupMenu popupMenu = MenuManager.Current.TopScreenContainsType<MessagePopupMenu>() as MessagePopupMenu;
+            if (popupMenu != null)
             {
-                if (MenuManager.Current.Top.HandleLeftClick(x, y) == true) { return; }
+                if (popupMenu.HandleLeftClick(x, y) == true) { return; }
             }
 
             switch (curState)
             {
                 case StateManager.State.MainMenu:
-                    // Check for buttons
-                    break;
+                    {
+                        // Check for buttons
+                        break;
+                    }
 
                 case StateManager.State.Overworld:
-                    // Check for buttons
-                    // Check for Gui things
-                    // Check for interactibles
-                    break;
+                    {
+                        // Check for buttons
+                        // Check for Gui things
+                        // Check for interactibles
+                        break;
+                    }
 
                 case StateManager.State.BuildSelection:
-                    if (BuildingManager.Current.Selection != null)
                     {
-                        BuildingManager.Current.Selection.Build();
-                        BuildingManager.Current.Selection = null;
-                        StateManager.Current.CurrentState = StateManager.State.World;
+                        if (BuildingManager.Current.Selection != null)
+                        {
+                            BuildingManager.Current.Selection.Build();
+                            BuildingManager.Current.Selection = null;
+                            StateManager.Current.CurrentState = StateManager.State.World;
+                        }
+                        break;
                     }
-                    break;
+
 
                 case StateManager.State.World:
-                    // todo: Help system / popups
-
-                    // buttons:
-                    if (MenuManager.Current.Top != null && MenuManager.Current.Top is WorldMenu)
                     {
-                        WorldMenu menu = MenuManager.Current.Top as WorldMenu;
-                        if (menu != null)
+                        // todo: Help system / popups
+
+                        // buttons:
+                        WorldMenu worldMenu = MenuManager.Current.TopScreenContainsType<WorldMenu>() as WorldMenu;
+                        if (worldMenu != null)
                         {
-                            if (menu.HandleLeftClick(x, y) == true) { return; }
+                            if (worldMenu.HandleLeftClick(x, y) == true) { return; }
                         }
-                    }
 
-                    // Resources:
-                    foreach (Resource r in World.Current.Resources.Sorted.Values)
-                    {
-                        if (r.IsCollision(worldX, worldY))
+                        // Resources:
+                        foreach (Resource r in World.Current.Resources.Sorted.Values)
                         {
-                            r.HandleLeftClick();
-                            return;
-                        }
-                    }
-
-                    
-                    if (World.Current.InsideBounds(worldX, worldY)) 
-                    {
-                        // Buildings
-                        foreach (Building building in BuildingManager.Current.AllBuildings)
-                        {
-                            if (building.IsCollision(worldX, worldY))
+                            if (r.IsCollision(worldX, worldY))
                             {
-                                building.HandleLeftClick();
+                                r.HandleLeftClick();
                                 return;
                             }
                         }
 
-                        // Tiles
-                        Tile curTile = World.Current.TileAtPixel(worldX, worldY);
-                        if (curTile != null)
+
+                        if (World.Current.InsideBounds(worldX, worldY))
                         {
-                            curTile.HandleLeftClick();
-                            return;
+                            // Buildings
+                            foreach (Building building in BuildingManager.Current.AllBuildings)
+                            {
+                                if (building.IsCollision(worldX, worldY))
+                                {
+                                    building.HandleLeftClick();
+                                    return;
+                                }
+                            }
+
+                            // Tiles
+                            Tile curTile = World.Current.TileAtPixel(worldX, worldY);
+                            if (curTile != null)
+                            {
+                                curTile.HandleLeftClick();
+                                return;
+                            }
                         }
+                        break;
                     }
-                    break;
+
 
                 case StateManager.State.Pause:
-                    if (MenuManager.Current.Top != null)
                     {
-                        if (MenuManager.Current.Top.HandleLeftClick(x, y) == true) { return; }
+                        foreach (Menu menu in MenuManager.Current.Top.MenuStack)
+                        {
+                            if (menu.HandleLeftClick(x, y) == true) { return; }
+                        }
+                        break;
                     }
-                    break;
 
 
                 case StateManager.State.LevelEditor:
-                    // Update this to search for menu instead of just "top" and remove the worldmenu call in editotilemenu handleleftclick
-                    if (MenuManager.Current.Top != null && MenuManager.Current.Top is WorldMenu)
                     {
-                        WorldMenu menu = MenuManager.Current.Top as WorldMenu;
-                        if (menu != null)
+                        WorldMenu worldMenu = MenuManager.Current.TopScreenContainsType<WorldMenu>() as WorldMenu;
+                        if (worldMenu != null)
                         {
-                            if (menu.HandleLeftClick(x, y) == true) { return; }
+                            if (worldMenu.HandleLeftClick(x, y) == true) { return; }
                         }
-                    }
-                    if (MenuManager.Current.Top != null && MenuManager.Current.Top is EditorTileMenu)
-                    {
-                        EditorTileMenu menu = MenuManager.Current.Top as EditorTileMenu;
-                        if (menu != null)
-                        {
-                            if (menu.HandleLeftClick(x, y) == true) { return; }
-                        }
-                    }
-                    if (MenuManager.Current.Top != null && MenuManager.Current.Top is EditorSaveLevel)
-                    {
-                        EditorSaveLevel menu = MenuManager.Current.Top as EditorSaveLevel;
-                        if (menu != null)
-                        {
-                            if (menu.HandleLeftClick(x, y) == true) { return; }
-                        }
-                    }
 
-                    break;
+                        EditorTileMenu editorTileMenu = MenuManager.Current.TopScreenContainsType<EditorTileMenu>() as EditorTileMenu;
+                        if (editorTileMenu != null)
+                        {
+                            if (editorTileMenu.HandleLeftClick(x, y) == true) { return; }
+                        }
+
+                        EditorSaveLevel editorSaveLevel = MenuManager.Current.TopScreenContainsType<EditorSaveLevel>() as EditorSaveLevel;
+                        if (editorSaveLevel != null)
+                        {
+                            if (editorSaveLevel.HandleLeftClick(x, y) == true) { return; }
+                        }
+                        break;
+                    }
             }
 
             Debugger.Current.AddTempString("[Clicked Empty]");
@@ -429,15 +440,15 @@ namespace AemonsNookMono.Admin
             if (state == StateManager.State.World || state == StateManager.State.BuildSelection)
             {
                 StateManager.Current.CurrentState = StateManager.State.Pause;
-                MenuManager.Current.AddMenu(new PauseMenu(state));
+                MenuManager.Current.AddMenu(new PauseMenu(state), false, false);
             }
             if (state == StateManager.State.Pause)
             {
-
-                if (MenuManager.Current.Top != null && MenuManager.Current.Top is PauseMenu)
+                PauseMenu pauseMenu = MenuManager.Current.TopScreenContainsType<PauseMenu>() as PauseMenu;
+                if (pauseMenu != null)
                 {
-                    StateManager.Current.CurrentState = (MenuManager.Current.Top as PauseMenu).OriginalState;
-                    MenuManager.Current.CloseTop();
+                    StateManager.Current.CurrentState = pauseMenu.OriginalState;
+                    MenuManager.Current.CloseMenuType<PauseMenu>();
                 }
             }
         }
@@ -447,40 +458,47 @@ namespace AemonsNookMono.Admin
             if (state == StateManager.State.World || state == StateManager.State.BuildSelection)
             {
                 StateManager.Current.CurrentState = StateManager.State.Pause;
-                MenuManager.Current.AddMenu(new PauseMenu(state));
+                MenuManager.Current.AddMenu(new PauseMenu(state), false, false);
                 return;
             }
             if (state == StateManager.State.Pause)
             {
 
-                if (MenuManager.Current.Top != null && MenuManager.Current.Top is PauseMenu)
+                PauseMenu pauseMenu = MenuManager.Current.TopScreenContainsType<PauseMenu>() as PauseMenu;
+                if (pauseMenu != null)
                 {
-                    StateManager.Current.CurrentState = (MenuManager.Current.Top as PauseMenu).OriginalState;
-                    MenuManager.Current.CloseTop();
+                    StateManager.Current.CurrentState = pauseMenu.OriginalState;
+                    MenuManager.Current.CloseMenuType<PauseMenu>();
                     return;
                 }
-                if (MenuManager.Current.Top != null && MenuManager.Current.Top is ProfileMenu)
+
+                ProfileMenu profileMenu = MenuManager.Current.TopScreenContainsType<ProfileMenu>() as ProfileMenu;
+                if (profileMenu != null)
                 {
-                    StateManager.Current.CurrentState = (MenuManager.Current.Top as ProfileMenu).OriginalState;
-                    MenuManager.Current.CloseTop();
+                    StateManager.Current.CurrentState = profileMenu.OriginalState;
+                    MenuManager.Current.CloseMenuType<ProfileMenu>();
                     return;
                 }
-                if (MenuManager.Current.Top != null && MenuManager.Current.Top is LevelSelectMenu)
+
+                LevelSelectMenu levelSelectMenu = MenuManager.Current.TopScreenContainsType<LevelSelectMenu>() as LevelSelectMenu;
+                if (levelSelectMenu != null)
                 {
-                    StateManager.Current.CurrentState = (MenuManager.Current.Top as LevelSelectMenu).OriginalState;
-                    MenuManager.Current.CloseTop();
+                    StateManager.Current.CurrentState = levelSelectMenu.OriginalState;
+                    MenuManager.Current.CloseMenuType<LevelSelectMenu>();
                     return;
                 }
-                if (MenuManager.Current.Top != null && MenuManager.Current.Top is TestMenu)
+
+                TestMenu testMenu = MenuManager.Current.TopScreenContainsType<TestMenu>() as TestMenu;
+                if (testMenu != null)
                 {
-                    StateManager.Current.CurrentState = (MenuManager.Current.Top as TestMenu).OriginalState;
-                    MenuManager.Current.CloseTop();
+                    StateManager.Current.CurrentState = testMenu.OriginalState;
+                    MenuManager.Current.CloseMenuType<TestMenu>();
                     return;
                 }
             }
-            if (MenuManager.Current.Top != null)
+            if (MenuManager.Current.TopMenu != null)
             {
-                MenuManager.Current.Top.HandleEscape();
+                MenuManager.Current.TopMenu.HandleEscape();
                 return;
             }
         }
@@ -492,17 +510,18 @@ namespace AemonsNookMono.Admin
                 p.Tasks.Clear();
                 p.Tasks.Push(new WoodCampWork(p, 3, 30));
                 World.Current.Peeps.Add(p);
-
-
-                //Threat t = new Threat();
-                //World.Current.Threats.Add(t);
             }
-            //if (ProfileManager.Current.Loaded != null)
-            //{
-            //    SaveManager.Current.SaveProfile(ProfileManager.Current.Loaded);
-            //}
-
         }
+
+        private void HandleNine()
+        {
+            for (int i = 0; i < 1; i++)
+            {
+                Threat t = new Threat();
+                World.Current.Threats.Add(t);
+            }
+        }
+
 
         private Dictionary<Keys, int> KeyboardAlarms { get; set; }
         private Dictionary<MouseButton, int> MouseAlarms { get; set; }

@@ -49,9 +49,9 @@ namespace AemonsNookMono.Menus.World
             }
         }
 
-        public override void Draw(bool isTop)
+        public override void Draw()
         {
-            base.Draw(true);
+            base.Draw();
         }
         public override void Refresh()
         {
@@ -73,22 +73,22 @@ namespace AemonsNookMono.Menus.World
                 {
                     case "Pause":
                         StateManager.Current.CurrentState = StateManager.State.Pause;
-                        MenuManager.Current.AddMenu(new PauseMenu(state));
+                        MenuManager.Current.AddMenu(new PauseMenu(state), false, false);
                         return true;
 
                     case "Profile":
                         StateManager.Current.CurrentState = StateManager.State.Pause;
-                        MenuManager.Current.AddMenu(new ProfileMenu(state));
+                        MenuManager.Current.AddMenu(new ProfileMenu(state), false, false);
                         return true;
 
                     case "Levels":
                         StateManager.Current.CurrentState = StateManager.State.Pause;
-                        MenuManager.Current.AddMenu(new LevelSelectMenu(state));
+                        MenuManager.Current.AddMenu(new LevelSelectMenu(state), false, false);
                         return true;
 
                     case "Test":
                         StateManager.Current.CurrentState = StateManager.State.Pause;
-                        MenuManager.Current.AddMenu(new TestMenu(state));
+                        MenuManager.Current.AddMenu(new TestMenu(state), false, false);
                         return true;
 
                     default:

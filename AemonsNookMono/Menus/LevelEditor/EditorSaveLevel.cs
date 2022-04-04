@@ -68,30 +68,30 @@ namespace AemonsNookMono.Menus.LevelEditor
                                     if (level != null)
                                     {
                                         SaveManager.Current.SaveLevel(level);
-                                        MenuManager.Current.CloseTop();
+                                        MenuManager.Current.CloseMenuType<EditorSaveLevel>();
                                         MenuManager.Current.Top.Refresh();
-                                        MenuManager.Current.AddMenu(new MessagePopupMenu("Level Saved", "Your level was saved successfully.", "Okay", MenuManager.Current.Top));
+                                        MenuManager.Current.AddMenu(new MessagePopupMenu("Level Saved", "Your level was saved successfully.", "Okay"), false, false);
                                     }
                                 }
                                 else
                                 {
-                                    MenuManager.Current.AddMenu(new MessagePopupMenu("", validationResult, "Okay", this));
+                                    MenuManager.Current.AddMenu(new MessagePopupMenu("", validationResult, "Okay"), false, false);
                                 }
 
                             }
                             else
                             {
-                                MenuManager.Current.AddMenu(new MessagePopupMenu("", "A level with this name already exists, please choose a different name.", "Okay", this));
+                                MenuManager.Current.AddMenu(new MessagePopupMenu("", "A level with this name already exists, please choose a different name.", "Okay"), false, false);
                             }
                         }
                         else
                         {
-                            MenuManager.Current.AddMenu(new MessagePopupMenu("", "Please enter a name for your level", "Okay", this));
+                            MenuManager.Current.AddMenu(new MessagePopupMenu("", "Please enter a name for your level", "Okay"), false, false);
                         }
                         return true;
 
                     case "Cancel":
-                        MenuManager.Current.CloseTop();
+                        MenuManager.Current.CloseMenuType<EditorSaveLevel>();
                         return true;
 
                     default:

@@ -13,10 +13,22 @@ namespace AemonsNookMono.Admin
         public const int BORDER_THICKNESS = 6;
         #endregion
 
+        #region Enums
+        public enum GraphicsPreset
+        {
+            Normal,
+            Addy,
+            None
+        }
+        #endregion
+
         #region Singleton Implementation
         private static Graphics instance;
         private static object _lock = new object();
-        private Graphics() { }
+        private Graphics() 
+        {
+            this.Preset = GraphicsPreset.Normal;
+        }
         public static Graphics Current
         {
             get
@@ -37,6 +49,7 @@ namespace AemonsNookMono.Admin
         #endregion
 
         #region Public Properties
+        public GraphicsPreset Preset { get; set; }
         public Dictionary<string, Texture2D> SpritesByName { get; set; }
         public Dictionary<string, SpriteFont> Fonts { get; set; }
         public GraphicsDeviceManager GraphicsDM { get; set; }
@@ -90,6 +103,15 @@ namespace AemonsNookMono.Admin
             this.Window = window;
 
             this.FullScreen = fullscreen;
+        }
+        public void GraphicsPresetIterate()
+        {
+            this.Preset++;
+            if (this.Preset == GraphicsPreset.None) { this.Preset = 0; }
+        }
+        public void GraphicsPresetSet(GraphicsPreset preset)
+        {
+            this.Preset = preset;
         }
         public int ScreenMidX { get { return Graphics.Current.Device.Viewport.Width / 2; } }
         public int ScreenMidY { get { return Graphics.Current.Device.Viewport.Height / 2; } }

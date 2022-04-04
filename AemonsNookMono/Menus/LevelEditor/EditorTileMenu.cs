@@ -60,10 +60,10 @@ namespace AemonsNookMono.Menus.LevelEditor
 
             base.Update();
         }
-        public override void Draw(bool isTop)
+        public override void Draw()
         {
             if (StateManager.Current.CurrentState == StateManager.State.LevelEditor && this.CurSelection != null) { this.CurSelection.Draw(); }
-            base.Draw(isTop);
+            base.Draw();
         }
         public override void InitButtons()
         {
@@ -142,7 +142,7 @@ namespace AemonsNookMono.Menus.LevelEditor
                         return true;
 
                     case "Save":
-                        MenuManager.Current.AddMenu(new EditorSaveLevel());
+                        MenuManager.Current.AddMenu(new EditorSaveLevel(), false, true);
                         return true;
 
                     default:

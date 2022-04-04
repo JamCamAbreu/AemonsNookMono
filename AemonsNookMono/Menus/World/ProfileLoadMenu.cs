@@ -108,7 +108,7 @@ namespace AemonsNookMono.Menus.World
                     SaveManager.Current.SaveProfile(ProfileManager.Current.Loaded);
                     Profile profile = this.ProfileButtonCodes[clicked.ButtonCode];
                     ProfileManager.Current.Loaded = profile;
-                    MenuManager.Current.CloseTop();
+                    MenuManager.Current.CloseMenuType<ProfileLoadMenu>();
                     MenuManager.Current.Top.Refresh();
                     return true;
                 }
@@ -116,7 +116,7 @@ namespace AemonsNookMono.Menus.World
                 switch (clicked.ButtonCode)
                 {
                     case "Back":
-                        MenuManager.Current.CloseTop();
+                        MenuManager.Current.CloseMenuType<ProfileLoadMenu>();
                         MenuManager.Current.Refresh();
                         return true;
 

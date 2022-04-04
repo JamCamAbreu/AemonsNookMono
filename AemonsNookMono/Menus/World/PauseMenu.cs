@@ -53,12 +53,9 @@ namespace AemonsNookMono.Menus.World
             base.Refresh();
             this.InitButtons();
         }
-        public override void Draw(bool isTop)
+        public override void Draw()
         {
-            if (isTop)
-            {
-                base.Draw(isTop);
-            }
+            base.Draw();
         }
 
         public override bool HandleLeftClick(int x, int y)
@@ -70,7 +67,7 @@ namespace AemonsNookMono.Menus.World
                 switch (clicked.ButtonCode)
                 {
                     case "Options":
-                        MenuManager.Current.AddMenu(new PauseOptionsMenu());
+                        MenuManager.Current.AddMenu(new PauseOptionsMenu(), true, true);
                         return true;
 
                     case "Save / Exit Level":
@@ -81,7 +78,7 @@ namespace AemonsNookMono.Menus.World
                     case "Back":
                         SaveManager.Current.SaveProfile(ProfileManager.Current.Loaded);
                         StateManager.Current.CurrentState = this.OriginalState;
-                        MenuManager.Current.CloseTop();
+                        MenuManager.Current.CloseMenuType<PauseMenu>();
                         return true;
 
                     default:

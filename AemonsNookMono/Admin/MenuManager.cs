@@ -12,7 +12,7 @@ namespace AemonsNookMono.Admin
         private static object _lock = new object();
         private MenuManager()
         {
-            this.menuStack = new Stack<Menu>();
+            this.screenStack = new Stack<Screen>();
         }
         public static MenuManager Current
         {
@@ -36,46 +36,108 @@ namespace AemonsNookMono.Admin
         #region Interface
         public void Refresh()
         {
-            foreach (Menu m in this.menuStack)
+            foreach (Screen screen in this.screenStack)
             {
-                m.Refresh();
+                screen.Refresh();
             }
         }
-        public void AddMenu(Menu menu)
+        public void AddMenu(Menu menu, bool newMenu, bool drawPrevScreen)
         {
-            this.menuStack.Push(menu);
+            if (this.Top == null || newMenu)
+            {
+                Screen screen = new Screen(drawPrevScreen);
+                screen.AddMenu(menu);
+                this.screenStack.Push(screen);
+            }
+            else
+            {
+                this.Top.AddMenu(menu);
+            }
         }
-        public void CloseTop()
+        public void CloseMenuType<type>()
         {
-            this.menuStack.Pop();
+            if (this.Top != null)
+            {
+                Menu menu = this.Top.ContainsType<type>();
+                while (menu != null)
+                {
+                    this.Top.Menus.Remove(menu);
+                    menu = this.Top.ContainsType<type>();
+                }
+                if (this.Top.Menus.Count <= 0)
+                {
+                    this.CloseTopScreen();
+                }
+            }
+            return;
+        }
+        public void CloseTopMenu()
+        {
+            if (this.Top != null)
+            {
+                this.Top.CloseTop();
+                if (this.Top.Menus.Count <= 0)
+                {
+                    this.CloseTopScreen();
+                }
+            }
+        }
+        public void CloseTopScreen()
+        {
+            this.screenStack.Pop();
         }
         public void ClearAllMenus()
         {
-            this.menuStack.Clear();
+            foreach (Screen screen in this.screenStack)
+            {
+                screen.ClearAllMenus();
+            }
+            this.screenStack.Clear();
         }
-        public Menu Top
+        public Screen Top
         {
             get
             {
-                if (this.menuStack.Count > 0)
+                if (this.screenStack.Count > 0)
                 {
-                    return this.menuStack.Peek();
+                    return this.screenStack.Peek();
                 }
                 else return null;
+            }
+        }
+        public Menu TopMenu
+        {
+            get
+            {
+                if (this.screenStack != null && this.screenStack.Count > 0)
+                {
+                    return this.Top.Top;
+                }
+                return null;
             }
         }
         public int Count
         {
             get
             {
-                return this.menuStack.Count;
+                return this.screenStack.Count;
             }
+        }
+        public Menu TopScreenContainsType<type>()
+        {
+            if (this.Top != null)
+            {
+                return this.Top.ContainsType<type>();
+            }
+            return null;
         }
         public Menu RetrieveMenu(string name)
         {
-            foreach (Menu menu in this.menuStack)
+            Menu menu = null;
+            foreach (Screen screen in this.screenStack)
             {
-                if (menu.MenuName == name)
+                menu = screen.RetrieveMenu(name);
+                if (menu != null)
                 {
                     return menu;
                 }
@@ -91,22 +153,21 @@ namespace AemonsNookMono.Admin
         }
         public void Draw()
         {
-            foreach (Menu menu in this.menuStack)
+            Stack<Screen> drawScreens = new Stack<Screen>();
+            foreach (Screen screen in this.screenStack)
             {
-                if (menu == this.Top)
-                {
-                    menu.Draw(true);
-                }
-                else
-                {
-                    menu.Draw(false);
-                }
+                drawScreens.Push(screen);
+                if (!screen.DrawPreviousScreen) { break; }
+            }
+            foreach (Screen screen in drawScreens)
+            {
+                screen.Draw();
             }
         }
         #endregion
 
         #region internal
-        private Stack<Menu> menuStack { get; set; }
+        private Stack<Screen> screenStack { get; set; }
         #endregion
     }
 }

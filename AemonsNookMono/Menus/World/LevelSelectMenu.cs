@@ -94,35 +94,33 @@ namespace AemonsNookMono.Menus.World
             base.Refresh();
             this.InitButtons();
         }
-        public override void Draw(bool isTop)
+        public override void Draw()
         {
-            if (isTop)
+            base.Draw();
+
+            Graphics.Current.SpriteB.Begin();
+            Button widthButton = this.GetButton("WidthTitle");
+            if (widthButton != null) 
             {
-                base.Draw(isTop);
-
-                Graphics.Current.SpriteB.Begin();
-                Button widthButton = this.GetButton("WidthTitle");
-                if (widthButton != null) 
-                {
-                    string wstring = $"Width: {this.customLevelWidth.ToString()}";
-                    Vector2 size = Graphics.Current.Fonts["couriernew"].MeasureString(wstring);
-                    int x = widthButton.ScreenX - ((int)size.X / 2);
-                    int y = widthButton.ScreenY - ((int)size.Y / 2);
-                    Graphics.Current.SpriteB.DrawString(Graphics.Current.Fonts["couriernew"], wstring, new Vector2(x, y), Color.White);
-                }
-
-                Button heightButton = this.GetButton("HeightTitle");
-                if (heightButton != null)
-                {
-                    string hstring = $"Height: {this.customLevelHeight.ToString()}";
-                    Vector2 size = Graphics.Current.Fonts["couriernew"].MeasureString(hstring);
-                    int x = heightButton.ScreenX - ((int)size.X / 2);
-                    int y = heightButton.ScreenY - ((int)size.Y / 2);
-                    Graphics.Current.SpriteB.DrawString(Graphics.Current.Fonts["couriernew"], hstring, new Vector2(x, y), Color.White);
-                }
-
-                Graphics.Current.SpriteB.End();
+                string wstring = $"Width: {this.customLevelWidth.ToString()}";
+                Vector2 size = Graphics.Current.Fonts["couriernew"].MeasureString(wstring);
+                int x = widthButton.ScreenX - ((int)size.X / 2);
+                int y = widthButton.ScreenY - ((int)size.Y / 2);
+                Graphics.Current.SpriteB.DrawString(Graphics.Current.Fonts["couriernew"], wstring, new Vector2(x, y), Color.White);
             }
+
+            Button heightButton = this.GetButton("HeightTitle");
+            if (heightButton != null)
+            {
+                string hstring = $"Height: {this.customLevelHeight.ToString()}";
+                Vector2 size = Graphics.Current.Fonts["couriernew"].MeasureString(hstring);
+                int x = heightButton.ScreenX - ((int)size.X / 2);
+                int y = heightButton.ScreenY - ((int)size.Y / 2);
+                Graphics.Current.SpriteB.DrawString(Graphics.Current.Fonts["couriernew"], hstring, new Vector2(x, y), Color.White);
+            }
+
+            Graphics.Current.SpriteB.End();
+
         }
         public override bool HandleLeftClick(int x, int y)
         {
@@ -155,7 +153,7 @@ namespace AemonsNookMono.Menus.World
                         StateManager.Current.CurrentState = StateManager.State.LevelEditor;
                         Level created = this.GenerateBlankLevel(this.customLevelWidth, this.customLevelHeight);
                         GameWorld.World.Current.Init(created);
-                        MenuManager.Current.AddMenu(new EditorTileMenu());
+                        MenuManager.Current.AddMenu(new EditorTileMenu(), false, false);
                         return true;
 
                     case "Small Meadow":
@@ -187,7 +185,7 @@ namespace AemonsNookMono.Menus.World
                     case "Back":
                         SaveManager.Current.SaveProfile(ProfileManager.Current.Loaded);
                         StateManager.Current.CurrentState = this.OriginalState;
-                        MenuManager.Current.CloseTop();
+                        MenuManager.Current.CloseMenuType<LevelSelectMenu>();
                         return true;
 
                     default:

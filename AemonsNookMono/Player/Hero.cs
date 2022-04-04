@@ -80,7 +80,6 @@ namespace AemonsNookMono.Player
         public int Speed { get; set; }
         public int VerticalSpeed { get; set; }
         public int HorizontalSpeed { get; set; }
-        public Random Ran { get; set; }
         public FacingDirection Direction { get; set; }
         public List<Resource> HeldResources { get; set; }
 

@@ -139,7 +139,7 @@ namespace AemonsNookMono.Menus.World
                     case "Back":
                         SaveManager.Current.SaveProfile(ProfileManager.Current.Loaded);
                         StateManager.Current.CurrentState = this.OriginalState;
-                        MenuManager.Current.CloseTop();
+                        MenuManager.Current.CloseMenuType<TestMenu>();
                         return true;
 
                     case "Left":

@@ -192,6 +192,11 @@ namespace AemonsNookMono
             Graphics.Current.SpritesByName.Add("cursor-redx", Content.Load<Texture2D>("Cursor/RedX"));
             #endregion
 
+            #region Fun
+            Graphics.Current.SpritesByName.Add("addy-ella", Content.Load<Texture2D>("Addy/Ella"));
+            Graphics.Current.SpritesByName.Add("addy-cheeseburger", Content.Load<Texture2D>("Addy/cheeseburger"));
+            #endregion
+
             Graphics.Current.Fonts.Add("debug", Content.Load<SpriteFont>("Fonts/Consolas"));
             Graphics.Current.Fonts.Add("arial", Content.Load<SpriteFont>("Fonts/Arial"));
             Graphics.Current.Fonts.Add("couriernew", Content.Load<SpriteFont>("Fonts/CourierNew"));

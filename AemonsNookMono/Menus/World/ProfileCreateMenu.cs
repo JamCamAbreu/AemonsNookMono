@@ -98,7 +98,7 @@ namespace AemonsNookMono.Menus.World
                         return true;
 
                     case "Back":
-                        MenuManager.Current.CloseTop();
+                        MenuManager.Current.CloseMenuType<ProfileCreateMenu>();
                         return true;
 
                     case "Create":
@@ -113,24 +113,24 @@ namespace AemonsNookMono.Menus.World
                                     {
                                         SaveManager.Current.SaveProfile(profile);
                                         ProfileManager.Current.Loaded = profile;
-                                        MenuManager.Current.CloseTop();
+                                        MenuManager.Current.CloseMenuType<ProfileCreateMenu>();
                                         MenuManager.Current.Top.Refresh();
-                                        MenuManager.Current.AddMenu(new MessagePopupMenu("Profile Created", "Your new profile was created successfully.", "Okay", MenuManager.Current.Top));
+                                        MenuManager.Current.AddMenu(new MessagePopupMenu("Profile Created", "Your new profile was created successfully.", "Okay"), false, false);
                                     }
                                 }
                                 else
                                 {
-                                    MenuManager.Current.AddMenu(new MessagePopupMenu("", "A profile with this name already exists, please choose a different name.", "Okay", this));
+                                    MenuManager.Current.AddMenu(new MessagePopupMenu("", "A profile with this name already exists, please choose a different name.", "Okay"), false, false);
                                 }
                             }
                             else
                             {
-                                MenuManager.Current.AddMenu(new MessagePopupMenu("", "Please enter a name for your profile", "Okay", this));
+                                MenuManager.Current.AddMenu(new MessagePopupMenu("", "Please enter a name for your profile", "Okay"), false, false);
                             }
                         }
                         else
                         {
-                            MenuManager.Current.AddMenu(new MessagePopupMenu("", "Please select one of the profile options.", "Okay", this));
+                            MenuManager.Current.AddMenu(new MessagePopupMenu("", "Please select one of the profile options.", "Okay"), false, false);
                         }
                         return true;
 

@@ -11,7 +11,7 @@ namespace AemonsNookMono.Menus.General
     public class MessagePopupMenu : Menu
     {
         #region Constructor
-        public MessagePopupMenu(string title, string message, string confirmbuttonstring, Menu Above = null) :
+        public MessagePopupMenu(string title, string message, string confirmbuttonstring) :
             base(
                 title,
                 (int)((float)Graphics.Current.ScreenWidth * 0.3f),
@@ -26,7 +26,6 @@ namespace AemonsNookMono.Menus.General
             this.message = message;
             this.confirmButtonString = confirmbuttonstring;
             this.InitButtons();
-            this.MenuAbove = Above;
         }
         public MessagePopupMenu(int width, int height, int centerx, int centery, string title, string message, string confirmbuttonstring, Color? color = null, string sprite = "") :
             base(
@@ -51,14 +50,9 @@ namespace AemonsNookMono.Menus.General
         #endregion
 
         #region Interface
-        public override void Draw(bool isTop)
-        {
-            if (this.MenuAbove != null && !string.IsNullOrEmpty(this.MenuAbove.MenuName))
-            {
-                MenuManager.Current.RetrieveMenu(MenuAbove.MenuName).Draw(true);
-            }
-            
-            base.Draw(isTop);
+        public override void Draw()
+        {           
+            base.Draw();
         }
         public override void InitButtons()
         {
@@ -84,7 +78,7 @@ namespace AemonsNookMono.Menus.General
                 Debugger.Current.AddTempString($"You clicked on the {clicked.ButtonCode} button!");
                 if (clicked.ButtonCode == this.confirmButtonString)
                 {
-                    MenuManager.Current.CloseTop();
+                    MenuManager.Current.CloseMenuType<MessagePopupMenu>();
                     return true;
                 }
 

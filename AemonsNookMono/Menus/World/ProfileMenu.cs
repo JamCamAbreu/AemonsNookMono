@@ -122,24 +122,24 @@ namespace AemonsNookMono.Menus.World
                     case "Back":
                         SaveManager.Current.SaveProfile(ProfileManager.Current.Loaded);
                         StateManager.Current.CurrentState = this.OriginalState;
-                        MenuManager.Current.CloseTop();
+                        MenuManager.Current.CloseMenuType<ProfileMenu>();
                         return true;
 
                     case "Create":
                         ProfileCreateMenu createmenu = new ProfileCreateMenu();
-                        MenuManager.Current.AddMenu(createmenu);
+                        MenuManager.Current.AddMenu(createmenu, true, true);
                         return true;
 
                     case "Load":
                         SaveManager.Current.SaveProfile(ProfileManager.Current.Loaded);
                         ProfileLoadMenu loadmenu = new ProfileLoadMenu();
-                        MenuManager.Current.AddMenu(loadmenu);
+                        MenuManager.Current.AddMenu(loadmenu, true, true);
                         return true;
 
                     case "Save":
                         SaveManager.Current.SaveProfile(ProfileManager.Current.Loaded);
                         StateManager.Current.CurrentState = this.OriginalState;
-                        MenuManager.Current.CloseTop();
+                        MenuManager.Current.CloseMenuType<ProfileMenu>();
                         return true;
 
 

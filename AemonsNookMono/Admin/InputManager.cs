@@ -235,10 +235,6 @@ namespace AemonsNookMono.Admin
             #region TEMP
             if (StateManager.Current.CurrentState == StateManager.State.World && Keyboard.GetState().IsKeyDown(Keys.R))
             {
-                throw new Exception("Yikes. I can't clear out those tiles because there are so many references to them.");
-                // I'll need to create a new world method for clearing out ALL objects first!
-                    // Buildings, peepes, threats, resources, ALL of it!
-                    // THEN, and only then can I clear out the tiles.
 
                 World.Current.Init(StateManager.Current.CurrentLevel);
             }

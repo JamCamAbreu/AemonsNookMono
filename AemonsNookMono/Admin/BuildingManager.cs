@@ -40,26 +40,11 @@ namespace AemonsNookMono.Admin
         public BuildingSelection Selection { get; set; }
         #endregion
 
-        #region Interface
+        #region Game Loop
         public void Init()
         {
             this.AllBuildings = new List<Building>();
             this.AllStockpiles = new List<Stockpile>();
-        }
-        public void AddBuilding(int x, int y, BuildingInfo.Type t)
-        {
-            if (t == BuildingInfo.Type.STOCKPILE)
-            {
-                Stockpile st = new Stockpile(x, y, t);
-                this.AllStockpiles.Add(st);
-                this.AllBuildings.Add(st);
-            }
-            else
-            {
-                Building b = new Building(x, y, t);
-                this.AllBuildings.Add(b);
-            }
-
         }
         public void Update()
         {
@@ -92,6 +77,29 @@ namespace AemonsNookMono.Admin
                 b.Draw();
             }
             Graphics.Current.SpriteB.End();
+        }
+        #endregion
+
+        #region Interface
+        public void ClearAllBuildings()
+        {
+            this.AllBuildings.Clear();
+            this.AllStockpiles.Clear();
+        }
+        public void AddBuilding(int x, int y, BuildingInfo.Type t)
+        {
+            if (t == BuildingInfo.Type.STOCKPILE)
+            {
+                Stockpile st = new Stockpile(x, y, t);
+                this.AllStockpiles.Add(st);
+                this.AllBuildings.Add(st);
+            }
+            else
+            {
+                Building b = new Building(x, y, t);
+                this.AllBuildings.Add(b);
+            }
+
         }
         public Stockpile GetClosestStockpile(Tile fromtile)
         {

@@ -33,16 +33,14 @@ namespace AemonsNookMono.GameWorld.Effects
         #endregion
 
         #region Public Properties
-        public List<EffectsComponent> Components { get; set; }
-        public List<TempEffect> SingleEffects { get; set; }
+        public List<EffectsComponent> Components { get; set; } = new List<EffectsComponent>();
+        public List<TempEffect> SingleEffects { get; set; } = new List<TempEffect>();
         #endregion
 
-        #region Interface
+        #region Game Loop
         public void Init()
         {
             ran = new Random();
-            this.Components = new List<EffectsComponent>();
-            this.SingleEffects = new List<TempEffect>();
 
             int maxWaterEffects = World.Current.WaterTiles.Count * 4;
             if (maxWaterEffects > 0)
@@ -50,19 +48,6 @@ namespace AemonsNookMono.GameWorld.Effects
                 var waterSparkles = new WaterSparkle(maxWaterEffects, 16);
                 this.Components.Add(waterSparkles);
             }
-        }
-        public void AddEffectsComponent(EffectsComponent component)
-        {
-            this.Components.Add(component);
-        }
-        public void AddSingleEffect(TempEffect effect)
-        {
-            this.SingleEffects.Add(effect);
-
-
-            // Rain effect would be fun!
-            // Wind
-            // Birds
         }
         public void Update()
         {
@@ -108,6 +93,36 @@ namespace AemonsNookMono.GameWorld.Effects
             }
 
             Graphics.Current.SpriteB.End();
+        }
+        #endregion
+
+        #region Interface
+        public void ClearAllEffects()
+        {
+            foreach (EffectsComponent component in this.Components)
+            {
+                component?.ClearEffect();
+            }
+            this.Components.Clear();
+
+            foreach (TempEffect component in this.SingleEffects)
+            {
+                component?.ClearEffect();
+            }
+            this.SingleEffects.Clear();
+        }
+        public void AddEffectsComponent(EffectsComponent component)
+        {
+            this.Components.Add(component);
+        }
+        public void AddSingleEffect(TempEffect effect)
+        {
+            this.SingleEffects.Add(effect);
+
+
+            // Rain effect would be fun!
+            // Wind
+            // Birds
         }
         public int CountTotalEffects()
         {

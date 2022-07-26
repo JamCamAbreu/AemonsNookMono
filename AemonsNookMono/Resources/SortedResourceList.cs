@@ -8,11 +8,15 @@ namespace AemonsNookMono.Resources
 {
     public class SortedResourceList
     {
+        #region Public Properties
         public SortedList<int, Resource> Sorted { get; set; }
-        public List<Resource> ResourcesToRemove { get; set; }
-        public List<Tree> AllTrees { get; set; }
-        public List<Stone> AllStones { get; set; }
+        public List<Resource> ResourcesToRemove { get; set; } = new List<Resource>();
+        public List<Tree> AllTrees { get; set; } = new List<Tree>();
+        public List<Stone> AllStones { get; set; } = new List<Stone>();
         public Random ran { get; set; }
+        #endregion
+
+        #region Constructor
         public SortedResourceList()
         {
             Sorted = new SortedList<int, Resource>();
@@ -21,6 +25,9 @@ namespace AemonsNookMono.Resources
             ResourcesToRemove = new List<Resource>();
             ran = new Random();
         }
+        #endregion
+
+        #region Interface
         public void Clear()
         {
             this.Sorted.Clear();
@@ -51,7 +58,7 @@ namespace AemonsNookMono.Resources
                         this.Sorted.Add(key, r);
                         added = true;
                     }
-                    catch 
+                    catch
                     {
                         collision++;
                         Debugger.Current.NumCollisionsDetected++; // Keep an eye on this, if needed bump up the yfactor to 100000 to avoid collisions
@@ -59,6 +66,9 @@ namespace AemonsNookMono.Resources
                 }
             }
         }
+        #endregion
+
+        #region Game Loop
         public void Update()
         {
             foreach (Resource r in this.Sorted.Values)
@@ -93,5 +103,6 @@ namespace AemonsNookMono.Resources
                 r.Draw();
             }
         }
+        #endregion
     }
 }

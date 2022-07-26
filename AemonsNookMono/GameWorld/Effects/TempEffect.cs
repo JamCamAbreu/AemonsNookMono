@@ -33,7 +33,7 @@ namespace AemonsNookMono.GameWorld.Effects
         }
         #endregion
 
-        #region Interface
+        #region Game Loop
         public void Update()
         {
             #region Kill
@@ -54,7 +54,6 @@ namespace AemonsNookMono.GameWorld.Effects
             }
             #endregion
         }
-
         public void Draw()
         {
             if (spriteNumFrames > 1)
@@ -66,6 +65,14 @@ namespace AemonsNookMono.GameWorld.Effects
                 Graphics.Current.SpriteB.Draw(Graphics.Current.SpritesByName[$"{this.spriteBaseName}"], new Vector2(World.Current.StartDrawX + xpos, World.Current.StartDrawY + ypos), Color.White);
             }
         }
+        #endregion
+
+        #region Interface
+        public virtual void ClearEffect()
+        {
+            this.Dead = true;
+        }
+
         #endregion
 
         #region Internal Properties

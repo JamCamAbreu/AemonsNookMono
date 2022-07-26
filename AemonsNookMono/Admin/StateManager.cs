@@ -61,20 +61,17 @@ namespace AemonsNookMono.Admin
         public Level CurrentLevel { get; set; }
         #endregion
 
-        #region Interface
+        #region Game Loop
         public void Init()
         {
             Debugger.Current.Init();
             Cursor.Current.Init();
             ProfileManager.Current.Init();
+            BuildingManager.Current.Init();
 
             this.CurrentLevel = new SmallMeadow();
             //this.level = new Level2();
-
-            BuildingManager.Current.Init();
             World.Current.Init(this.CurrentLevel);
-
-            
         }
         public void Update(GameTime gameTime)
         {
@@ -103,7 +100,5 @@ namespace AemonsNookMono.Admin
             Debugger.Current.Draw(gameTime);
         }
         #endregion
-
-
     }
 }

@@ -49,22 +49,24 @@ namespace AemonsNookMono.GameWorld
         public Tile[,] Tiles;
         public int Width { get; set; }
         public int Height { get; set; }
-        public List<Tile> RoadTiles { get; set; }
-        public List<Tile> SpawnTiles { get; set; }
-        public List<Tile> TreeTiles { get; set; }
-        public List<Tile> StoneTiles { get; set; }
-        public List<Tile> WaterTiles { get; set; }
-        public List<List<Tile>> TileLists { get; set; }
-        public SortedResourceList Resources { get; set; }
-        public List<Peep> Peeps { get; set; }
-        public List<Threat> Threats { get; set; }
+        public List<Tile> RoadTiles { get; set; } = new List<Tile>();
+        public List<Tile> SpawnTiles { get; set; } = new List<Tile>();
+        public List<Tile> TreeTiles { get; set; } = new List<Tile>();
+        public List<Tile> StoneTiles { get; set; } = new List<Tile>();
+        public List<Tile> WaterTiles { get; set; } = new List<Tile>();
+        public List<List<Tile>> TileLists { get; set; } = new List<List<Tile>>();
+        public SortedResourceList Resources { get; set; } = new SortedResourceList();
+        public List<Peep> Peeps { get; set; } = new List<Peep>();
+        public List<Threat> Threats { get; set; } = new List<Threat>();
         public Random ran { get; set; }
         public Hero hero { get; set; }
         #endregion
 
-        #region Constructors
+        #region Constructors/Destructors
         public void Init(Level level)
         {
+            this.ClearLevel();
+
             this.ran = new Random();
 
             this.TileLists = new List<List<Tile>>();
@@ -106,86 +108,65 @@ namespace AemonsNookMono.GameWorld
                 this.hero = null;
             }
         }
-        #endregion
-
-        #region Interface
-        public void RefreshTiles(bool fixedResources)
+        public void LoadLevel(Level level)
         {
-            this.SetTileShapes();
-            this.ReloadTiles();
-            if (fixedResources)
-            {
-                this.SpawnTrees(1, 1, false);
-                this.SpawnStones(1, 1, false);
-            }
-            else
-            {
-                this.SpawnTrees(0, 4);
-                this.SpawnStones(0, 3);
-            }
-
-        }
-        public void RefreshDisplay()
-        {
+            this.initTiles(level.WIDTH, level.HEIGHT);
+            this.sizeX = level.WIDTH * TILE_DIMENSION_PIXELS;
+            this.sizeY = level.HEIGHT * TILE_DIMENSION_PIXELS;
             this.StartDrawX = (Graphics.Current.Device.Viewport.Width / 2) - (this.sizeX / 2);
             this.StartDrawY = (Graphics.Current.Device.Viewport.Height / 2) - (this.sizeY / 2);
-            if (this.Resources != null && this.Resources.Sorted != null && this.Resources.Sorted.Count > 0)
+
+            this.SetTileNeighbors();
+
+            string levelcode = level.RetrieveLevelCode();
+            int i = 0;
+            char c;
+            for (int row = 0; row <= this.Height - 1; row++)
             {
-                foreach (Resource r in this.Resources.Sorted.Values)
+                for (int col = 0; col < this.Width; col++)
                 {
-                    Vector2 position = new Vector2(this.StartDrawX + r.TileOn.RelativeX + r.TileRelativeX, this.StartDrawY + r.TileOn.RelativeY + r.TileRelativeY);
-                    r.Position = position;
-                    r.TargetPosition = position;
-                    if (r is Tree) { (r as Tree).SetCollisions(); }
-                    else if (r is Stone) { (r as Stone).SetCollisions(); }
-                    else { throw new NotImplementedException(); }
+                    c = levelcode[i];
+                    LoadChar(row, col, c);
+                    i++;
                 }
             }
-        }
-        public bool InsideBounds(int pixelX, int pixelY)
-        {
-            if (pixelX < this.StartDrawX || pixelY < this.StartDrawY || pixelX >= this.StartDrawX + this.sizeX || pixelY >= this.StartDrawY + this.sizeY) { return false; }
-            return true;
-        }
-        public Tile TileAt(int x, int y)
-        {
-            if (x < 0 || y < 0 || x > this.Width || y > this.Height) { throw new Exception("Attempt to retrieve Tile out of bounds!"); }
-            return this.Tiles[y, x];
-        }
-        public Tile TileAtPixel(int pixelX, int pixelY)
-        {
 
-            if (!this.InsideBounds(pixelX, pixelY)) { return null; }
-            int relativeX = pixelX - this.StartDrawX;
-            int relativeY = pixelY - this.StartDrawY;
+            //this.SpawnTrees(0, 4);
+            //this.SpawnStones(0, 3);
+            this.SpawnTrees(1, 1, false);
+            this.SpawnStones(1, 1, false);
 
-            //if (!this.InsideBounds((int)translation.X, (int)translation.Y)) { return null; }
-            //int relativeX = (int)translation.X - this.StartDrawX;
-            //int relativeY = (int)translation.Y - this.StartDrawY;
+            this.SetTileShapes();
 
-            int tileX = relativeX / TILE_DIMENSION_PIXELS;
-            int tileY = relativeY / TILE_DIMENSION_PIXELS;
-            return TileAt(tileX, tileY);
+            StateManager.Current.CurrentLevel = level;
         }
-        public Tile RetrieveRandomTile()
+        public void ClearLevel()
         {
-            int x = this.ran.Next(0, this.Width - 1);
-            int y = this.ran.Next(0, this.Height - 1);
-            return TileAt(x, y);
-        }
+            // TODO
+            // I think generally going in reverse init order should do the trick. Needs tests.
+            this.hero = null;
+            MenuManager.Current.ClearAllMenus();
+            EffectsGenerator.Current.ClearAllEffects();
 
-        public Tuple<int, int> RetrieveRandomTileCoords(List<Tile> tiles)
-        {
-            if (tiles != null && tiles.Count > 0)
-            {
-                int r = this.ran.Next(0, tiles.Count - 1);
-                int pad = World.TILE_DIMENSION_PIXELS / 4;
-                int tilex = this.ran.Next(pad, World.TILE_DIMENSION_PIXELS - pad);
-                int tiley = this.ran.Next(pad, World.TILE_DIMENSION_PIXELS - pad);
-                return new Tuple<int, int>(tiles[r].RelativeX + tilex, tiles[r].RelativeY + tiley);
-            }
-            return null;
+            BuildingManager.Current.ClearAllBuildings();
+
+            this.Threats.Clear();
+            this.Peeps.Clear();
+            this.Resources.Clear();
+
+            this.WaterTiles.Clear();
+            this.StoneTiles.Clear();
+            this.TreeTiles.Clear();
+            this.SpawnTiles.Clear();
+            this.RoadTiles.Clear();
+            this.TileLists.Clear();
+
+            this.Tiles = null;
+            // Clear Level / Tiles
         }
+        #endregion
+
+        #region Game Loop
         public void Draw()
         {
             if (this.hero != null)
@@ -266,6 +247,87 @@ namespace AemonsNookMono.GameWorld
                 this.hero.Update();
             }
         }
+        #endregion
+
+        #region Interface
+        public void RefreshTiles(bool fixedResources)
+        {
+            this.SetTileShapes();
+            this.ReloadTiles();
+            if (fixedResources)
+            {
+                this.SpawnTrees(1, 1, false);
+                this.SpawnStones(1, 1, false);
+            }
+            else
+            {
+                //this.SpawnTrees(0, 4);
+                //this.SpawnStones(0, 3);
+                this.SpawnTrees(1, 1, false);
+                this.SpawnStones(1, 1, false);
+            }
+
+        }
+        public void RefreshDisplay()
+        {
+            this.StartDrawX = (Graphics.Current.Device.Viewport.Width / 2) - (this.sizeX / 2);
+            this.StartDrawY = (Graphics.Current.Device.Viewport.Height / 2) - (this.sizeY / 2);
+            if (this.Resources != null && this.Resources.Sorted != null && this.Resources.Sorted.Count > 0)
+            {
+                foreach (Resource r in this.Resources.Sorted.Values)
+                {
+                    Vector2 position = new Vector2(this.StartDrawX + r.TileOn.RelativeX + r.TileRelativeX, this.StartDrawY + r.TileOn.RelativeY + r.TileRelativeY);
+                    r.Position = position;
+                    r.TargetPosition = position;
+                    if (r is Tree) { (r as Tree).SetCollisions(); }
+                    else if (r is Stone) { (r as Stone).SetCollisions(); }
+                    else { throw new NotImplementedException(); }
+                }
+            }
+        }
+        public bool InsideBounds(int pixelX, int pixelY)
+        {
+            if (pixelX < this.StartDrawX || pixelY < this.StartDrawY || pixelX >= this.StartDrawX + this.sizeX || pixelY >= this.StartDrawY + this.sizeY) { return false; }
+            return true;
+        }
+        public Tile TileAt(int x, int y)
+        {
+            if (x < 0 || y < 0 || x > this.Width || y > this.Height) { throw new Exception("Attempt to retrieve Tile out of bounds!"); }
+            return this.Tiles[y, x];
+        }
+        public Tile TileAtPixel(int pixelX, int pixelY)
+        {
+
+            if (!this.InsideBounds(pixelX, pixelY)) { return null; }
+            int relativeX = pixelX - this.StartDrawX;
+            int relativeY = pixelY - this.StartDrawY;
+
+            //if (!this.InsideBounds((int)translation.X, (int)translation.Y)) { return null; }
+            //int relativeX = (int)translation.X - this.StartDrawX;
+            //int relativeY = (int)translation.Y - this.StartDrawY;
+
+            int tileX = relativeX / TILE_DIMENSION_PIXELS;
+            int tileY = relativeY / TILE_DIMENSION_PIXELS;
+            return TileAt(tileX, tileY);
+        }
+        public Tile RetrieveRandomTile()
+        {
+            int x = this.ran.Next(0, this.Width - 1);
+            int y = this.ran.Next(0, this.Height - 1);
+            return TileAt(x, y);
+        }
+        public Tuple<int, int> RetrieveRandomTileCoords(List<Tile> tiles)
+        {
+            if (tiles != null && tiles.Count > 0)
+            {
+                int r = this.ran.Next(0, tiles.Count - 1);
+                int pad = World.TILE_DIMENSION_PIXELS / 4;
+                int tilex = this.ran.Next(pad, World.TILE_DIMENSION_PIXELS - pad);
+                int tiley = this.ran.Next(pad, World.TILE_DIMENSION_PIXELS - pad);
+                return new Tuple<int, int>(tiles[r].RelativeX + tilex, tiles[r].RelativeY + tiley);
+            }
+            return null;
+        }
         public Tile RetrieveRandomExit(Tile excluding)
         {
             if (this.SpawnTiles == null || this.SpawnTiles.Count == 0)
@@ -289,8 +351,6 @@ namespace AemonsNookMono.GameWorld
         #endregion
 
         #region Private Properties
-        private const int MAX_WORLD_WIDTH = 40;
-        private const int MAX_WORLD_HEIGHT = 40;
         private int sizeX = 0;
         private int sizeY = 0;
         #endregion
@@ -353,36 +413,6 @@ namespace AemonsNookMono.GameWorld
                     curTile.Shape = shape;
                 }
             }
-        }
-        private void LoadLevel(Level level)
-        {
-            this.initTiles(level.WIDTH, level.HEIGHT);
-            this.sizeX = level.WIDTH * TILE_DIMENSION_PIXELS;
-            this.sizeY = level.HEIGHT * TILE_DIMENSION_PIXELS;
-            this.StartDrawX = (Graphics.Current.Device.Viewport.Width / 2) - (this.sizeX / 2);
-            this.StartDrawY = (Graphics.Current.Device.Viewport.Height / 2) - (this.sizeY / 2);
-
-            this.SetTileNeighbors();
-
-            string levelcode = level.RetrieveLevelCode();
-            int i = 0;
-            char c;
-            for (int row = 0; row <= this.Height - 1; row++)
-            {
-                for (int col = 0; col < this.Width; col++)
-                {
-                    c = levelcode[i];
-                    LoadChar(row, col, c);
-                    i++;
-                }
-            }
-
-            this.SpawnTrees(0, 4);
-            this.SpawnStones(0, 3);
-
-            this.SetTileShapes();
-
-            StateManager.Current.CurrentLevel = level;
         }
         private void LoadChar(int row, int col, char c)
         {
@@ -498,7 +528,7 @@ namespace AemonsNookMono.GameWorld
         }
         private void ReloadTile(Tile tile)
         {
-
+            throw new NotImplementedException();
         }
         private void SpawnTrees(int min, int max, bool useRandomOffset = true)
         {

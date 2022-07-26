@@ -21,11 +21,7 @@ namespace AemonsNookMono.GameWorld.Effects
         public List<TempEffect> Effects { get; set; }
         #endregion
 
-        #region Interface
-        public virtual void GenerateEffect()
-        {
-
-        }
+        #region Game Loop
         public void Update()
         {
             this.effectTimer--;
@@ -46,10 +42,6 @@ namespace AemonsNookMono.GameWorld.Effects
                 this.Effects.Remove(effect);
             }
         }
-        public void AddEffect(TempEffect effect)
-        {
-            this.Effects.Add(effect);
-        }
         public void Draw()
         {
             foreach (TempEffect effect in this.Effects)
@@ -57,6 +49,23 @@ namespace AemonsNookMono.GameWorld.Effects
                 effect.Draw();
             }
         }
+        #endregion
+
+        #region Interface
+        public virtual void ClearEffect()
+        {
+            this.Effects?.Clear();
+            this.resetTimer();
+        }
+        public virtual void GenerateEffect()
+        {
+
+        }
+        public void AddEffect(TempEffect effect)
+        {
+            this.Effects.Add(effect);
+        }
+
         #endregion
 
         #region Helper Methods

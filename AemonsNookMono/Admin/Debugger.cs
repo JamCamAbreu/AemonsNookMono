@@ -40,27 +40,12 @@ namespace AemonsNookMono.Admin
         public bool DrawTileShapes { get; set; }
         public World CurrentWorld { get; set; }
         public bool ShowCircleCollisions { get; set; }
-
         public int NumCollisionsDetected { get; set; } = 0;
-
         public string Debugger1 { get; set; }
         public string Debugger2 { get; set; }
         #endregion
 
-        #region Interface
-        public void AddTempString(string message)
-        {
-            this.tempStrings.Insert(0, message);
-            if (this.tempStrings.Count > 6)
-            {
-                this.tempStrings.RemoveRange(6, this.tempStrings.Count - 6);
-            }
-        }
-        public void Refresh()
-        {
-            this.screenWidthPixels = Graphics.Current.Device.Viewport.Width;
-            this.screenHeightPixels = Graphics.Current.Device.Viewport.Height;
-        }
+        #region Game Loop
         public void Init()
         {
             fps = new FrameCounter();
@@ -125,11 +110,7 @@ namespace AemonsNookMono.Admin
             debugMessages.Add($"Debugger 1: {this.Debugger1}");
             debugMessages.Add($"Debugger 2: {this.Debugger2}");
 
-
-
             debugMessages.Add($"--------------------------------");
-
-
 
             int maxLength = 0;
             foreach (string message in debugMessages)
@@ -155,12 +136,28 @@ namespace AemonsNookMono.Admin
                 else { msg = message; }
                 float transparency = 1.0f - ((float)(row - 1) / (float)maxTempStrings);
                 Color stringcolor = Color.White * transparency;
-                Graphics.Current.SpriteB.DrawString(Graphics.Current.Fonts["debug"], msg, new Vector2(8, screenHeightPixels - PAD - (ROW_HEIGHT*row)), stringcolor);
+                Graphics.Current.SpriteB.DrawString(Graphics.Current.Fonts["debug"], msg, new Vector2(8, screenHeightPixels - PAD - (ROW_HEIGHT * row)), stringcolor);
                 row++;
             }
             #endregion
 
             Graphics.Current.SpriteB.End();
+        }
+        #endregion
+
+        #region Interface
+        public void AddTempString(string message)
+        {
+            this.tempStrings.Insert(0, message);
+            if (this.tempStrings.Count > 6)
+            {
+                this.tempStrings.RemoveRange(6, this.tempStrings.Count - 6);
+            }
+        }
+        public void Refresh()
+        {
+            this.screenWidthPixels = Graphics.Current.Device.Viewport.Width;
+            this.screenHeightPixels = Graphics.Current.Device.Viewport.Height;
         }
         #endregion
 

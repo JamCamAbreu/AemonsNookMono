@@ -36,11 +36,14 @@ namespace AemonsNookMono.Admin
         public Color ColorSecondary { get; set; }
         #endregion
 
-        #region Interface
+        #region Game Loop
         public void Init()
         {
             if (this.Loaded == null) { throw new Exception("Could not load profile."); }
         }
+        #endregion
+
+        #region Interface
         private Profile loaded { get; set; }
         public Profile Loaded
         {

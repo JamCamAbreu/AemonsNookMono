@@ -1,5 +1,8 @@
 ﻿using AemonsNookMono.Admin;
 using AemonsNookMono.GameWorld;
+using AemonsNookMono.GameWorld.Motion;
+using AemonsNookMono.GameWorld.Motion.Buildings;
+using AemonsNookMono.GameWorld.Motion.Spirals;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -22,6 +25,8 @@ namespace AemonsNookMono.Structures
             this.Width = BuildingInfo.RetrieveWidth(t);
             this.Name = BuildingInfo.RetrieveName(t);
             this.Sprite = BuildingInfo.RetrieveSprite(t);
+            this.Motions = new Queue<Motion>() { };
+            this.Motions.Enqueue(new FallBounceMotion(new Vector2(x, y), false));
 
             Tile tile;
             for (int w = 0; w < this.Width; w++)
@@ -39,7 +44,7 @@ namespace AemonsNookMono.Structures
             this.CreateCollisions();
         }
         #endregion
-
+ 
         #region Public Properties
         public BuildingInfo.Type Type { get; set; }
         public int Height { get; set; }
@@ -51,6 +56,7 @@ namespace AemonsNookMono.Structures
         public List<Tile> TilesUnderneath { get; set; }
         public List<Collision> Collisions { get; set; }
         public string Sprite { get; set; }
+        public Queue<Motion> Motions { get; set; }
         #endregion
 
         #region Interface
@@ -60,7 +66,16 @@ namespace AemonsNookMono.Structures
         }
         public virtual void Update()
         {
-
+            if (this.Motions.Count > 0)
+            {
+                Vector2 pos = this.Motions.Peek().Step(3, 3);
+                this.OriginX = (int)pos.X;
+                this.OriginY = (int)pos.Y;
+                if (this.Motions.Peek().Complete)
+                {
+                    this.Motions.Dequeue();
+                }
+            }
         }
         public virtual void Draw()
         {
